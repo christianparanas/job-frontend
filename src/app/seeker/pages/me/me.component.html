@@ -1,24 +1,18 @@
 <div class="relative z-40 mt-10 pb-20">
-  <!-- <div class="">
-    <h1 class="font-bold text-xl md:text-3xl text-gray-900">About</h1>
-    <p class="text-gray-800 text-[12px]">Information about the system</p>
-  </div>
-
-  <div class="mt-20 pb-10">- Description</div> -->
   <div>
     <div>
-      <div class="w-full h-[300px] bg-gray-400 rounded-xl"></div>
-      <div class="py-5 rounded-lg absolute top-44 ml-10">
+      <div class="w-full h-[200px] md:h-[300px] bg-gray-400 rounded-xl"></div>
+      <div class="py-5 rounded-lg grid place-items-center absolute top-24 md:top-44 ml-10">
         <div class="w-fit rounded-full h-fit border-4 border-gray-200">
           <img
             src="https://avatars.githubusercontent.com/u/73870953?v=4"
             alt=""
-            class="w-[100px] h-[100px] md:w-[150px] md:h-[150px] object-cover rounded-full"
+            class="w-[150px] h-[150px] md:w-[150px] md:h-[150px] object-cover rounded-full"
           />
         </div>
         <div class="grid items-center">
           <h2
-            class="text-center mt-4 font-bold text-[12px] md:text-[20px] text-black"
+            class="text-center mt-4 font-bold text-[15px] md:text-[20px] text-black"
           >
             Luigi Loreno
           </h2>
@@ -31,7 +25,7 @@
 
   <div class="mt-40 pb-10">
     <h2 class="font-semibold text-lg md:text-xl mb-5 text-slate-800">About</h2>
-    <p class="text-gray-900 text-[14px]">
+    <p class="text-gray-900 text-[14px] w-full">
       I am a passionate and dedicated web developer, skilled in creating
       seamless and intuitive web applications using modern technologies and
       frameworks. With a focus on delivering exceptional user experiences, I
@@ -47,8 +41,8 @@
 
   <hr />
 
-  <div class="mt-10 bg-white">
-    <div class="card">
+  <div class="mt-10 bg-white w-full">
+    <div class="w-[400px] sm:w-full">
       <p-tabs [(value)]="selectedTabIndex" scrollable>
         <p-tablist>
           @for(tab of tabs; track trackTabValue){
@@ -64,14 +58,17 @@
               <app-seeker-information></app-seeker-information>
             </ng-container>
             <ng-container *ngIf="tab.value == 1">
-              <app-seeker-assessment-table></app-seeker-assessment-table> <!-- Load component here -->
+              <app-seeker-assessment-table></app-seeker-assessment-table>
+              <!-- Load component here -->
             </ng-container>
             <ng-container *ngIf="tab.value == 2">
-              <app-seeker-level></app-seeker-level> <!-- Load component here -->
+              <app-seeker-level></app-seeker-level>
+              <!-- Load component here -->
             </ng-container>
 
             <ng-container *ngIf="tab.value == 3">
-              <app-seeker-recommendation></app-seeker-recommendation> <!-- Load component here -->
+              <app-seeker-recommendation></app-seeker-recommendation>
+              <!-- Load component here -->
             </ng-container>
           </p-tabpanel>
           }
