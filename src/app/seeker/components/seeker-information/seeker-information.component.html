@@ -4,16 +4,33 @@
   <div class="mt-6 pb-10">
     <div class="grid md:grid-cols-[250px_1fr] gap-6">
       <div class="grid items-center">
-        <!-- Profile Picture (Placeholder for now) -->
-        <div class="bg-gray-200 rounded-full w-[200px] h-[200px]">
+        <!-- Profile Picture Section -->
+        <div
+          class="bg-gray-200 rounded-full w-[200px] h-[200px] flex items-center justify-center"
+        >
           <img
-            src="https://avatars.githubusercontent.com/u/73870953?v=4"
-            alt=""
+            *ngIf="user.profilePicture"
+            [src]="user.profilePicture"
+            alt="Profile Picture"
             class="w-full h-full object-cover rounded-full"
           />
+          <input
+            *ngIf="!user.profilePicture"
+            type="file"
+            accept="image/*"
+            (change)="onProfilePictureChange($event)"
+            class="hidden"
+            id="profilePictureInput"
+          />
+          <label
+            for="profilePictureInput"
+            class="cursor-pointer text-sm text-blue-500"
+          >
+            {{ "Change Picture" }}
+          </label>
         </div>
       </div>
-      <div class="">
+      <div>
         <div class="grid md:grid-cols-3 gap-4">
           <!-- First Name -->
           <div class="flex flex-col gap-2">
@@ -21,9 +38,9 @@
             <input
               pInputText
               id="firstName"
-              aria-describedby="firstName-help"
               pSize="small"
               [(ngModel)]="user.firstName"
+              required
             />
           </div>
           <!-- Middle Name -->
@@ -32,7 +49,6 @@
             <input
               pInputText
               id="middleName"
-              aria-describedby="middleName-help"
               pSize="small"
               [(ngModel)]="user.middleName"
             />
@@ -43,9 +59,9 @@
             <input
               pInputText
               id="lastName"
-              aria-describedby="lastName-help"
               pSize="small"
               [(ngModel)]="user.lastName"
+              required
             />
           </div>
         </div>
@@ -53,17 +69,18 @@
         <!-- Additional Information Section -->
         <div class="mt-6">
           <div class="grid md:grid-cols-3 gap-4">
-            <!-- Educational Attainment -->
+            <!-- Educational Attainment (Dropdown) -->
             <div class="flex flex-col gap-2">
               <label for="education" class="text-[14px]"
                 >Educational Attainment</label
               >
-              <input
-                pInputText
-                id="education"
-                aria-describedby="education-help"
-                pSize="small"
+              <p-select
+                [options]="educationOptions"
                 [(ngModel)]="user.education"
+                variant="filled"
+                placeholder=""
+                class="w-full"
+                size="small"
               />
             </div>
 
@@ -74,26 +91,23 @@
                 pInputText
                 id="dob"
                 type="date"
-                aria-describedby="dob-help"
                 pSize="small"
                 [(ngModel)]="user.dob"
+                required
               />
             </div>
 
             <!-- Gender -->
             <div class="flex flex-col gap-2">
               <label for="gender" class="text-[14px]">Gender</label>
-              <select
-                pInputText
-                id="gender"
-                aria-describedby="gender-help"
-                pSize="small"
+              <p-select
+                [options]="genderOptions"
                 [(ngModel)]="user.gender"
-              >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
+                variant="filled"
+                placeholder=""
+                class="w-full"
+                size="small"
+              />
             </div>
           </div>
 
@@ -105,9 +119,9 @@
                 pInputText
                 id="phone"
                 type="tel"
-                aria-describedby="phone-help"
                 pSize="small"
                 [(ngModel)]="user.phone"
+                required
               />
             </div>
 
@@ -117,11 +131,28 @@
               <input
                 pInputText
                 id="address"
-                aria-describedby="address-help"
                 pSize="small"
                 [(ngModel)]="user.address"
               />
             </div>
+          </div>
+        </div>
+
+        <!-- Career Goals / Skills to Develop -->
+        <div class="mt-6">
+          <div class="flex flex-col gap-2">
+            <label for="careerGoals" class="text-[14px]"
+              >Career Goals / Skills to Develop</label
+            >
+            <textarea
+              pInputText
+              id="careerGoals"
+              pSize="small"
+              rows="4"
+              [(ngModel)]="user.careerGoals"
+              placeholder="Describe your career goals or skills you'd like to develop."
+              required
+            ></textarea>
           </div>
         </div>
       </div>
@@ -131,23 +162,20 @@
       <div></div>
       <div class="card flex justify-center">
         <p-toast position="bottom-left" key="bl" />
-        <p-button (onClick)="show()" label="Save" size="small" />
-    </div>
+        <p-button (onClick)="saveProfile()" label="Save" size="small" />
+      </div>
     </div>
   </div>
 
   <hr />
 
   <div class="mt-4">
-    <div class="font-bold text-xl mb-6 text-gray-800">
-      Achievements
-    </div>
+    <div class="font-bold text-xl mb-6 text-gray-800">Achievements</div>
 
-    <!-- Responsive Grid Layout -->
+    <!-- Achievement Grid -->
     <div
       class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6"
     >
-      <!-- Achievement Card Loop -->
       <div
         *ngFor="let achievement of achievements"
         class="transition-all duration-300 transform hover:scale-105"
@@ -155,14 +183,11 @@
         <div
           class="card p-6 rounded-lg bg-white shadow-md hover:shadow-xl cursor-pointer transform transition-all hover:scale-105 border border-gray-100 hover:border-blue-500"
         >
-          <!-- Icon Section -->
           <div class="flex justify-center mb-4">
             <i
               class="fad fa-sign-out text-4xl text-blue-500 transition-transform duration-300 hover:text-yellow-500 hover:scale-110"
             ></i>
           </div>
-
-          <!-- Title and Points Section -->
           <div class="text-center">
             <h6 class="font-semibold text-md text-gray-800">
               {{ achievement.title }}

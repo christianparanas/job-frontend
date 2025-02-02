@@ -11,20 +11,20 @@ import { CommonModule } from '@angular/common';
 })
 export class JobsComponent implements OnInit {
   jobs: any = [];
-  isLoading = true;
+  isLoading = false;
 
   constructor(private jobService: JobService) {}
 
   ngOnInit(): void {
-    this.jobService.getJobs().subscribe(
-      (response) => {
-        this.jobs = response.jobs;
-        this.isLoading = false;
-      },
-      (error) => {
-        console.error('Error fetching jobs:', error);
-        this.isLoading = false;
-      }
-    );
+    // this.jobService.getJobs().subscribe(
+    //   (response) => {
+    //     this.jobs = response.jobs;
+    //     this.isLoading = false;
+    //   },
+    //   (error) => {
+    //     console.error('Error fetching jobs:', error);
+    //     this.isLoading = false;
+    //   }
+    // );
   }
 }
