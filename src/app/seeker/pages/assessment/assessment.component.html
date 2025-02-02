@@ -1,1 +1,89 @@
-<p>assessment works!</p>
+
+
+<div class="relative z-40 mt-2 pb-20">
+
+  <hr />
+
+  <div class="mt-10 bg-white p-6">
+    <div class="font-bold text-2xl mb-6 text-center">Assessment</div>
+
+    <!-- Assessment Questions -->
+    <div *ngFor="let question of questions; let i = index" class="mb-6">
+
+      <!-- Question Title -->
+      <div class="font-semibold text-lg text-gray-800">{{ question.questionText }}</div>
+
+      <!-- Dynamic Question Inputs -->
+      <div class="mt-4">
+        <ng-container [ngSwitch]="question.type">
+
+          <!-- Text Input -->
+          <div *ngSwitchCase="'text'">
+            <input
+              type="text"
+              [(ngModel)]="question.answer"
+              class="p-2 border border-gray-300 rounded-md w-full"
+              placeholder="Your answer here..."
+            />
+          </div>
+
+          <!-- Checkbox -->
+          <div *ngSwitchCase="'checkbox'">
+            <div *ngFor="let option of question.options">
+              <label class="flex items-center mt-2">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="question.answer[option]"
+                  class="mr-2"
+                />
+                {{ option }}
+              </label>
+            </div>
+          </div>
+
+          <!-- Radio Button -->
+          <div *ngSwitchCase="'radio'">
+            <div *ngFor="let option of question.options">
+              <label class="flex items-center mt-2">
+                <input
+                  type="radio"
+                  name="question{{i}}"
+                  [(ngModel)]="question.answer"
+                  [value]="option"
+                  class="mr-2"
+                />
+                {{ option }}
+              </label>
+            </div>
+          </div>
+
+          <!-- Dropdown -->
+          <div *ngSwitchCase="'dropdown'">
+            <select
+              [(ngModel)]="question.answer"
+              class="p-2 border border-gray-300 rounded-md w-full"
+            >
+              <option *ngFor="let option of question.options" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="mt-6 text-center">
+      <button
+        (click)="submitAssessment()"
+        class="bg-blue-500 text-white p-3 rounded-lg"
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+
+
+  <hr />
+</div>

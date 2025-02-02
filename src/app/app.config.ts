@@ -8,6 +8,8 @@ import { routes } from './app.routes';
 import { definePreset } from '@primeng/themes';
 
 import { MessageService } from 'primeng/api';
+import { JobService } from './seeker/shared/services/job.service';
+import { provideHttpClient } from "@angular/common/http";
 
 const Noir = definePreset(Lara, {
   semantic: {
@@ -70,7 +72,8 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
-    MessageService
+    MessageService,
+    JobService,
+    provideHttpClient()
   ],
 };
-
