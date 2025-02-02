@@ -6,17 +6,19 @@
   />
 
   <div class="">
-    <div class="max-w-7xl mx-auto grid lg:grid-cols-[1fr_400px] md:p-8">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-[1fr_400px] md:p-8 gap-10">
       <div class="hidden lg:block">
         <div class="p-4 rounded-md w-fit pr-6 min-h-[96px]">
           <img src="PSFLogo.png" alt="Logo" class="w-[400px]" />
         </div>
-        <div class="mt-2">
-          <h1 class="font-black text-3xl">
-            <span class="text-gray-900 ml-10"
-              >ANALYTICS & ARTIFICIAL INTELLIGENCE</span
-            >
+        <div class="mt-4">
+          <h1 class="font-black text-3xl text-gray-900">
+            Transform Your Future with Data and AI
           </h1>
+          <p class="text-gray-600 mt-2 text-lg">
+            Unlock endless possibilities with analytics, artificial intelligence, and cutting-edge technologies.
+            Start your journey towards a brighter, data-driven career today.
+          </p>
         </div>
       </div>
 
@@ -33,107 +35,75 @@
           <h1 class="font-black text-gray-900 text-lg lg:text-3xl">Sign Up</h1>
         </div>
 
-        <form
-          (ngSubmit)="onSubmit()"
-          [formGroup]="loginForm"
-          class="grid gap-3"
-        >
-          <div>
-            <label class="block text-sm font-medium text-gray-700"
-              >Username</label
-            >
-
-            <div class="mt-1 relative">
+        <div class="card flex justify-center">
+          <div pFocusTrap class="w-full flex flex-col gap-6">
+            <p-iconfield>
+              <p-inputicon>
+                <i class="pi pi-user"></i>
+              </p-inputicon>
               <input
                 type="text"
-                formControlName="username"
-                placeholder="Your username"
                 pInputText
+                id="input"
+                [(ngModel)]="name"
+                type="text"
+                placeholder="Name"
+                [pAutoFocus]="true"
+                [fluid]="true"
               />
-            </div>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Name</label>
+            </p-iconfield>
 
-            <div class="mt-1 relative">
+            <p-iconfield>
+              <p-inputicon>
+                <i class="pi pi-envelope"> </i>
+              </p-inputicon>
               <input
                 type="text"
-                formControlName="name"
-                placeholder="Your name"
                 pInputText
-                required
-              />
-            </div>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Email</label>
-
-            <div class="mt-1 relative">
-              <input
+                id="email"
+                [(ngModel)]="email"
                 type="email"
-                formControlName="email"
-                placeholder="Your email"
-                pInputText
-                required
+                placeholder="Email"
+                [fluid]="true"
               />
-            </div>
-          </div>
+            </p-iconfield>
 
-          <div>
-            <label class="block text-sm font-medium text-gray-700"
-              >Password</label
-            >
-            <div class="mt-1 relative">
-              <p-password
-                placeholder="Your password"
-                styleClass="p-password p-component p-inputwrapper p-input-icon-right"
-                formControlName="password"
-                [toggleMask]="true"
-                [feedback]="false"
-              ></p-password>
-            </div>
-          </div>
+            <p-password
+              [(ngModel)]="password"
+              [toggleMask]="true"
+              inputStyleClas="w-full"
+              placeholder="Password"
+              [inputStyle]="{'width':'100%'}"
+              styleClass="w-full"
+            />
 
-          <button
-            type="submit"
-            class="grid place-items-center cursor-pointer bg-gray-900 text-white font-semibold rounded-md py-2 hover:bg-gray-900/80 transition-all w-full"
-          >
-            <div class="flex items-center w-fit mx-autoo" *ngIf="submitLoading">
-              <svg
-                class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  class="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                ></circle>
-                <path
-                  class="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-
-              <span>Processing</span>
+            <div class="flex items-center gap-2">
+              <p-checkbox
+                id="accept"
+                [(ngModel)]="accept"
+                name="accept"
+                value="Accept"
+              />
+              <label for="accept">I agree to the terms and conditions.</label>
             </div>
 
-            <span *ngIf="!submitLoading">Sign Up</span>
-          </button>
-          <div class="text-[14px] text-center">
-            <p>
-              Already have an account?
-              <span class="text-gray-900 cursor-pointer" routerLink="/login"
-                >Login</span
-              >
-            </p>
+            <p-button
+              type="submit"
+              label="Sign Up"
+              class="mt-2"
+              styleClass="w-full"
+            />
+
+            <div class=" text-center text-gray-500">
+              <p>
+                Already have an account?
+                <span class="text-gray-900 cursor-pointer" routerLink="/login"
+                  >Login</span
+                >
+              </p>
+            </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>

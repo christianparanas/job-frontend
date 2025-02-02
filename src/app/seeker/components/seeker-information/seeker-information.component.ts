@@ -15,7 +15,7 @@ import { SelectModule } from 'primeng/select';
     ButtonModule,
     CommonModule,
     ToastModule,
-    SelectModule,
+    SelectModule
   ],
   templateUrl: './seeker-information.component.html',
   standalone: true,
