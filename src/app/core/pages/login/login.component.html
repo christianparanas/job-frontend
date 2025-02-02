@@ -1,0 +1,123 @@
+<div class="relative min-h-fit h-screen md:overflow-y-scroll md:pt-12">
+  <img
+    src="PSFLogo.png"
+    alt=""
+    class="-left-[1000px] fixed -bottom-40 md:-left-20 opacity-5"
+  />
+
+  <div class="">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-[1fr_400px] md:p-8">
+      <div class="hidden lg:block">
+        <div class="p-4 rounded-md w-fit pr-6 min-h-[96px]">
+          <img src="PSFLogo.png" alt="Logo" class="w-[400px]" />
+        </div>
+        <div class="mt-2">
+          <h1 class="font-black text-3xl">
+            <span class="text-gray-900 ml-10">ANALYTICS & ARTIFICIAL INTELLIGENCE</span>
+          </h1>
+        </div>
+      </div>
+
+      <div
+        class="relative p-6 pt-0 w-full md:w-[400px] mx-auto z-50 md:shadow-md lg:shadow-none rounded-md"
+      >
+        <div
+          class="absolute top-0 left-0 w-full md:hidden mb-10 z-50 py-4"
+        >
+          <div class="text-center w-fit mx-auto mt-4">
+            <img src="PSFLogo.png" alt="Logo" class="w-[150px] mr-2" />
+          </div>
+        </div>
+
+        <div class="mt-[100px] md:mt-4 mb-4">
+          <h1 class="font-black text-gray-900 text-lg lg:text-3xl">Login</h1>
+        </div>
+
+        <form
+          (ngSubmit)="onSubmit()"
+          [formGroup]="loginForm"
+          class="grid gap-3"
+        >
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Email</label>
+
+            <div class="mt-1 relative">
+              <input
+                type="email"
+                formControlName="email"
+                placeholder="Your email"
+                pInputText
+                required
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700"
+              >Password</label
+            >
+            <div class="mt-1 relative">
+              <p-password
+                placeholder="Your password"
+                styleClass="p-password p-component p-inputwrapper p-input-icon-right"
+                formControlName="password"
+                [toggleMask]="true"
+                [feedback]="false"
+              ></p-password>
+            </div>
+
+            <div class="flex justify-between items-center mt-2">
+              <div class=""></div>
+              <p
+                routerLink="/forgotpassword"
+                class="text-[13px] cursor-pointer text-gray-500 hover:text-gray-900"
+              >
+                Forgot your password?
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="grid place-items-center cursor-pointer bg-gray-900 text-white font-semibold rounded-md py-2 hover:bg-gray-900/80 transition-all w-full"
+          >
+            <div class="flex items-center w-fit mx-autoo" *ngIf="submitLoading">
+              <svg
+                class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+
+              <span>Processing</span>
+            </div>
+
+            <span *ngIf="!submitLoading">Login</span>
+          </button>
+          <div class="text-[14px] text-center text-gray-500">
+            <p>
+              No account?
+              <span class="text-gray-900 cursor-pointer" routerLink="/signup"
+                >Signup</span
+              >
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

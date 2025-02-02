@@ -1,0 +1,76 @@
+<div class="relative z-40 mt-2 pb-20">
+
+  <hr />
+
+  <div class="mt-6 pb-10">
+    <div class="card">
+      <div class="grid grid-cols-2 gap-10">
+        <!-- Category 1: Overall Ability Progress -->
+        <div class="p-col-12 p-md-6 p-lg-4">
+          <h6 class="font-bold">Overall Ability Progress</h6>
+          <p class="text-[13px]">
+            Description: A general metric showing how the user’s overall ability
+            has improved or adjusted across all assessments.
+          </p>
+          <div class="bg-gray-50 p-2 rounded-sm mt-1">
+            <p-chart
+            type="line"
+            [data]="abilityProgressData"
+            [options]="abilityProgressOptions"
+          ></p-chart>
+          </div>
+        </div>
+
+        <!-- Category 4: Time Taken Per Assessment -->
+        <div class="p-col-12 p-md-6 p-lg-4">
+          <h6 class="font-bold">Time Taken Per Assessment</h6>
+          <p class="text-[13px]">
+            Description: Measures how quickly the user completes assessments and
+            whether they are improving their speed.
+          </p>
+          <div class="bg-gray-50 p-2 rounded-sm mt-1">
+          <p-chart
+            type="bar"
+            [data]="timeTakenData"
+            [options]="timeTakenOptions"
+          ></p-chart>
+        </div>
+        </div>
+
+        <!-- Category 2: Subject or Skill Area Progress -->
+        <div class="p-col-12 p-md-6 p-lg-4">
+          <h6 class="font-bold">Subject or Skill Area Progress</h6>
+          <p class="text-[13px]">
+            Description: Track progress in different subjects or skill sets the
+            user is being assessed on.
+          </p>
+          <div class="bg-gray-50 p-2 rounded-sm mt-1">
+          <p-chart
+            type="radar"
+            [data]="subjectProgressData"
+            [options]="subjectProgressOptions"
+          ></p-chart>
+        </div>
+        </div>
+
+        <!-- Category 3: Difficulty Level Adjustments -->
+        <div class="p-col-12 p-md-6 p-lg-4">
+          <h6 class="font-bold">Difficulty Level Adjustments</h6>
+          <p class="text-[13px]">
+            Description: Shows the level of difficulty the user is tackling as
+            the system adapts.
+          </p>
+          <div class="bg-gray-50 p-2 rounded-sm mt-1">
+          <p-chart
+            type="line"
+            [data]="difficultyLevelData"
+            [options]="difficultyLevelOptions"
+          ></p-chart>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+</div>
