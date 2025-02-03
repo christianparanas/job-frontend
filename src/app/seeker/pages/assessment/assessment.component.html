@@ -1,86 +1,145 @@
-
 <div class="relative z-40 mt-20 pb-20">
   <div class="mb-5">
     <h1 class="font-bold text-xl md:text-3xl text-gray-900">Assessments</h1>
-    <p class="text-gray-800 text-[12px]">Information about the system</p>
+    <p class="text-gray-800 text-[12px]">
+      Information about the system and available assessments
+    </p>
   </div>
 
   <hr />
 
-  <div class="mt-24 pb-10">
-    <div *ngFor="let question of questions; let i = index" class="mb-6">
-
-      <!-- Question Title -->
-      <div class="font-semibold text-lg text-gray-800">{{ question.questionText }}</div>
-
-      <!-- Dynamic Question Inputs -->
-      <div class="mt-4">
-        <ng-container [ngSwitch]="question.type">
-
-          <!-- Text Input -->
-          <div *ngSwitchCase="'text'">
-            <input
-              type="text"
-              [(ngModel)]="question.answer"
-              class="p-2 border border-gray-300 rounded-md w-full"
-              placeholder="Your answer here..."
+  <!-- General Assessments Section -->
+  <div class="mb-6 mt-16">
+    <h6 class="font-semibold text-xl text-gray-900">
+      General Assessments
+    </h6>
+    <p class="text-sm text-gray-700">
+      Assess your foundational skills applicable across various industries.
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
+      <p-card
+        header="Basic Skills"
+        subheader=""
+        styleClass="card border border-gray-100"
+      >
+        <ng-template pTemplate="content">
+          <div class="flex justify-center items-center">
+            Evaluate your math, reading, and digital literacy.
+          </div>
+          <div class="flex justify-start mt-4">
+            <p-button
+              label="Start Assessment"
+              icon="pi pi-arrow-right"
+              size="small"
             />
           </div>
+        </ng-template>
+      </p-card>
 
-          <!-- Checkbox -->
-          <div *ngSwitchCase="'checkbox'">
-            <div *ngFor="let option of question.options">
-              <label class="flex items-center mt-2">
-                <input
-                  type="checkbox"
-                  [(ngModel)]="question.answer[option]"
-                  class="mr-2"
-                />
-                {{ option }}
-              </label>
-            </div>
-          </div>
-
-          <!-- Radio Button -->
-          <div *ngSwitchCase="'radio'">
-            <div *ngFor="let option of question.options">
-              <label class="flex items-center mt-2">
-                <input
-                  type="radio"
-                  name="question{{i}}"
-                  [(ngModel)]="question.answer"
-                  [value]="option"
-                  class="mr-2"
-                />
-                {{ option }}
-              </label>
-            </div>
-          </div>
-
-          <!-- Dropdown -->
-          <div *ngSwitchCase="'dropdown'">
-            <select
-              [(ngModel)]="question.answer"
-              class="p-2 border border-gray-300 rounded-md w-full"
-            >
-              <option *ngFor="let option of question.options" [value]="option">
-                {{ option }}
-              </option>
-            </select>
-          </div>
-
-        </ng-container>
-      </div>
-    </div>
-
-    <!-- Submit Button -->
-    <div class="mt-6 text-center">
-      <button
-        (click)="submitAssessment()"
-        class="bg-blue-500 text-white p-3 rounded-lg"
+      <p-card
+        header="Cognitive Abilities"
+        subheader=""
+        styleClass="card border border-gray-100"
       >
-        Submit
-      </button>
+        <ng-template pTemplate="content">
+          <div class="flex justify-center items-center">
+            Test your critical thinking, memory, and problem-solving skills.
+          </div>
+          <div class="flex justify-start mt-4">
+            <p-button
+              label="Start Assessment"
+              icon="pi pi-arrow-right"
+              size="small"
+            />
+          </div>
+        </ng-template>
+      </p-card>
+
+      <p-card
+        header="Soft Skills"
+        subheader=""
+        styleClass="card border border-gray-100"
+      >
+        <ng-template pTemplate="content">
+          <div class="flex justify-center items-center">
+            Assess your communication, adaptability, and teamwork abilities.
+          </div>
+          <div class="flex justify-start mt-4">
+            <p-button
+              label="Start Assessment"
+              icon="pi pi-arrow-right"
+              size="small"
+            />
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
+
+  <div class="mb-6 mt-20">
+    <h6 class="font-semibold text-xl text-gray-900">
+      Career Assessments
+    </h6>
+    <p class="text-sm text-gray-700">
+      Assess the specific skills needed for your chosen career path.
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
+      <p-card
+        header="Industry-Specific Skills"
+        subheader=""
+        styleClass="card border border-gray-100"
+      >
+        <ng-template pTemplate="content">
+          <div class="flex justify-center items-center">
+            Assess your technical skills for specific industries.
+          </div>
+          <div class="flex justify-start mt-4">
+            <p-button
+              label="Start Assessment"
+              icon="pi pi-arrow-right"
+              size="small"
+            />
+          </div>
+        </ng-template>
+      </p-card>
+
+      <p-card
+        header="Career Pathway Competency"
+        subheader=""
+        styleClass="card border border-gray-100"
+      >
+        <ng-template pTemplate="content">
+          <div class="flex justify-center items-center">
+            Evaluate your readiness for advancing in a career.
+          </div>
+          <div class="flex justify-start mt-4">
+            <p-button
+              label="Start Assessment"
+              icon="pi pi-arrow-right"
+              size="small"
+            />
+          </div>
+        </ng-template>
+      </p-card>
+
+      <p-card
+        header="Workplace Readiness"
+        subheader=""
+        styleClass="card border border-gray-100"
+      >
+        <ng-template pTemplate="content">
+          <div class="flex justify-center items-center">
+            Assess your preparedness for the workplace environment.
+          </div>
+          <div class="flex justify-start mt-4">
+            <p-button
+              label="Start Assessment"
+              icon="pi pi-arrow-right"
+              size="small"
+            />
+          </div>
+        </ng-template>
+      </p-card>
     </div>
   </div>
 

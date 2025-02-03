@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
 interface Question {
   id: number;
@@ -12,7 +14,7 @@ interface Question {
 
 @Component({
   selector: 'app-assessment',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CardModule, ButtonModule],
   standalone: true,
   templateUrl: './assessment.component.html',
   styleUrl: './assessment.component.css',
