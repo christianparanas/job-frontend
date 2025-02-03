@@ -8,7 +8,6 @@
 
   <!-- Main content -->
   <div class="max-w-7xl mx-auto grid lg:grid-cols-[1fr_400px] md:p-8 gap-10">
-
     <!-- Left Side Content: Modernized Text -->
     <div class="hidden lg:block">
       <div class="p-4 rounded-md w-fit pr-6 min-h-[96px]">
@@ -19,8 +18,9 @@
           Transform Your Future with Data and AI
         </h1>
         <p class="text-gray-600 mt-2 text-lg">
-          Unlock endless possibilities with analytics, artificial intelligence, and cutting-edge technologies.
-          Start your journey towards a brighter, data-driven career today.
+          Unlock endless possibilities with analytics, artificial intelligence,
+          and cutting-edge technologies. Start your journey towards a brighter,
+          data-driven career today.
         </p>
       </div>
     </div>
@@ -43,7 +43,7 @@
 
       <!-- Login Form Fields -->
       <div class="card flex justify-center">
-        <div pFocusTrap class="w-full flex flex-col gap-6">
+        <div pFocusTrap class="w-full flex flex-col gap-4">
           <!-- Email Field -->
           <p-iconfield>
             <p-inputicon>
@@ -60,14 +60,20 @@
           </p-iconfield>
 
           <!-- Password Field -->
-          <p-password
-            [(ngModel)]="password"
-            [feedback]="false"
-            [toggleMask]="true"
-            [inputStyle]="{'width':'100%'}"
-            placeholder="Password"
-            styleClass="w-full"
-          ></p-password>
+          <div>
+            <p-password
+              [(ngModel)]="password"
+              [feedback]="false"
+              [toggleMask]="true"
+              [inputStyle]="{ width: '100%' }"
+              placeholder="Password"
+              styleClass="w-full"
+            ></p-password>
+
+            <div class=" text-gray-500 my-0 grid place-items-end mt-3  cursor-pointer hover:text-gray-400">
+              <p routerLink="/forgotpassword">Forgot Password?</p>
+            </div>
+          </div>
 
           <!-- Login Button -->
           <p-button

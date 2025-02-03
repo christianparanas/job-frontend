@@ -1,0 +1,38 @@
+<div class="relative z-40 mt-20 pb-20">
+  <div class="">
+    <h1 class="font-bold text-xl md:text-3xl text-gray-900">Users Management</h1>
+    <p class="text-gray-800 text-[12px]">Information about the system</p>
+  </div>
+  <hr class="mt-4" />
+
+  <div class="mt-4 pb-10">
+    <div class="mt-10 bg-white w-full">
+      <div class="w-[400px] sm:w-full">
+        <p-tabs [(value)]="selectedTabIndex" scrollable>
+          <p-tablist>
+            @for(tab of tabs; track trackTabValue){
+            <p-tab [value]="tab.value">
+              {{ tab.title }}
+            </p-tab>
+            }
+          </p-tablist>
+          <p-tabpanels>
+            @for(tab of tabs; track tab.value){
+            <p-tabpanel [value]="tab.value">
+              <ng-container *ngIf="tab.value == 0">
+                <app-seekers></app-seekers>
+              </ng-container>
+              <ng-container *ngIf="tab.value == 1">
+                <app-mod></app-mod>
+                <!-- Load component here -->
+              </ng-container>
+            </p-tabpanel>
+            }
+          </p-tabpanels>
+        </p-tabs>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+</div>

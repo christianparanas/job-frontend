@@ -11,6 +11,14 @@ import { PathwayComponent } from './seeker/pages/pathway/pathway.component';
 import { AboutComponent } from './seeker/pages/about/about.component';
 import { AuthComponent } from './admin/pages/auth/auth.component';
 import { DashboardComponent } from './admin/pages/dashboard/dashboard.component';
+import { AdminLayoutComponent } from './admin/components/admin-layout/admin-layout.component';
+import { UsersComponent } from './admin/pages/users/users.component';
+import { SettingsComponent } from './admin/pages/settings/settings.component';
+import { ReportsComponent } from './admin/pages/reports/reports.component';
+import { LogsComponent } from './admin/pages/logs/logs.component';
+import { NotificationsComponent } from './admin/pages/notifications/notifications.component';
+import { HelpComponent } from './admin/pages/help/help.component';
+import { ProfileComponent } from './admin/pages/profile/profile.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -30,6 +38,21 @@ export const routes: Routes = [
       { path: 'about', component: AboutComponent },
     ],
   },
-  { path: 'admin/login', component: AuthComponent },
-  { path: 'admin/', component: DashboardComponent },
+
+  {
+    path: 'admin',
+    component: AdminLayoutComponent,
+    // canActivate: [StudentGuard],
+    children: [
+      { path: '', component: DashboardComponent },
+      { path: 'login', component: AuthComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'help', component: HelpComponent },
+      { path: 'notifications', component: NotificationsComponent },
+      { path: 'logs', component: LogsComponent },
+      { path: 'reports', component: ReportsComponent },
+      { path: 'settings', component: SettingsComponent },
+      { path: 'users', component: UsersComponent },
+    ],
+  },
 ];

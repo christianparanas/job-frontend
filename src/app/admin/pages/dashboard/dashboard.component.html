@@ -1,1 +1,71 @@
-<p>dashboard works!</p>
+<div class="relative z-40 mt-20 pb-20 ">
+  <div class="mb-6">
+    <h1 class="font-bold text-3xl text-gray-900">Dashboard</h1>
+    <p class="text-gray-600 text-sm">Overview of your progress and activities</p>
+  </div>
+
+  <hr class="border-gray-300" />
+
+  <div class="mt-10 pb-10">
+    <!-- Grid Layout for Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Skill Progress Overview -->
+      <div class="card p-6 bg-white rounded-md shadow-md hover:shadow-xl transition-all border border-gray-100">
+        <h2 class="font-semibold text-lg text-gray-800">Skill Progress Overview</h2>
+        <p-chart type="bar" [data]="skillProgressData" class="mt-6"></p-chart>
+      </div>
+
+      <!-- Career Pathways -->
+      <div class="card p-6 bg-white rounded-md shadow-md hover:shadow-xl transition-all border border-gray-100">
+        <h2 class="font-semibold text-lg text-gray-800">Career Pathways</h2>
+        <ul class="mt-4 space-y-3">
+          <li *ngFor="let path of careerPaths" class="text-gray-700 flex items-center">
+            <i class="fad fa-arrow-right text-gray-500 mr-2"></i>{{ path }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Trending Skills -->
+      <div class="card p-6 bg-white rounded-md shadow-md hover:shadow-xl transition-all border border-gray-100">
+        <h2 class="font-semibold text-lg text-gray-800">Trending Skills</h2>
+        <ul class="mt-4 space-y-3">
+          <li *ngFor="let skill of trendingSkills" class="text-gray-700 flex items-center">
+            <i class="fad fa-star text-yellow-500 mr-2"></i>{{ skill }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Certifications Overview -->
+      <div class="card p-6 bg-white rounded-md shadow-md hover:shadow-xl transition-all border border-gray-100">
+        <h2 class="font-semibold text-lg text-gray-800">Certifications Overview</h2>
+        <div class="mt-4">
+          <p class="text-gray-600">Certificates Issued: <span class="font-semibold text-gray-800">{{ certificationsCount }}</span></p>
+          <p class="text-gray-600">Top Certifications: <span class="font-semibold text-gray-800">{{ topCertifications.join(', ') }}</span></p>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="card p-6 bg-white rounded-md shadow-md hover:shadow-xl transition-all border border-gray-100">
+        <h2 class="font-semibold text-lg text-gray-800">Recent Activity</h2>
+        <ul class="mt-4 space-y-3">
+          <li *ngFor="let activity of recentActivity" class="text-gray-700 flex items-center">
+            <i class="fad fa-check-circle text-green-500 mr-2"></i>{{ activity }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- System Alerts & Notifications -->
+      <div class="card p-6 bg-white rounded-md shadow-md hover:shadow-xl transition-all border border-gray-100">
+        <h2 class="font-semibold text-lg text-gray-800">System Alerts</h2>
+        <ul class="mt-4 space-y-3">
+          <li *ngFor="let alert of systemAlerts" class="text-gray-700 flex items-center">
+            <i class="fad fa-exclamation-circle text-red-500 mr-2"></i>{{ alert }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="my-6 border-gray-300" />
+  </div>
+</div>
