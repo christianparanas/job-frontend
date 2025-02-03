@@ -131,7 +131,7 @@ export class AdminHeaderComponent {
 
   logout() {
     // this.authService.logout('student');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/admin/login']);
   }
 
   listenScrollEvent = () => {

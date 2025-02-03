@@ -45,7 +45,6 @@ export const routes: Routes = [
     // canActivate: [StudentGuard],
     children: [
       { path: '', component: DashboardComponent },
-      { path: 'login', component: AuthComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'help', component: HelpComponent },
       { path: 'notifications', component: NotificationsComponent },
@@ -55,4 +54,6 @@ export const routes: Routes = [
       { path: 'users', component: UsersComponent },
     ],
   },
+  { path: 'admin/login', component: AuthComponent },
+
 ];
