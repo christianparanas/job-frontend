@@ -11,8 +11,6 @@ import { InputIconModule } from 'primeng/inputicon';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { PasswordModule } from 'primeng/password';
 
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -22,7 +20,6 @@ import { CommonModule } from '@angular/common';
     PasswordModule,
     ReactiveFormsModule,
     InputTextModule,
-    RouterLink,
     FocusTrapModule,
     ButtonModule,
     FormsModule,
@@ -40,8 +37,6 @@ export class AuthComponent implements OnInit {
   password: string = '';
 
   constructor(
-    public router: Router,
-    private route: ActivatedRoute // private authService: AuthService
   ) {}
 
   ngOnInit(): void {}
