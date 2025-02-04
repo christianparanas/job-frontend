@@ -16,8 +16,9 @@
             Transform Your Future with Data and AI
           </h1>
           <p class="text-gray-600 mt-2 text-lg">
-            Unlock endless possibilities with analytics, artificial intelligence, and cutting-edge technologies.
-            Start your journey towards a brighter, data-driven career today.
+            Unlock endless possibilities with analytics, artificial
+            intelligence, and cutting-edge technologies. Start your journey
+            towards a brighter, data-driven career today.
           </p>
         </div>
       </div>
@@ -45,9 +46,25 @@
                 type="text"
                 pInputText
                 id="input"
-                [(ngModel)]="name"
+                [(ngModel)]="firstname"
                 type="text"
-                placeholder="Name"
+                placeholder="First Name"
+                [pAutoFocus]="true"
+                [fluid]="true"
+              />
+            </p-iconfield>
+
+            <p-iconfield>
+              <p-inputicon>
+                <i class="pi pi-user"></i>
+              </p-inputicon>
+              <input
+                type="text"
+                pInputText
+                id="input"
+                [(ngModel)]="lastname"
+                type="text"
+                placeholder="Last Name"
                 [pAutoFocus]="true"
                 [fluid]="true"
               />
@@ -73,7 +90,7 @@
               [toggleMask]="true"
               inputStyleClas="w-full"
               placeholder="Password"
-              [inputStyle]="{'width':'100%'}"
+              [inputStyle]="{ width: '100%' }"
               styleClass="w-full"
             />
 
@@ -92,9 +109,10 @@
               label="Sign Up"
               class="mt-2"
               styleClass="w-full"
+              (onClick)="onSubmit()"
             />
 
-            <div class=" text-center text-gray-500">
+            <div class="text-center text-gray-500">
               <p>
                 Already have an account?
                 <span class="text-gray-900 cursor-pointer" routerLink="/login"

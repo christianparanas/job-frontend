@@ -14,6 +14,8 @@ import { AutoFocusModule } from 'primeng/autofocus';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../shared/services/auth.service';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 @Component({
   selector: 'app-signup',
@@ -36,19 +38,52 @@ import { CommonModule } from '@angular/common';
   styleUrl: './signup.component.css',
 })
 export class SignupComponent implements OnInit {
-  name: string = '';
+  firstname: string = '';
+  lastname: string = '';
   email: string = '';
   password: string = '';
   accept: boolean = false;
 
   constructor(
     public router: Router,
-    private route: ActivatedRoute // private authService: AuthService
+    private route: ActivatedRoute,
+    private authService: AuthService, // Inject the AuthService
+    private toast: HotToastService
   ) {}
 
   ngOnInit(): void {}
 
   onSubmit() {
-    console.log('hehe');
+    // Check if the user accepted the terms and conditions
+    if (!this.accept) {
+      this.toast.info('You must accept the terms and conditions.');
+      return;
+    }
+
+    // Call the signup service method
+    const signupData = {
+      firstname: this.firstname,
+      lastname: this.lastname,
+      email: this.email,
+      password: this.password,
+    };
+
+    this.authService.signup(signupData).subscribe(
+      (response) => {
+        // Handle success response
+        this.toast.info(response.message, {
+          autoClose: false,
+          dismissible: true,
+          icon: '❎',
+        });
+        // Redirect the user or show a success message
+        this.router.navigate(['/login']); // Example of navigating to login page
+      },
+      (error) => {
+        // Handle error response
+        console.error('Signup failed', error);
+        // Show error message or handle accordingly
+      }
+    );
   }
 }

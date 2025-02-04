@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@use "@ngxpert/hot-toast/styles";
+
 @import "primeicons/primeicons.css";
+/* Importing @ngxpert/hot-toast SCSS file. */
 
 @tailwind base;
 @tailwind components;

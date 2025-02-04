@@ -14,6 +14,8 @@ import { PasswordModule } from 'primeng/password';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../shared/services/auth.service';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 @Component({
   selector: 'app-login',
@@ -41,12 +43,33 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public router: Router,
-    private route: ActivatedRoute // private authService: AuthService
+    private route: ActivatedRoute,
+    private authService: AuthService, // Inject the UserService
+    private toast: HotToastService
   ) {}
 
   ngOnInit(): void {}
 
   onSubmit() {
-    console.log('hehe');
+    const loginData = {
+      email: this.email,
+      password: this.password,
+    };
+
+    // Call the login method from UserService
+    this.authService.login(loginData).subscribe(
+      (response) => {
+        console.log('Login successful', response);
+
+        this.toast.success('Login successful');
+        // You can redirect the user to the dashboard or home page after successful login
+        this.router.navigate(['/']);
+      },
+      (error) => {
+        console.error('Login error', error);
+        this.toast.error('Invalid Email or Password');
+        // Handle the error, show a message to the user
+      }
+    );
   }
 }
