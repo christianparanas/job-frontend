@@ -19,12 +19,14 @@ import { LogsComponent } from './admin/pages/logs/logs.component';
 import { NotificationsComponent } from './admin/pages/notifications/notifications.component';
 import { HelpComponent } from './admin/pages/help/help.component';
 import { ProfileComponent } from './admin/pages/profile/profile.component';
+import { AccountVerifiedComponent } from './core/pages/account-verified/account-verified.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'forgotpassword', component: ForgotpasswordComponent },
   { path: 'resetpassword', component: ResetpasswordComponent },
+  { path: 'account-verified', component: AccountVerifiedComponent },
 
   {
     path: '',
@@ -54,6 +56,6 @@ export const routes: Routes = [
       { path: 'users', component: UsersComponent },
     ],
   },
-  { path: 'admin/login', component: AuthComponent },
+  { path: 'login', component: AuthComponent },
 
 ];

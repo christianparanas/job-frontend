@@ -61,13 +61,13 @@ export class LoginComponent implements OnInit {
       (response) => {
         console.log('Login successful', response);
 
-        this.toast.success('Login successful');
+        this.toast.success(response.message);
         // You can redirect the user to the dashboard or home page after successful login
         this.router.navigate(['/']);
       },
       (error) => {
         console.error('Login error', error);
-        this.toast.error('Invalid Email or Password');
+        this.toast.error(error.error.message);
         // Handle the error, show a message to the user
       }
     );
