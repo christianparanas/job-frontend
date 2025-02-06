@@ -17,3 +17,12 @@
 body {
   @apply bg-white;
 }
+
+.p-menubar {
+  display: grid !important;
+  place-items: center !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}

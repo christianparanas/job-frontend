@@ -1,1 +1,54 @@
-<p>mod works!</p>
+<div class="mt-6 pb-10">
+  <p-table
+    [columns]="cols"
+    [value]="users"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template #header let-columns>
+      <tr>
+        <th *ngFor="let col of columns" class="text-left p-3 bg-gray-200">
+          {{ col.header }}
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-rowData let-columns="columns">
+      <tr class="border-b">
+        <td *ngFor="let col of columns" class="p-3">
+          <!-- Role Column -->
+          <div *ngIf="col.field == 'role'">
+            <p-chip
+              [label]="rowData[col.field]"
+              icon="pi pi-user"
+              styleClass="text-[12px] uppercase bg-red-500"
+            />
+          </div>
+
+          <!-- Status Column with Dynamic Colors -->
+          <div *ngIf="col.field == 'status'">
+            <span
+              class="text-xs font-semibold px-3 py-2 rounded-full"
+              [ngClass]="{
+                'bg-green-300 text-white': rowData[col.field] === 'Active',
+                'bg-red-500 text-gray-100 decoration-none': rowData[col.field] === 'Inactive',
+                'bg-yellow-300 text-black': rowData[col.field] === 'Pending',
+                'bg-gray-200 text-white': ![
+                  'Active',
+                  'Inactive',
+                  'Pending'
+                ].includes(rowData[col.field])
+              }"
+            >
+              {{ rowData[col.field] }}
+            </span>
+          </div>
+
+          <!-- Default Columns -->
+          <div *ngIf="col.field != 'role' && col.field != 'status'">
+            {{ rowData[col.field] }}
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
