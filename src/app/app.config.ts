@@ -11,6 +11,7 @@ import { MessageService } from 'primeng/api';
 import { JobService } from './seeker/shared/services/job.service';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
+import { DatePipe } from '@angular/common';
 
 const Noir = definePreset(Lara, {
   semantic: {
@@ -77,5 +78,6 @@ export const appConfig: ApplicationConfig = {
     JobService,
     provideHttpClient(),
     provideHotToastConfig(),
+    DatePipe
   ],
 };

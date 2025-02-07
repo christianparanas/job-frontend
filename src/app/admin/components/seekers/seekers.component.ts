@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
+import { TableModule } from 'primeng/table';
 import { ChipModule } from 'primeng/chip';
 import { MenubarModule } from 'primeng/menubar';
-import { MenuItem } from 'primeng/api';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
+import { MenuItem } from 'primeng/api';
 import { UserService } from '../../shared/services/user.service';
 
 interface Column {
@@ -16,29 +16,32 @@ interface Column {
 
 interface User {
   username: string;
-  name: string;
+  firstname: string;
+  lastname: string;
   email: string;
   role: string;
   status: string;
   createdAt: string;
+  name?: string; // Adding 'name' as an optional field for concatenation
 }
 
 @Component({
   selector: 'app-seekers',
+  standalone: true,
   imports: [
-    TableModule,
     CommonModule,
+    TableModule,
     ChipModule,
     MenubarModule,
+    TieredMenuModule,
     MenuModule,
     ButtonModule,
   ],
-  standalone: true,
   templateUrl: './seekers.component.html',
   styleUrls: ['./seekers.component.css'],
 })
 export class SeekersComponent implements OnInit {
-  users: any[] = [];
+  users: User[] = [];
   cols: Column[] = [];
   actionItems: MenuItem[] | undefined;
 
@@ -81,9 +84,15 @@ export class SeekersComponent implements OnInit {
 
   getUsers() {
     this.userService.getUsers().subscribe(
-      (data) => {
-        this.users = data;
-        console.log(data);
+      (data: any) => {
+        if (Array.isArray(data.users)) {
+          this.users = data.users.map((user: any) => ({
+            ...user,
+            name: `${user.firstname} ${user.lastname}`,
+          }));
+        } else {
+          console.error('Expected an array but received:', data.users);
+        }
       },
       (error) => {
         console.error('Error fetching users:', error);

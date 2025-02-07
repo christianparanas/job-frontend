@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
+import { TableModule } from 'primeng/table';
 import { ChipModule } from 'primeng/chip';
+import { MenubarModule } from 'primeng/menubar';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { MenuModule } from 'primeng/menu';
+import { ButtonModule } from 'primeng/button';
+import { MenuItem } from 'primeng/api';
+import { AdminService } from '../../shared/services/admin.service';
 
 interface Column {
   field: string;
@@ -9,68 +15,57 @@ interface Column {
 }
 
 interface User {
-  id: string;
-  name: string;
+  username: string;
+  firstname: string;
+  lastname: string;
   email: string;
   role: string;
   status: string;
   createdAt: string;
+  name?: string; // Adding 'name' as an optional field for concatenation
 }
+
 @Component({
   selector: 'app-mod',
-  imports: [TableModule, CommonModule, ChipModule],
   standalone: true,
+  imports: [
+    CommonModule,
+    TableModule,
+    ChipModule,
+    MenubarModule,
+    TieredMenuModule,
+    MenuModule,
+    ButtonModule,
+  ],
   templateUrl: './mod.component.html',
   styleUrls: ['./mod.component.css'],
 })
 export class ModComponent implements OnInit {
   users: User[] = [];
   cols: Column[] = [];
+  actionItems: MenuItem[] | undefined;
 
-  constructor() {}
+  constructor(private adminService: AdminService) {}
 
   ngOnInit() {
-    // Sample User Data
-    this.users = [
+    this.actionItems = [
       {
-        id: '1',
-        name: 'John Doe',
-        email: 'john.doe@example.com',
-        role: 'Admin',
-        status: 'Active',
-        createdAt: '2024-02-06',
-      },
-      {
-        id: '2',
-        name: 'Jane Smith',
-        email: 'jane.smith@example.com',
-        role: 'User',
-        status: 'Inactive',
-        createdAt: '2024-01-20',
-      },
-      {
-        id: '3',
-        name: 'Michael Brown',
-        email: 'michael.brown@example.com',
-        role: 'Moderator',
-        status: 'Active',
-        createdAt: '2023-12-15',
-      },
-      {
-        id: '4',
-        name: 'Emily Johnson',
-        email: 'emily.johnson@example.com',
-        role: 'User',
-        status: 'Pending',
-        createdAt: '2024-02-01',
-      },
-      {
-        id: '5',
-        name: 'David Wilson',
-        email: 'david.wilson@example.com',
-        role: 'Admin',
-        status: 'Active',
-        createdAt: '2023-11-10',
+        label: '',
+        icon: 'pi pi-cog',
+        items: [
+          {
+            label: 'Components',
+            icon: 'pi pi-bolt',
+          },
+          {
+            label: 'Blocks',
+            icon: 'pi pi-server',
+          },
+          {
+            label: 'UI Kit',
+            icon: 'pi pi-pencil',
+          },
+        ],
       },
     ];
 
@@ -79,9 +74,29 @@ export class ModComponent implements OnInit {
       { field: 'username', header: 'Username' },
       { field: 'name', header: 'Name' },
       { field: 'email', header: 'Email' },
-      { field: 'role', header: 'Role' },
       { field: 'status', header: 'Status' },
-      { field: 'createdAt', header: 'Created At' },
+      { field: 'createdAt', header: 'Created' },
+      { field: 'action', header: 'Action' },
     ];
+
+    this.getUsers();
+  }
+
+  getUsers() {
+    this.adminService.getUsers().subscribe(
+      (data: any) => {
+        if (Array.isArray(data.users)) {
+          this.users = data.users.map((user: any) => ({
+            ...user,
+            name: `${user.firstname} ${user.lastname}`,
+          }));
+        } else {
+          console.error('Expected an array but received:', data.users);
+        }
+      },
+      (error) => {
+        console.error('Error fetching users:', error);
+      }
+    );
   }
 }

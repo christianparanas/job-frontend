@@ -28,24 +28,24 @@ export class AdminSidebarComponent {
       route: 'reports',
       icon: 'fal fa-retweet',
     },
-    {
-      title: 'Notifications',
-      route: 'notifications',
-      icon: 'fal fa-info-circle',
-    },
+    // {
+    //   title: 'Notifications',
+    //   route: 'notifications',
+    //   icon: 'fal fa-info-circle',
+    // },
     {
       title: 'Settings',
       route: 'settings',
       icon: 'fal fa-info-circle',
     },
     {
-      title: 'Audit Logs',
+      title: 'Logs',
       route: 'logs',
       icon: 'fal fa-info-circle',
     },
     {
-      title: 'Support/Help',
-      route: 'help',
+      title: 'Tickets',
+      route: 'tickets',
       icon: 'fal fa-info-circle',
     },
   ];

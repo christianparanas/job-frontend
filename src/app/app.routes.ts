@@ -17,7 +17,7 @@ import { SettingsComponent } from './admin/pages/settings/settings.component';
 import { ReportsComponent } from './admin/pages/reports/reports.component';
 import { LogsComponent } from './admin/pages/logs/logs.component';
 import { NotificationsComponent } from './admin/pages/notifications/notifications.component';
-import { HelpComponent } from './admin/pages/help/help.component';
+import { TicketsComponent } from './admin/pages/tickets/tickets.component';
 import { ProfileComponent } from './admin/pages/profile/profile.component';
 import { AccountVerifiedComponent } from './core/pages/account-verified/account-verified.component';
 
@@ -48,7 +48,7 @@ export const routes: Routes = [
     children: [
       { path: '', component: DashboardComponent },
       { path: 'profile', component: ProfileComponent },
-      { path: 'help', component: HelpComponent },
+      { path: 'tickets', component: TicketsComponent },
       { path: 'notifications', component: NotificationsComponent },
       { path: 'logs', component: LogsComponent },
       { path: 'reports', component: ReportsComponent },
@@ -57,5 +57,4 @@ export const routes: Routes = [
     ],
   },
   { path: 'login', component: AuthComponent },
-
 ];
