@@ -20,6 +20,9 @@ import { NotificationsComponent } from './admin/pages/notifications/notification
 import { TicketsComponent } from './admin/pages/tickets/tickets.component';
 import { ProfileComponent } from './admin/pages/profile/profile.component';
 import { AccountVerifiedComponent } from './core/pages/account-verified/account-verified.component';
+import { EmpLayoutComponent } from './employer/components/emp-layout/emp-layout.component';
+import { EmpDashboardComponent } from './employer/pages/emp-dashboard/emp-dashboard.component';
+import { EmpAuthComponent } from './employer/pages/emp-auth/emp-auth.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -56,5 +59,16 @@ export const routes: Routes = [
       { path: 'users', component: UsersComponent },
     ],
   },
-  { path: 'login', component: AuthComponent },
+
+  {
+    path: 'employer',
+    component: EmpLayoutComponent,
+    // canActivate: [StudentGuard],
+    children: [
+      { path: '', component: DashboardComponent },
+      { path: 'dashboard', component: EmpDashboardComponent },
+    ],
+  },
+  { path: 'employer/auth', component: EmpAuthComponent },
+  { path: 'admin/auth', component: AuthComponent },
 ];
