@@ -23,6 +23,7 @@ import { AccountVerifiedComponent } from './core/pages/account-verified/account-
 import { EmpLayoutComponent } from './employer/components/emp-layout/emp-layout.component';
 import { EmpDashboardComponent } from './employer/pages/emp-dashboard/emp-dashboard.component';
 import { EmpAuthComponent } from './employer/pages/emp-auth/emp-auth.component';
+import { EmpJobsComponent } from './employer/pages/emp-jobs/emp-jobs.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -65,8 +66,8 @@ export const routes: Routes = [
     component: EmpLayoutComponent,
     // canActivate: [StudentGuard],
     children: [
-      { path: '', component: DashboardComponent },
-      { path: 'dashboard', component: EmpDashboardComponent },
+      { path: '', component: EmpDashboardComponent },
+      { path: 'jobs', component: EmpJobsComponent },
     ],
   },
   { path: 'employer/auth', component: EmpAuthComponent },

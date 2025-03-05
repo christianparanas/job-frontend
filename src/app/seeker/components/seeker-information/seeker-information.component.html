@@ -9,13 +9,13 @@
           class="bg-gray-200 rounded-full w-[200px] h-[200px] flex items-center justify-center"
         >
           <img
-            *ngIf="user.profilePicture"
-            [src]="user.profilePicture"
+            *ngIf="user.image"
+            [src]="user.image"
             alt="Profile Picture"
             class="w-full h-full object-cover rounded-full"
           />
           <input
-            *ngIf="!user.profilePicture"
+            *ngIf="!user.image"
             type="file"
             accept="image/*"
             (change)="onProfilePictureChange($event)"
@@ -39,7 +39,7 @@
               pInputText
               id="firstName"
               pSize="small"
-              [(ngModel)]="user.firstName"
+              [(ngModel)]="user.firstname"
               required
             />
           </div>
@@ -50,7 +50,7 @@
               pInputText
               id="middleName"
               pSize="small"
-              [(ngModel)]="user.middleName"
+              [(ngModel)]="user.middlename"
             />
           </div>
           <!-- Last Name -->
@@ -60,7 +60,7 @@
               pInputText
               id="lastName"
               pSize="small"
-              [(ngModel)]="user.lastName"
+              [(ngModel)]="user.lastname"
               required
             />
           </div>
@@ -76,7 +76,7 @@
               >
               <p-select
                 [options]="educationOptions"
-                [(ngModel)]="user.education"
+                [(ngModel)]="user.personalinformation.educationalAttainment"
                 variant="filled"
                 placeholder=""
                 class="w-full"
@@ -92,7 +92,7 @@
                 id="dob"
                 type="date"
                 pSize="small"
-                [(ngModel)]="user.dob"
+                [(ngModel)]="user.personalinformation.dateOfBirth"
                 required
               />
             </div>
@@ -120,7 +120,7 @@
                 id="phone"
                 type="tel"
                 pSize="small"
-                [(ngModel)]="user.phone"
+                [(ngModel)]="user.personalinformation.phoneNumber"
                 required
               />
             </div>
@@ -132,29 +132,12 @@
                 pInputText
                 id="address"
                 pSize="small"
-                [(ngModel)]="user.address"
+                [(ngModel)]="user.personalinformation.address"
               />
             </div>
           </div>
         </div>
 
-        <!-- Career Goals / Skills to Develop -->
-        <div class="mt-6">
-          <div class="flex flex-col gap-2">
-            <label for="careerGoals" class="text-[14px]"
-              >Career Goals / Skills to Develop</label
-            >
-            <textarea
-              pInputText
-              id="careerGoals"
-              pSize="small"
-              rows="4"
-              [(ngModel)]="user.careerGoals"
-              placeholder="Describe your career goals or skills you'd like to develop."
-              required
-            ></textarea>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -167,35 +150,4 @@
     </div>
   </div>
 
-  <hr />
-
-  <div class="mt-4">
-    <div class="font-bold text-xl mb-6 text-gray-800">Achievements</div>
-
-    <!-- Achievement Grid -->
-    <div
-      class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6"
-    >
-      <div
-        *ngFor="let achievement of achievements"
-        class="transition-all duration-300 transform hover:scale-105"
-      >
-        <div
-          class="card p-6 rounded-lg bg-white shadow-md hover:shadow-xl cursor-pointer transform transition-all hover:scale-105 border border-gray-100 hover:border-blue-500"
-        >
-          <div class="flex justify-center mb-4">
-            <i
-              class="fad fa-sign-out text-4xl text-blue-500 transition-transform duration-300 hover:text-yellow-500 hover:scale-110"
-            ></i>
-          </div>
-          <div class="text-center">
-            <h6 class="font-semibold text-md text-gray-800">
-              {{ achievement.title }}
-            </h6>
-            <p class="text-sm text-gray-600">{{ achievement.points }} points</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

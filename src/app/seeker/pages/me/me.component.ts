@@ -3,8 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
 import { SeekerAssessmentTableComponent } from '../../components/seeker-assessment-table/seeker-assessment-table.component';
 import { SeekerInformationComponent } from '../../components/seeker-information/seeker-information.component';
-import { SeekerLevelComponent } from '../../components/seeker-level/seeker-level.component';
 import { SeekerRecommendationComponent } from '../../components/seeker-recommendation/seeker-recommendation.component';
+import {
+  ProfileService,
+  UserProfile,
+} from '../../shared/services/profile.service';
 
 @Component({
   selector: 'app-me',
@@ -13,7 +16,6 @@ import { SeekerRecommendationComponent } from '../../components/seeker-recommend
     CommonModule,
     SeekerAssessmentTableComponent,
     SeekerInformationComponent,
-    SeekerLevelComponent,
     SeekerRecommendationComponent,
   ],
   standalone: true,
@@ -22,22 +24,59 @@ import { SeekerRecommendationComponent } from '../../components/seeker-recommend
 })
 export class MeComponent implements OnInit {
   tabs: { title: string; value: number; content: string }[] = [];
-  // Variable for storing the currently selected tab index
-  selectedTabIndex: number = 0;  // Default selected tab index (tab 0)
+  selectedTabIndex: number = 0;
+  profile: any;
+  loading: boolean = false;
+
+  constructor(private profileService: ProfileService) {}
 
   ngOnInit() {
+    this.initializeTabs();
+    this.loadProfile();
+  }
+
+  initializeTabs() {
     this.tabs = [
       { title: 'Personal Information', value: 0, content: 'Tab 1 Content' },
       { title: 'Assessment History', value: 1, content: 'Tab 2 Content' },
-      { title: 'Current Level/Ability', value: 2, content: 'Tab 3 Content' },
       { title: 'Recommended For You', value: 3, content: 'Tab 3 Content' },
     ];
   }
 
-  // Track function to improve performance when iterating over tabs
-  trackTabValue(index: number, tab: any): number {
-    return tab.value; // track by tab value
+  loadProfile() {
+    this.loading = true;
+    this.profileService.getProfile().subscribe({
+      next: (profileData) => {
+        this.profile = profileData;
+        console.log(profileData);
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error loading profile:', error);
+        this.loading = false;
+      },
+    });
   }
 
-  constructor() { }
+  onTabChange(event: any) {
+    this.selectedTabIndex = event.index;
+    // Optionally load tab-specific data
+    // this.loadTabData(this.tabs[this.selectedTabIndex].value);
+  }
+
+  // loadTabData(tabValue: number) {
+  //   this.profileService.getTabData(tabValue).subscribe({
+  //     next: (data) => {
+  //       // Handle tab-specific data
+  //       // You might want to pass this data to child components
+  //     },
+  //     error: (error) => {
+  //       console.error('Error loading tab data:', error);
+  //     }
+  //   });
+  // }
+
+  trackTabValue(index: number, tab: any): number {
+    return tab.value;
+  }
 }

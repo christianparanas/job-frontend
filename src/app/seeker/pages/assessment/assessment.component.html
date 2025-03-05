@@ -1,145 +1,86 @@
 <div class="relative z-40 mt-20 pb-20">
+  <!-- Header -->
   <div class="mb-5">
-    <h1 class="font-bold text-xl md:text-3xl text-gray-900">Assessments</h1>
+    <h1 class="font-bold text-xl md:text-3xl text-gray-900">PSF Assessment</h1>
     <p class="text-gray-800 text-[12px]">
-      Information about the system and available assessments
+      Philippine Skills Framework (ANALYTICS & ARTIFICIAL INTELLIGENCE)
     </p>
   </div>
 
   <hr />
 
-  <!-- General Assessments Section -->
-  <div class="mb-6 mt-16">
-    <h6 class="font-semibold text-xl text-gray-900">
-      General Assessments
-    </h6>
-    <p class="text-sm text-gray-700">
-      Assess your foundational skills applicable across various industries.
-    </p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
-      <p-card
-        header="Basic Skills"
-        subheader=""
-        styleClass="card border border-gray-100"
-      >
-        <ng-template pTemplate="content">
-          <div class="flex justify-center items-center">
-            Evaluate your math, reading, and digital literacy.
-          </div>
-          <div class="flex justify-start mt-4">
-            <p-button
-              label="Start Assessment"
-              icon="pi pi-arrow-right"
-              size="small"
-            />
-          </div>
-        </ng-template>
-      </p-card>
-
-      <p-card
-        header="Cognitive Abilities"
-        subheader=""
-        styleClass="card border border-gray-100"
-      >
-        <ng-template pTemplate="content">
-          <div class="flex justify-center items-center">
-            Test your critical thinking, memory, and problem-solving skills.
-          </div>
-          <div class="flex justify-start mt-4">
-            <p-button
-              label="Start Assessment"
-              icon="pi pi-arrow-right"
-              size="small"
-            />
-          </div>
-        </ng-template>
-      </p-card>
-
-      <p-card
-        header="Soft Skills"
-        subheader=""
-        styleClass="card border border-gray-100"
-      >
-        <ng-template pTemplate="content">
-          <div class="flex justify-center items-center">
-            Assess your communication, adaptability, and teamwork abilities.
-          </div>
-          <div class="flex justify-start mt-4">
-            <p-button
-              label="Start Assessment"
-              icon="pi pi-arrow-right"
-              size="small"
-            />
-          </div>
-        </ng-template>
-      </p-card>
+  <!-- Intro/Status Section -->
+  <div *ngIf="showIntro" class="mb-6 mt-16 grid place-items-center">
+    <div class="w-[600px] text-center">
+      <p *ngIf="!hasTakenAssessment" class="text-gray-700 text-base md:text-lg leading-relaxed">
+        Welcome to the PSF Assessment! Dive into 33 questions crafted to test your expertise in Analytics and Artificial Intelligence under the Philippine Skills Framework. Ready to showcase your skills? Let’s get started!
+      </p>
+      <p *ngIf="hasTakenAssessment" class="text-gray-700 text-base md:text-lg leading-relaxed">
+        You have already taken this assessment. Would you like to retake it?
+      </p>
+      <p-button
+        *ngIf="!hasTakenAssessment"
+        label="Start Assessment"
+        styleClass="mt-6 p-button-raised p-button-primary"
+        (click)="startAssessment()">
+      </p-button>
+      <p-button
+        *ngIf="hasTakenAssessment"
+        label="Retake Assessment"
+        styleClass="mt-6 p-button-raised p-button-primary"
+        (click)="startAssessment()">
+      </p-button>
     </div>
   </div>
 
-  <div class="mb-6 mt-20">
-    <h6 class="font-semibold text-xl text-gray-900">
-      Career Assessments
-    </h6>
-    <p class="text-sm text-gray-700">
-      Assess the specific skills needed for your chosen career path.
-    </p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
-      <p-card
-        header="Industry-Specific Skills"
-        subheader=""
-        styleClass="card border border-gray-100"
-      >
-        <ng-template pTemplate="content">
-          <div class="flex justify-center items-center">
-            Assess your technical skills for specific industries.
+  <!-- Questions Section -->
+  <div *ngIf="!showIntro && !showThankYou" class="mb-6 mt-16 grid place-items-center">
+    <div class="md:w-[600px] text-center">
+      <div *ngFor="let question of paginatedQuestions; let i = index" class="mb-8 text-left">
+        <p class="text-gray-800 font-semibold">{{ (currentPage - 1) * 5 + i + 1 }}. {{ question.questionText }}</p>
+        <div class="mt-2">
+          <div *ngFor="let option of question.options" class="mb-2 flex items-center">
+            <p-radioButton
+              [name]="'question' + ((currentPage - 1) * 5 + i)"
+              [value]="option"
+              [(ngModel)]="question.selectedOption"
+              class="mr-2">
+            </p-radioButton>
+            <label class="text-gray-700">{{ option }}</label>
           </div>
-          <div class="flex justify-start mt-4">
-            <p-button
-              label="Start Assessment"
-              icon="pi pi-arrow-right"
-              size="small"
-            />
-          </div>
-        </ng-template>
-      </p-card>
+        </div>
+      </div>
 
-      <p-card
-        header="Career Pathway Competency"
-        subheader=""
-        styleClass="card border border-gray-100"
-      >
-        <ng-template pTemplate="content">
-          <div class="flex justify-center items-center">
-            Evaluate your readiness for advancing in a career.
-          </div>
-          <div class="flex justify-start mt-4">
-            <p-button
-              label="Start Assessment"
-              icon="pi pi-arrow-right"
-              size="small"
-            />
-          </div>
-        </ng-template>
-      </p-card>
+      <!-- Pagination -->
+      <p-paginator
+        [rows]="5"
+        [totalRecords]="questions.length"
+        (onPageChange)="onPageChange($event)"
+        [first]="(currentPage - 1) * 5">
+      </p-paginator>
 
-      <p-card
-        header="Workplace Readiness"
-        subheader=""
-        styleClass="card border border-gray-100"
-      >
-        <ng-template pTemplate="content">
-          <div class="flex justify-center items-center">
-            Assess your preparedness for the workplace environment.
-          </div>
-          <div class="flex justify-start mt-4">
-            <p-button
-              label="Start Assessment"
-              icon="pi pi-arrow-right"
-              size="small"
-            />
-          </div>
-        </ng-template>
-      </p-card>
+      <!-- Submit Button (Conditional Visibility) -->
+      <p-button
+        *ngIf="showSubmitButton()"
+        label="Submit Answers"
+        styleClass="mt-6 p-button-raised p-button-success"
+        (click)="submitAnswers()"
+        [disabled]="isSubmitting">
+      </p-button>
+    </div>
+  </div>
+
+  <!-- Thank You Message (Shown after successful submission) -->
+  <div *ngIf="showThankYou" class="mb-6 mt-16 grid place-items-center">
+    <div class="w-[600px] text-center">
+      <p class="text-gray-700 text-base md:text-lg leading-relaxed">
+        Thank you for taking the PSF Assessment! Your responses have been successfully submitted, and your skills have been evaluated under the Philippine Skills Framework (Analytics & Artificial Intelligence). We appreciate your participation and will use your results to provide personalized insights and recommendations.
+      </p>
+      <p-button
+        label="Return to Dashboard"
+        styleClass="mt-6 p-button-raised p-button-primary"
+        (click)="returnToDashboard()">
+      </p-button>
     </div>
   </div>
 
