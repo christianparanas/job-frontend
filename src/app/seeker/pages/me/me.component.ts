@@ -38,7 +38,7 @@ export class MeComponent implements OnInit {
   initializeTabs() {
     this.tabs = [
       { title: 'Personal Information', value: 0, content: 'Tab 1 Content' },
-      { title: 'Assessment History', value: 1, content: 'Tab 2 Content' },
+      { title: 'Skill Proficiencies', value: 1, content: 'Tab 2 Content' },
       { title: 'Recommended For You', value: 3, content: 'Tab 3 Content' },
     ];
   }
@@ -60,21 +60,7 @@ export class MeComponent implements OnInit {
 
   onTabChange(event: any) {
     this.selectedTabIndex = event.index;
-    // Optionally load tab-specific data
-    // this.loadTabData(this.tabs[this.selectedTabIndex].value);
   }
-
-  // loadTabData(tabValue: number) {
-  //   this.profileService.getTabData(tabValue).subscribe({
-  //     next: (data) => {
-  //       // Handle tab-specific data
-  //       // You might want to pass this data to child components
-  //     },
-  //     error: (error) => {
-  //       console.error('Error loading tab data:', error);
-  //     }
-  //   });
-  // }
 
   trackTabValue(index: number, tab: any): number {
     return tab.value;

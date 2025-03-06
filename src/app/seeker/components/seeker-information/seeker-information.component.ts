@@ -27,7 +27,26 @@ import {
   providers: [MessageService],
 })
 export class SeekerInformationComponent implements OnInit {
-  user: UserProfile;
+  user: UserProfile = {
+    id: 0, // Required field, default to 0 or adjust based on your logic
+    firstname: '',
+    middlename: '',
+    lastname: '',
+    image: '',
+    gender: '',
+    PersonalInformation: {
+      dateOfBirth: '',
+      phoneNumber: '',
+      address: '',
+      occupation: '',
+      educationalAttainment: '',
+      school: '',
+      yearGraduated: 0,
+      degreeEarned: '',
+      maritalStatus: '',
+      gwa: 0
+    },
+  };
 
   educationOptions: string[] = [
     'High School Diploma',
@@ -52,9 +71,18 @@ export class SeekerInformationComponent implements OnInit {
   loadProfile() {
     this.loading = true;
     this.profileService.getProfile().subscribe({
-      next: (profile) => {
-        this.user = profile;
+      next: (profile: any) => {
+        this.user = {
+          ...this.user, // Keep the initialized defaults
+          ...profile,   // Overwrite with API data
+          PersonalInformation: {
+            ...this.user.PersonalInformation, // Keep default personalinformation fields
+            ...profile.PersonalInformation    // Overwrite with API personalinformation, if it exists
+          }
+        };
         this.loading = false;
+
+        console.log(this.user);
       },
       error: (error) => {
         console.error('Error loading profile:', error);
@@ -84,12 +112,16 @@ export class SeekerInformationComponent implements OnInit {
   }
 
   saveProfile() {
+    console.log(this.user);
+
     this.loading = true;
     this.profileService.updateProfile(this.user).subscribe({
       next: (updatedProfile) => {
         this.user = updatedProfile;
         this.loading = false;
         this.showSuccess('Profile saved successfully');
+
+        console.log(updatedProfile);
       },
       error: (error) => {
         console.error('Error saving profile:', error);
