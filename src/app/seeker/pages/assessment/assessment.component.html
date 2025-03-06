@@ -11,7 +11,7 @@
 
   <!-- Intro/Status Section -->
   <div *ngIf="showIntro" class="mb-6 mt-16 grid place-items-center">
-    <div class="w-[600px] text-center">
+    <div class="md:w-[600px] text-center">
       <p *ngIf="!hasTakenAssessment" class="text-gray-700 text-base md:text-lg leading-relaxed">
         Welcome to the PSF Assessment! Dive into 33 questions crafted to test your expertise in Analytics and Artificial Intelligence under the Philippine Skills Framework. Ready to showcase your skills? Let’s get started!
       </p>
@@ -72,7 +72,7 @@
 
   <!-- Thank You Message (Shown after successful submission) -->
   <div *ngIf="showThankYou" class="mb-6 mt-16 grid place-items-center">
-    <div class="w-[600px] text-center">
+    <div class="md:w-[600px] text-center">
       <p class="text-gray-700 text-base md:text-lg leading-relaxed">
         Thank you for taking the PSF Assessment! Your responses have been successfully submitted, and your skills have been evaluated under the Philippine Skills Framework (Analytics & Artificial Intelligence). We appreciate your participation and will use your results to provide personalized insights and recommendations.
       </p>

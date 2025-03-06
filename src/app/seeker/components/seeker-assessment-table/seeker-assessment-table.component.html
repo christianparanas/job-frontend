@@ -1,10 +1,53 @@
-<div class="relative z-40 mt-2 pb-20">
+<div class="relative z-40 mt-4 pb-20 bg-gray-50 min-h-screen">
+  <hr class="border-t border-gray-300" />
 
-  <hr />
+  <div class="mt-8 pb-12 px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-xl shadow-lg mb-8">
+      <h2 class="text-2xl font-bold tracking-tight">Your Skills Assessment</h2>
+      <p class="mt-1 text-sm opacity-80">Track your proficiency across key skills</p>
+    </div>
 
-  <div class="mt-6 pb-10">
+    <!-- Loading/Empty States -->
+    <div *ngIf="loading" class="text-center text-gray-600 py-6 animate-pulse">
+      Loading your assessments...
+    </div>
+    <div *ngIf="!loading && profs.length === 0" class="text-center text-gray-500 py-6">
+      No assessments found yet. Start by adding some skills!
+    </div>
 
+    <!-- Cards Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div
+        *ngFor="let prof of profs"
+        class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1 h-fit"
+      >
+        <!-- Skill Name -->
+        <h3 class="text-xl font-semibold text-gray-900 mb-3" title="{{ prof.skill.name }}">
+          {{ prof.skill.name }}
+        </h3>
+
+        <!-- Description -->
+        <p class="text-sm text-gray-700 line-clamp-3 mb-4">{{ prof.skill.description }}</p>
+
+        <!-- Proficiency Highlight -->
+        <div class="flex justify-between items-center">
+          <span class="text-sm font-medium text-gray-600">Proficiency:</span>
+          <span
+            class="inline-flex items-center justify-center px-3 py-1 text-lg font-bold text-white rounded-full shadow-sm"
+            [ngClass]="{
+              'bg-green-500': prof.proficiencyLevel >= 4,
+              'bg-blue-500': prof.proficiencyLevel === 3,
+              'bg-yellow-500': prof.proficiencyLevel === 2,
+              'bg-red-500': prof.proficiencyLevel <= 1
+            }"
+          >
+            {{ prof.proficiencyLevel }}
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <hr />
+  <hr class="border-t border-gray-300" />
 </div>

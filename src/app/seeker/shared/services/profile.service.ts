@@ -40,6 +40,11 @@ export class ProfileService {
     return this.http.get<any>(`${this.apiUrl}/profile/${userId}`);
   }
 
+  getProf() {
+    const userId = this.authService.getUser()?.id;
+    return this.http.get<any>(`${this.apiUrl}/prof/${userId}`);
+  }
+
   // Update user profile using the user ID from localStorage as a path parameter
   updateProfile(profile: UserProfile): Observable<UserProfile> {
     const userId = this.authService.getUser()?.id;

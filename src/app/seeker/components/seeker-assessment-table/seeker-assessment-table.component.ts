@@ -1,108 +1,54 @@
 import { Component } from '@angular/core';
-import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
+import { ProfileService } from '../../shared/services/profile.service';
 
-interface Column {
-  field: string;
-  header: string;
-}
-
-interface Product {
-  id: string;
-  code: string;
-  name: string;
-  description: string;
-  image: string;
-  price: number;
-  category: string;
-  quantity: number;
-  inventoryStatus: string;
-  rating: number;
+// Define an interface for the profs data structure
+interface Proficiency {
+  id: number;
+  assessmentDate: string;
+  createdAt: string;
+  updatedAt: string;
+  proficiencyLevel: number;
+  skillId: number;
+  userId: number;
+  skill: {
+    id: number;
+    name: string;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+  };
 }
 
 @Component({
   selector: 'app-seeker-assessment-table',
-  imports: [TableModule, CommonModule],
+  imports: [CommonModule], // Removed TableModule since we're not using p-table
   standalone: true,
   templateUrl: './seeker-assessment-table.component.html',
-  styleUrls: ['./seeker-assessment-table.component.css']
+  styleUrls: ['./seeker-assessment-table.component.css'],
 })
 export class SeekerAssessmentTableComponent {
-  products: Product[] = []; // Define the correct type for products
-  cols: Column[] = [];
+  loading: boolean = false;
+  profs: Proficiency[] = [];
 
-  constructor() {}
+  constructor(private profileService: ProfileService) {}
 
   ngOnInit() {
-    // Example data for products (usually you'd fetch this from an API or service)
-    this.products = [
-      {
-        id: '1000',
-        code: 'f230fh0g3',
-        name: 'Bamboo Watch',
-        description: 'Product Description',
-        image: 'bamboo-watch.jpg',
-        price: 65,
-        category: 'Accessories',
-        quantity: 24,
-        inventoryStatus: 'INSTOCK',
-        rating: 5
-      },
-      {
-        id: '1000',
-        code: 'f230fh0g3',
-        name: 'Bamboo Watch',
-        description: 'Product Description',
-        image: 'bamboo-watch.jpg',
-        price: 65,
-        category: 'Accessories',
-        quantity: 24,
-        inventoryStatus: 'INSTOCK',
-        rating: 5
-      },
-      {
-        id: '1000',
-        code: 'f230fh0g3',
-        name: 'Bamboo Watch',
-        description: 'Product Description',
-        image: 'bamboo-watch.jpg',
-        price: 65,
-        category: 'Accessories',
-        quantity: 24,
-        inventoryStatus: 'INSTOCK',
-        rating: 5
-      },
-      {
-        id: '1000',
-        code: 'f230fh0g3',
-        name: 'Bamboo Watch',
-        description: 'Product Description',
-        image: 'bamboo-watch.jpg',
-        price: 65,
-        category: 'Accessories',
-        quantity: 24,
-        inventoryStatus: 'INSTOCK',
-        rating: 5
-      },
-      {
-        id: '1000',
-        code: 'f230fh0g3',
-        name: 'Bamboo Watch',
-        description: 'Product Description',
-        image: 'bamboo-watch.jpg',
-        price: 65,
-        category: 'Accessories',
-        quantity: 24,
-        inventoryStatus: 'INSTOCK',
-        rating: 5
-      }
-    ];
+    this.loadProfs();
+  }
 
-    this.cols = [
-      { field: 'code', header: 'Code' },
-      { field: 'name', header: 'Name' },
-      { field: 'category', header: 'Category' },
-      { field: 'quantity', header: 'Quantity' }
-    ];
+  loadProfs() {
+    this.loading = true;
+    this.profileService.getProf().subscribe({
+      next: (prfd: Proficiency[]) => {
+        this.profs = prfd;
+        this.loading = false;
+        console.log('Loaded profs:', prfd);
+      },
+      error: (error) => {
+        console.error('Error loading profile:', error);
+        this.loading = false;
+      },
+    });
   }
 }
