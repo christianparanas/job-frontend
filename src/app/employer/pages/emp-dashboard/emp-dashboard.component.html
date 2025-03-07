@@ -1,1 +1,90 @@
-<p>emp-dashboard works!</p>
+<div class="relative z-40 mt-20 pb-20">
+  <!-- Header -->
+  <div class="mb-5">
+    <h1 class="font-bold text-xl md:text-3xl text-gray-900">
+      Welcome, {{ companyName }}
+    </h1>
+    <p class="text-gray-800 text-[12px]">Your employer dashboard</p>
+  </div>
+
+  <hr />
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 py-8">
+    <!-- Key Metrics -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      <div
+        *ngFor="let metric of metricsList"
+        class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200 hover:-translate-y-1 animate-fade-in"
+      >
+        <div class="flex items-center gap-4">
+          <i class="{{ metric.icon }} {{ metric.color }} text-2xl"></i>
+          <div>
+            <p class="text-gray-500 text-sm">{{ metric.label }}</p>
+            <h3 class="text-2xl font-semibold text-gray-800">
+              {{ metric.value }}
+            </h3>
+          </div>
+        </div>
+        <a
+          [routerLink]="metric.link"
+          class="mt-4 text-blue-500 text-sm hover:underline"
+          >View {{ metric.label }}</a
+        >
+      </div>
+    </div>
+
+    <!-- Recent Activity & Quick Actions -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Recent Activity -->
+      <div
+        class="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm border border-gray-200 animate-fade-in"
+      >
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">
+          Recent Activity
+        </h2>
+        <div class="max-h-80 overflow-y-auto space-y-4">
+          <div
+            *ngFor="let activity of recentActivities"
+            class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 cursor-pointer transition-colors duration-200"
+          >
+            <i class="fal fa-circle text-blue-400 text-xs"></i>
+            <div class="flex-1">
+              <p class="text-gray-700 text-sm">{{ activity.message }}</p>
+              <p class="text-gray-400 text-xs">{{ activity.timestamp }}</p>
+            </div>
+          </div>
+          <div
+            *ngIf="recentActivities.length === 0"
+            class="text-gray-500 text-sm text-center py-4"
+          >
+            No recent activity yet
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div
+        class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 animate-fade-in h-fit"
+      >
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
+        <div class="space-y-4">
+          <button
+            routerLink="/employer/job/create"
+            class="w-full bg-slate-900 hover:bg-slate-700 text-white px-4 py-2 rounded-md transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
+          >
+            <i class="fal fa-plus"></i>
+            Create New Job
+          </button>
+          <button
+            routerLink="/employer/candidates"
+            class="w-full bg-gray-50 border border-slate-300 hover:bg-gray-100 text-gray-700 px-4 py-2 rounded-md transition-all duration-200 hover:shadow-sm flex items-center justify-center gap-2"
+          >
+            <i class="fal fa-eye"></i>
+            View Candidates
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+<div class="min-h-screen bg-gray-50 py-10">
+  <!-- Header -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 animate-fade-in-down">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <p-button
+          icon="pi pi-arrow-left"
+          styleClass="p-button-text p-button-sm text-gray-600 hover:text-gray-800"
+          [routerLink]="['/employer/jobs']"
+        ></p-button>
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900">{{ job.title }}</h1>
+          <p class="text-sm text-gray-600">Job Posting Details</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <p-dropdown
+          [options]="statusOptions"
+          [(ngModel)]="job.status"
+          (onChange)="toggleStatus($event.value)"
+          [style]="{ 'min-width': '150px' }"
+          class="text-sm"
+          [ngClass]="{
+            'p-dropdown-green': job.status === 'Active',
+            'p-dropdown-yellow': job.status === 'Draft',
+            'p-dropdown-red': job.status === 'Closed'
+          }"
+        ></p-dropdown>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Left Column: Job Info & Actions -->
+    <div class="lg:col-span-1 space-y-6 animate-fade-in">
+      <!-- Job Info -->
+      <p-card header="Job Information" class="bg-white rounded-lg shadow-sm border border-gray-100">
+        <div class="space-y-4">
+          <div>
+            <label class="text-xs font-semibold text-gray-500 uppercase">Applications</label>
+            <p class="text-sm text-gray-900">
+              <a [routerLink]="['/employer/applications']" class="text-blue-500 hover:underline">
+                {{ job.applications || 0 }} Applicants
+              </a>
+            </p>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-500 uppercase">Posted Date</label>
+            <p class="text-sm text-gray-900">{{ job.postedDate || 'N/A' }}</p>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-500 uppercase">Location</label>
+            <p class="text-sm text-gray-900">{{ job.location || 'N/A' }}</p>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-500 uppercase">Salary</label>
+            <p class="text-sm text-gray-900">{{ job.salary || 'N/A' }}</p>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-500 uppercase">Type</label>
+            <p class="text-sm text-gray-900">{{ job.type || 'N/A' }}</p>
+          </div>
+        </div>
+      </p-card>
+
+      <!-- Actions -->
+      <p-card header="Actions" class="bg-white rounded-lg shadow-sm border border-gray-100">
+        <div class="space-y-4">
+          <p-button
+            label="Edit Job"
+            icon="pi pi-pencil"
+            styleClass="p-button-sm w-full text-blue-500 hover:text-blue-600"
+            [routerLink]="['/employer/jobs/edit', job.id]"
+          ></p-button>
+          <p-button
+            label="Delete Job"
+            icon="pi pi-trash"
+            styleClass="p-button-sm w-full text-red-500 hover:text-red-600"
+            (click)="deleteJob()"
+          ></p-button>
+          <p-button
+            label="Back to Jobs"
+            icon="pi pi-arrow-left"
+            styleClass="p-button-sm w-full p-button-outlined"
+            [routerLink]="['/employer/jobs']"
+          ></p-button>
+        </div>
+      </p-card>
+    </div>
+
+    <!-- Right Column: Description & Requirements -->
+    <div class="lg:col-span-2 space-y-6 animate-fade-in">
+      <!-- Job Description -->
+      <p-card header="Description" class="bg-white rounded-lg shadow-sm border border-gray-100">
+        <p class="text-sm text-gray-700">{{ job.description || 'No description available.' }}</p>
+      </p-card>
+
+      <!-- Requirements -->
+      <p-card header="Requirements" class="bg-white rounded-lg shadow-sm border border-gray-100">
+        <ul class="list-disc pl-5 space-y-2">
+          <li *ngFor="let req of job.requirements || []" class="text-sm text-gray-700">{{ req }}</li>
+          <li *ngIf="!job.requirements || job.requirements.length === 0" class="text-sm text-gray-500">N/A</li>
+        </ul>
+      </p-card>
+    </div>
+  </div>
+</div>

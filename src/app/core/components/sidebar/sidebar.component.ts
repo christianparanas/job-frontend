@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -7,10 +7,10 @@ import { CommonModule } from '@angular/common';
   imports: [RouterModule, CommonModule],
   standalone: true,
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css',
+  styleUrls: ['./sidebar.component.css'],
 })
-export class SidebarComponent {
-  currentRoute: any;
+export class SidebarComponent implements OnInit {
+  currentRoute: string = '/'; // Default to root
 
   routesArr: any = [
     {
@@ -29,19 +29,32 @@ export class SidebarComponent {
       icon: 'fal fa-retweet',
     },
     {
+      title: 'Chat',
+      route: 'chats',
+      icon: 'fal fa-comment',
+    },
+    {
       title: 'About',
       route: 'about',
       icon: 'fal fa-info-circle',
     },
   ];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    this.getCurrentRouteURL(this.route.snapshot.children[0].routeConfig?.path);
+    // Initial route setup
+    this.updateCurrentRoute();
+
+    // Subscribe to route changes
+    this.router.events.subscribe(() => {
+      this.updateCurrentRoute();
+    });
   }
 
-  getCurrentRouteURL(route: any) {
-    route == '' ? (this.currentRoute = '/') : (this.currentRoute = route);
+  updateCurrentRoute() {
+    const fullPath = this.router.url; // e.g., '/employer/jobs'
+    const routeSegment = fullPath.split('/')[1] || ''; // Extract after '/employer/'
+    this.currentRoute = routeSegment === '' ? '' : routeSegment; // Normalize root to ''
   }
 }

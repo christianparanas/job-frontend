@@ -44,6 +44,11 @@ export class HeaderComponent {
       icon: 'fal fa-retweet',
     },
     {
+      title: 'Chat',
+      route: 'chats',
+      icon: 'fal fa-comment',
+    },
+    {
       title: 'About',
       route: 'about',
       icon: 'fal fa-info-circle',

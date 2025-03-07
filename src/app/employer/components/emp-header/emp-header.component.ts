@@ -27,42 +27,11 @@ export class EmpHeaderComponent {
     private router: Router // private toast: HotToastService
   ) {}
 
-  routesArr: any = [
-    {
-      title: 'Dashboard',
-      route: '/',
-      icon: 'fal fa-chart-line',
-    },
-    {
-      title: 'User Management',
-      route: 'users',
-      icon: 'fal fa-box-ballot',
-    },
-    {
-      title: 'Reports',
-      route: 'reports',
-      icon: 'fal fa-retweet',
-    },
-    // {
-    //   title: 'Notifications',
-    //   route: 'notifications',
-    //   icon: 'fal fa-info-circle',
-    // },
-    {
-      title: 'Settings',
-      route: 'settings',
-      icon: 'fal fa-info-circle',
-    },
-    {
-      title: 'Logs',
-      route: 'logs',
-      icon: 'fal fa-info-circle',
-    },
-    {
-      title: 'Tickets',
-      route: 'tickets',
-      icon: 'fal fa-info-circle',
-    },
+  routesArr = [
+    { title: 'Dashboard', route: 'dashboard', icon: 'fal fa-chart-line' }, // '' maps to '/employer'
+    { title: 'Job Postings', route: 'jobs', icon: 'fal fa-briefcase' },
+    { title: 'Candidates', route: 'candidates', icon: 'fal fa-users' },
+    { title: 'Chat', route: 'chats', icon: 'fal fa-comment' },
   ];
 
   ngOnInit(): void {

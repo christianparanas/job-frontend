@@ -24,6 +24,16 @@ import { EmpLayoutComponent } from './employer/components/emp-layout/emp-layout.
 import { EmpDashboardComponent } from './employer/pages/emp-dashboard/emp-dashboard.component';
 import { EmpAuthComponent } from './employer/pages/emp-auth/emp-auth.component';
 import { EmpJobsComponent } from './employer/pages/emp-jobs/emp-jobs.component';
+// Add missing components
+import { EmpApplicantsComponent } from './employer/pages/emp-applicants/emp-applicants.component';
+import { EmpCandidateComponent } from './employer/pages/emp-candidate/emp-candidate.component';
+import { EmpJobComponent } from './employer/pages/emp-job/emp-job.component';
+import { EmpCreateJobComponent } from './employer/pages/emp-create-job/emp-create-job.component';
+import { EmpEditJobComponent } from './employer/pages/emp-edit-job/emp-edit-job.component';
+import { ChatsComponent } from './seeker/pages/chats/chats.component';
+import { EmpChatsComponent } from './employer/pages/emp-chats/emp-chats.component';
+import { EmpChatComponent } from './employer/pages/emp-chat/emp-chat.component';
+import { EmpViewJobComponent } from './employer/pages/emp-view-job/emp-view-job.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -35,12 +45,12 @@ export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    // canActivate: [StudentGuard],
     children: [
       { path: '', component: JobsComponent },
       { path: 'assessment', component: AssessmentComponent },
       { path: 'me', component: MeComponent },
       { path: 'pathway', component: PathwayComponent },
+      { path: 'chats', component: ChatsComponent },
       { path: 'about', component: AboutComponent },
     ],
   },
@@ -48,7 +58,6 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminLayoutComponent,
-    // canActivate: [StudentGuard],
     children: [
       { path: '', component: DashboardComponent },
       { path: 'profile', component: ProfileComponent },
@@ -64,10 +73,17 @@ export const routes: Routes = [
   {
     path: 'employer',
     component: EmpLayoutComponent,
-    // canActivate: [StudentGuard],
     children: [
-      { path: '', component: EmpDashboardComponent },
-      { path: 'jobs', component: EmpJobsComponent },
+      { path: 'dashboard', component: EmpDashboardComponent }, // '/employer'
+      { path: 'jobs', component: EmpJobsComponent },  // '/employer/jobs'
+      { path: 'chats', component: EmpChatsComponent },  // '/employer/jobs'
+      { path: 'chat', component: EmpChatComponent },  // '/employer/jobs'
+      { path: 'candidates', component: EmpApplicantsComponent }, // Add this
+      { path: 'candidate', component: EmpCandidateComponent }, // Add this
+      { path: 'job', component: EmpJobComponent }, // Add this
+      { path: 'job/create', component: EmpCreateJobComponent }, // Add this
+      { path: 'job/edit', component: EmpEditJobComponent }, // Add this
+      { path: 'job/view', component: EmpViewJobComponent }, // Add this
     ],
   },
   { path: 'employer/auth', component: EmpAuthComponent },

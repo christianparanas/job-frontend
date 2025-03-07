@@ -27,3 +27,22 @@
 .animate-fade-in {
   animation: fadeIn 0.4s ease-out;
 }
+
+.p-dropdown-green .p-dropdown-label {
+  background: #dcfce7 !important;
+  color: #15803d !important;
+}
+
+.p-dropdown-yellow .p-dropdown-label {
+  background: #fef3c7 !important;
+  color: #d97706 !important;
+}
+
+.p-dropdown-red .p-dropdown-label {
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+}
+
+.p-dropdown {
+  border-radius: 9999px !important;
+}

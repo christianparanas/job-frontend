@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -7,56 +7,33 @@ import { CommonModule } from '@angular/common';
   imports: [RouterModule, CommonModule],
   standalone: true,
   templateUrl: './emp-sidebar.component.html',
-  styleUrl: './emp-sidebar.component.css',
+  styleUrls: ['./emp-sidebar.component.css'],
 })
-export class EmpSidebarComponent {
-  currentRoute: any;
+export class EmpSidebarComponent implements OnInit {
+  currentRoute: string = '/'; // Default to root
 
-  routesArr: any = [
-    {
-      title: 'Dashboard',
-      route: '/',
-      icon: 'fal fa-chart-line',
-    },
-    {
-      title: 'User Management',
-      route: 'users',
-      icon: 'fal fa-box-ballot',
-    },
-    {
-      title: 'Reports',
-      route: 'reports',
-      icon: 'fal fa-retweet',
-    },
-    // {
-    //   title: 'Notifications',
-    //   route: 'notifications',
-    //   icon: 'fal fa-info-circle',
-    // },
-    {
-      title: 'Settings',
-      route: 'settings',
-      icon: 'fal fa-info-circle',
-    },
-    {
-      title: 'Logs',
-      route: 'logs',
-      icon: 'fal fa-info-circle',
-    },
-    {
-      title: 'Tickets',
-      route: 'tickets',
-      icon: 'fal fa-info-circle',
-    },
+  routesArr = [
+    { title: 'Dashboard', route: 'dashboard', icon: 'fal fa-chart-line' }, // '' maps to '/employer'
+    { title: 'Job Postings', route: 'jobs', icon: 'fal fa-briefcase' },
+    { title: 'Candidates', route: 'candidates', icon: 'fal fa-users' },
+    { title: 'Chat', route: 'chats', icon: 'fal fa-life-ring' },
   ];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    this.getCurrentRouteURL(this.route.snapshot.children[0].routeConfig?.path);
+    // Initial route setup
+    this.updateCurrentRoute();
+
+    // Subscribe to route changes
+    this.router.events.subscribe(() => {
+      this.updateCurrentRoute();
+    });
   }
 
-  getCurrentRouteURL(route: any) {
-    route == '' ? (this.currentRoute = '/') : (this.currentRoute = route);
+  updateCurrentRoute() {
+    const fullPath = this.router.url; // e.g., '/employer/jobs'
+    const routeSegment = fullPath.split('/employer/')[1] || ''; // Extract after '/employer/'
+    this.currentRoute = routeSegment === '' ? '' : routeSegment; // Normalize root to ''
   }
 }

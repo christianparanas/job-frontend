@@ -1,3 +1,14 @@
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -7,6 +18,10 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.4s ease-out;
 }
 
 .animate-fade-in {
@@ -29,5 +44,13 @@
 }
 
 .p-dropdown {
-  border-radius: 9999px !important; /* rounded-full */
+  border-radius: 8px !important;
+}
+
+.p-multiselect {
+  border-radius: 8px !important;
+}
+
+.p-multiselect-panel {
+  border-radius: 8px !important;
 }

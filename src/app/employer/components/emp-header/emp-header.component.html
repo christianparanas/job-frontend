@@ -6,16 +6,9 @@
     >
       <div class="flex items-center" routerLink="/">
         <img src="PSFLogo.png" alt="" class="w-[100px] mr-2" />
-        <!-- <h1 class="font-semibold">PSF</h1> -->
       </div>
 
       <div class="flex items-center">
-        <!-- <div
-          *ngIf="user.length != 0"
-          class="mr-3 cursor-pointer border rounded-full w-fit h-fit"
-          [ngClass]="onScroll ? 'border-slate-200' : 'border-gray-900'"
-          routerLink="/me"
-        > -->
         <div
           *ngIf="true"
           class="mr-3 cursor-pointer border rounded-full w-fit h-fit border-slate-200"
@@ -55,7 +48,7 @@
             <div
               *ngFor="let route of routesArr"
               class="text-slate-800 py-2 px-6 transition-all cursor-pointer border-l-4 border-white hover:text-gray-500 font-semibold grid grid-cols-[35px_1fr] items-center"
-              [routerLink]="'/admin/' + route.route"
+              [routerLink]="'/employer/' + route.route"
               (click)="getCurrentRouteURL(route.route); isNavOpen = false"
               [ngClass]="
                 currentRoute == route.route
@@ -86,24 +79,13 @@
       class="w-[calc(100%_-_280px)] flex justify-between items-center p-5 pb-3 bg-black"
     >
       <div class="flex items-center">
-        <h1 class="mr-6 font-semibold">Admin Panel</h1>
-        <!--
-        <div class="relative">
-          <input
-            type="text"
-            class="bg-gray-900 shadow-sm p-2 pl-8 outline-none text-sm rounded-md text-gray-50 placeholder-slate-50"
-            placeholder="Search"
-          />
-          <i
-            class="fal fa-search absolute left-2 top-2 text-sm text-gray-50"
-          ></i>
-        </div> -->
+        <h1 class="mr-6 font-semibold">Employer Panel</h1>
       </div>
 
       <div class="flex items-center">
         <div
           class="flex items-center cursor-pointer hover:bg-gray-900 transition-colors py-2 px-2 pl-3 rounded-xl mr-2"
-          routerLink="/admin/profile"
+          routerLink="/employer/profile"
         >
           <h1 *ngIf="user.length != 0" class="font-semibold mr-2 capitalize">
             Hi, {{ user.name.split(" ")[0] }}
