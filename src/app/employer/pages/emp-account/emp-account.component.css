@@ -1,0 +1,36 @@
+:host ::ng-deep .p-card {
+  background: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+}
+
+:host ::ng-deep .p-tabview .p-tabview-nav {
+  border-bottom: 2px solid #e5e7eb;
+}
+
+:host ::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  padding: 1rem;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+:host ::ng-deep .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  color: #4f46e5;
+  border-bottom: 2px solid #4f46e5;
+}
+
+.p-button-success {
+  background-color: #10b981;
+}
+
+.p-button-success:hover {
+  background-color: #059669;
+}
+
+.p-button-primary {
+  background-color: #4f46e5;
+}
+
+.p-button-primary:hover {
+  background-color: #4338ca;
+}

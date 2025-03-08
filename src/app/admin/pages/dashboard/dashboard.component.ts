@@ -1,66 +1,96 @@
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ChartModule } from 'primeng/chart';
+import { RouterLink } from '@angular/router';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { ToastModule } from 'primeng/toast';
+import { DropdownModule } from 'primeng/dropdown';
+import { AdminService } from '../../shared/services/admin.service'; // Import AdminService
+import { HotToastService } from '@ngxpert/hot-toast';
+import { AuthService } from '../../../core/shared/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, ChartModule],
   standalone: true,
+  imports: [
+    CommonModule,
+    TableModule,
+    ButtonModule,
+    CardModule,
+    ToastModule,
+    DropdownModule,
+  ],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css',
+  styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent {
-  // Chart Data for Skill Progression Overview
-  skillProgressData = {
-    labels: ['Entry', 'Intermediate', 'Advanced'],
-    datasets: [
-      {
-        label: 'User Skill Progression',
-        data: [50, 80, 40], // Example data points
-        backgroundColor: '#4CAF50', // Green color
-      },
-    ],
-  };
-
-  // Career Pathways
-  careerPaths = ['Software Engineer', 'Project Manager', 'Data Scientist'];
-
-  // Trending Skills
-  trendingSkills = ['Python', 'SQL', 'Project Management', 'Machine Learning'];
-
-  // Certifications Overview
-  certificationsCount = 120;
-  topCertifications = [
-    'Certified Data Analyst',
-    'AWS Certified Solutions Architect',
-    'Google Data Engineer',
+export class DashboardComponent implements OnInit {
+  users: any[] = [];
+  stats = { totalUsers: 0, employers: 0, candidates: 0 };
+  roleOptions = [
+    { label: 'User', value: 'User' },
+    { label: 'Employer', value: 'Employer' },
+    { label: 'Admin', value: 'Admin' },
   ];
 
-  // Recent Activity
-  recentActivity = [
-    'User completed Assessment 1',
-    'User achieved Certification: Python Basics',
-    'User started Assessment: Advanced SQL',
-    'User joined the Data Science Pathway',
-  ];
-
-  // System Alerts
-  systemAlerts = [
-    'System Maintenance Scheduled for 12th Feb',
-    'Assessment Feedback: Complete your assessments for certification eligibility',
-    'New Course Added: Advanced Data Analytics',
-  ];
-
-  constructor() {}
+  constructor(
+    private authService: AuthService,
+    private adminService: AdminService, // Use AdminService
+    private toast: HotToastService
+  ) {}
 
   ngOnInit(): void {
-    // You can fetch the data dynamically from an API here if needed.
-    // This can be set up in the ngOnInit lifecycle hook.
+    this.loadUsers();
+    this.loadStats();
   }
 
-  // You can implement methods to handle user interactions like viewing more details, etc.
-  viewMoreDetails(): void {
-    console.log('User clicked on "View More Details"');
-    // Implement action such as navigating to a detailed view or performing a specific task
+
+  loadUsers(): void {
+    this.adminService.getAllUsers().subscribe({
+      next: (response) => this.users = response,
+      error: () => this.toast.error('Failed to load users.'),
+    });
+  }
+
+  loadStats(): void {
+    this.adminService.getUserStats().subscribe({
+      next: (response) => this.stats = response,
+      error: () => this.toast.error('Failed to load stats.'),
+    });
+  }
+
+  toggleVerification(user: any): void {
+    const updatedStatus = !user.isVerified;
+    this.adminService.toggleUserVerification(user.id, updatedStatus).subscribe({
+      next: () => {
+        user.isVerified = updatedStatus;
+        this.toast.success(`User ${user.username} verification status updated.`);
+      },
+      error: () => this.toast.error('Failed to update verification status.'),
+    });
+  }
+
+  deleteUser(user: any): void {
+    if (confirm(`Are you sure you want to delete ${user.username}?`)) {
+      this.adminService.deleteUser(user.id).subscribe({
+        next: () => {
+          this.users = this.users.filter(u => u.id !== user.id);
+          this.loadStats(); // Refresh stats
+          this.toast.success(`User ${user.username} deleted.`);
+        },
+        error: () => this.toast.error('Failed to delete user.'),
+      });
+    }
+  }
+
+  updateUserRole(user: any, newRole: string): void {
+    this.adminService.updateUserRole(user.id, newRole).subscribe({
+      next: () => {
+        user.role = newRole;
+        this.toast.success(`User ${user.username} role updated to ${newRole}.`);
+        this.loadStats(); // Refresh stats
+      },
+      error: () => this.toast.error('Failed to update user role.'),
+    });
   }
 }

@@ -11,10 +11,12 @@ export interface UserProfile {
   lastname: string;
   image?: string | null;
   gender: string | null;
+  address?: string;
+  website?: string;
+  about?: string;
   PersonalInformation: {
     dateOfBirth?: string; // YYYY-MM-DD format
     phoneNumber?: string;
-    address?: string;
     occupation?: string;
     educationalAttainment?: string;
     school?: string;

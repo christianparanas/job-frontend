@@ -1,0 +1,27 @@
+.p-button-danger {
+  background-color: #ef4444;
+  border-color: #ef4444;
+}
+
+.p-button-danger:hover {
+  background-color: #dc2626;
+  border-color: #dc2626;
+}
+
+/* Adjust table header and body font sizes */
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background-color: #f8fafc;
+  color: #1f2937;
+  padding: 0.75rem;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  padding: 0.75rem;
+}
+
+
+
+/* Hover effect */
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+  background-color: #f1f5f9;
+}

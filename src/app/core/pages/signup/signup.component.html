@@ -38,48 +38,62 @@
 
         <div class="card flex justify-center">
           <div pFocusTrap class="w-full flex flex-col gap-6">
+            <!-- Role Selection -->
+            <div class="flex gap-4">
+              <p-radioButton
+                name="role"
+                value="candidate"
+                [(ngModel)]="role"
+                inputId="candidate"
+              ></p-radioButton>
+              <label for="candidate" class="text-gray-700">Seeker</label>
+              <p-radioButton
+                name="role"
+                value="employer"
+                [(ngModel)]="role"
+                inputId="employer"
+              ></p-radioButton>
+              <label for="employer" class="text-gray-700">Employer</label>
+            </div>
+
             <p-iconfield>
               <p-inputicon>
-                <i class="pi pi-user"></i>
+                <i class="pi pi-{{ role === 'employer' ? 'building' : 'user' }}"></i>
               </p-inputicon>
               <input
                 type="text"
                 pInputText
-                id="input"
+                id="firstname"
                 [(ngModel)]="firstname"
-                type="text"
-                placeholder="First Name"
+                [placeholder]="role === 'employer' ? 'Company Name' : 'First Name'"
                 [pAutoFocus]="true"
                 [fluid]="true"
               />
             </p-iconfield>
 
-            <p-iconfield>
+            <p-iconfield *ngIf="role === 'candidate'">
               <p-inputicon>
                 <i class="pi pi-user"></i>
               </p-inputicon>
               <input
                 type="text"
                 pInputText
-                id="input"
+                id="lastname"
                 [(ngModel)]="lastname"
-                type="text"
                 placeholder="Last Name"
-                [pAutoFocus]="true"
                 [fluid]="true"
               />
             </p-iconfield>
 
             <p-iconfield>
               <p-inputicon>
-                <i class="pi pi-envelope"> </i>
+                <i class="pi pi-envelope"></i>
               </p-inputicon>
               <input
-                type="text"
+                type="email"
                 pInputText
                 id="email"
                 [(ngModel)]="email"
-                type="email"
                 placeholder="Email"
                 [fluid]="true"
               />
@@ -88,7 +102,7 @@
             <p-password
               [(ngModel)]="password"
               [toggleMask]="true"
-              inputStyleClas="w-full"
+              inputStyleClass="w-full"
               placeholder="Password"
               [inputStyle]="{ width: '100%' }"
               styleClass="w-full"

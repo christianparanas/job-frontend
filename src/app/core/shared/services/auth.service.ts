@@ -68,4 +68,9 @@ export class AuthService {
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.USER_KEY);
   }
+
+  getUserRole(): string | null {
+    const user = this.getUser();
+    return user?.Roles[0].name || null; // Assumes role is returned in the user object
+  }
 }

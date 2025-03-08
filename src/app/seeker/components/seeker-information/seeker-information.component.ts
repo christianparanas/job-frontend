@@ -34,10 +34,12 @@ export class SeekerInformationComponent implements OnInit {
     lastname: '',
     image: '',
     gender: '',
+    address: '',
+    website: '',
+    about: '',
     PersonalInformation: {
       dateOfBirth: '',
       phoneNumber: '',
-      address: '',
       occupation: '',
       educationalAttainment: '',
       school: '',

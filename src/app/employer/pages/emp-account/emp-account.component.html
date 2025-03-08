@@ -1,1 +1,135 @@
-<p>emp-account works!</p>
+<div class="relative z-40 mt-10 pb-20">
+  <div>
+    <div>
+      <div class="w-full h-[200px] md:h-[300px] bg-gray-400 rounded-xl"></div>
+      <div class="py-5 rounded-lg grid place-items-center absolute top-24 md:top-44 ml-10">
+        <div class="w-fit rounded-full h-fit border-4 border-gray-200">
+          <img
+            [src]="user.image || 'https://avatars.githubusercontent.com/u/73870953?v=4'"
+            alt="Profile picture"
+            class="w-[150px] h-[150px] md:w-[150px] md:h-[150px] object-cover rounded-full"
+          />
+        </div>
+        <div class="grid items-center">
+          <h2
+            class="text-center mt-4 font-bold text-[15px] md:text-[20px] text-black"
+          >
+            {{ user.firstname || 'Loading...' }}
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="mt-40" />
+
+  <div class="mt-10 bg-white w-full">
+    <div class="w-[400px] sm:w-full">
+      <div class="relative z-40 mt-2 pb-20">
+
+        <div class="mt-6 pb-10">
+          <div class="grid md:grid-cols-[250px_1fr] gap-6">
+            <div class="grid items-center">
+              <!-- Profile Picture Section -->
+              <div
+                class="bg-gray-200 rounded-full w-[200px] h-[200px] flex items-center justify-center"
+              >
+                <img
+                  *ngIf="user?.image"
+                  [src]="user.image"
+                  alt="Profile Picture"
+                  class="w-full h-full object-cover rounded-full"
+                />
+                <input
+                  *ngIf="!user?.image"
+                  type="file"
+                  accept="image/*"
+                  (change)="onProfilePictureChange($event)"
+                  class="hidden"
+                  id="profilePictureInput"
+                />
+                <label
+                  for="profilePictureInput"
+                  class="cursor-pointer text-sm text-blue-500"
+                >
+                  {{ "Change Picture" }}
+                </label>
+              </div>
+            </div>
+            <div>
+              <div class="grid md:grid-cols-3 gap-4">
+                <!-- First Name -->
+                <div class="flex flex-col gap-2">
+                  <label for="firstName" class="text-[14px]">Company Name</label>
+                  <input
+                    pInputText
+                    id="firstName"
+                    pSize="small"
+                    [(ngModel)]="user.firstname"
+                    required
+                  />
+                </div>
+
+                <div class="flex flex-col gap-2">
+                  <label for="emailC" class="text-[14px]">Website</label>
+                  <input
+                    pInputText
+                    id="emailC"
+                    pSize="small"
+                    [(ngModel)]="user.website"
+                    required
+                  />
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label for="address" class="text-[14px]">Address</label>
+                  <input
+                    pInputText
+                    id="address"
+                    pSize="small"
+                    [(ngModel)]="user.address"
+                  />
+                </div>
+              </div>
+
+              <!-- Additional Information Section -->
+              <div class="mt-6">
+                <div class="grid md:grid-cols-3 gap-4">
+                  <!-- Educational Attainment (Dropdown) -->
+
+                </div>
+
+                <div class="grid  gap-4 ">
+                  <!-- Phone Number -->
+                  <div class="flex flex-col gap-2">
+                    <label for="phone" class="text-[14px]">About</label>
+                    <textarea
+                    rows="4"
+                      pInputText
+                      id="phone"
+                      type="tel"
+                      pSize="small"
+                      [(ngModel)]="user.about"
+                      required
+                    ></textarea>
+                  </div>
+
+                  <!-- Address -->
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-between mt-6">
+            <div></div>
+            <div class="card flex justify-center">
+              <p-toast position="bottom-left" key="bl" />
+              <p-button (onClick)="saveProfile()" label="Save" size="small" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

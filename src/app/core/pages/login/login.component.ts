@@ -57,19 +57,30 @@ export class LoginComponent implements OnInit {
     };
 
     // Call the login method from UserService
-    this.authService.login(loginData).subscribe(
-      (response) => {
-        console.log('Login successful', response);
+    this.authService.login(loginData).subscribe({
+      next: (response) => {
+        this.toast.success('Login successful!');
+        const role = this.authService.getUserRole();
 
-        this.toast.success(response.message);
-        // You can redirect the user to the dashboard or home page after successful login
-        this.router.navigate(['/']);
+        // Redirect based on role
+        switch (role) {
+          case 'User':
+            this.router.navigate(['/jobs']); // Candidate dashboard
+            break;
+          case 'Employer':
+            this.router.navigate(['/employer/dashboard']); // Employer dashboard
+            break;
+          case 'Admin':
+            this.router.navigate(['/admin/dashboard']); // Admin dashboard
+            break;
+          default:
+            this.router.navigate(['/']); // Fallback
+        }
       },
-      (error) => {
-        console.error('Login error', error);
-        this.toast.error(error.error.message);
-        // Handle the error, show a message to the user
-      }
-    );
+      error: (error) => {
+        console.error('Login failed', error);
+        this.toast.error(error.error?.message || 'Login failed. Please try again.');
+      },
+    });
   }
 }

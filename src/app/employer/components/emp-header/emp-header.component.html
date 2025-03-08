@@ -12,7 +12,7 @@
         <div
           *ngIf="true"
           class="mr-3 cursor-pointer border rounded-full w-fit h-fit border-slate-200"
-          routerLink="/admin/profile"
+          routerLink="/employer/account"
         >
           <img
             [src]="user.image != null ? user.image : defaultImg"
@@ -85,7 +85,7 @@
       <div class="flex items-center">
         <div
           class="flex items-center cursor-pointer hover:bg-gray-900 transition-colors py-2 px-2 pl-3 rounded-xl mr-2"
-          routerLink="/employer/profile"
+          routerLink="/employer/account"
         >
           <h1 *ngIf="user.length != 0" class="font-semibold mr-2 capitalize">
             Hi, {{ user.name.split(" ")[0] }}

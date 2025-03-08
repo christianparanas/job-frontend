@@ -1,8 +1,8 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthService } from '../../shared/services/auth.service'; // Adjust path
+import { AuthService } from '../services/auth.service'; // Adjust path
 
-export const seekerGuard: CanActivateFn = (route, state) => {
+export const employerGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
@@ -16,7 +16,7 @@ export const seekerGuard: CanActivateFn = (route, state) => {
   const userRole = authService.getUserRole();
 
   // Check if the role is 'User' (for candidates/seekers)
-  if (userRole === 'User') {
+  if (userRole === 'Employer') {
     return true; // Allow access
   }
 

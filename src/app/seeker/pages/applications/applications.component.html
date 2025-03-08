@@ -1,0 +1,80 @@
+<div class="relative z-40 mt-20 pb-20">
+  <div class="mb-5">
+    <h1 class="font-bold text-xl md:text-3xl text-gray-900">Job Applications</h1>
+    <p class="text-gray-800 text-[12px]">View and manage your submitted job applications</p>
+  </div>
+
+  <hr />
+
+  <!-- Main Content -->
+  <div class="max-w-5xl py-10">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="flex justify-center items-center h-64">
+      <p-progressSpinner styleClass="w-12 h-12 text-indigo-500"></p-progressSpinner>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && applications.length === 0" class="text-center py-16">
+      <i class="pi pi-folder-open text-4xl text-gray-400"></i>
+      <p class="mt-4 text-lg text-gray-600">No applications submitted yet</p>
+      <p class="mt-2 text-sm text-gray-500">Apply to jobs to see them here!</p>
+    </div>
+
+    <!-- Applications Table -->
+    <div *ngIf="!isLoading && applications.length > 0" class="card">
+      <p-table
+        [value]="applications"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [rowHover]="true"
+        [paginator]="true"
+        [rows]="5"
+        [rowsPerPageOptions]="[5, 10, 20]"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="Job.title">Job Title </th>
+            <!-- <th pSortableColumn="Job.employer.username">Employer <p-sortIcon field="Job.employer.username"></p-sortIcon></th> -->
+            <th pSortableColumn="Job.employer.username">Employer</th>
+            <th pSortableColumn="appliedDate">Applied Date</th>
+            <th pSortableColumn="Job.status">Status</th>
+            <th pSortableColumn="Job.location">Location</th>
+            <th pSortableColumn="Job.salary">Salary </th>
+            <th pSortableColumn="Job.type">Type </th>
+            <th>Action</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-app>
+          <tr>
+            <td>{{ app.Job.title }}</td>
+            <td>{{ app.Job.employer.username }}</td>
+            <td>{{ app.appliedDate | date:'mediumDate' }}</td>
+            <td>
+              <p-badge
+                [value]="app.Job.status"
+                [styleClass]="getStatusStyle(app.Job.status)"
+              ></p-badge>
+            </td>
+            <td>{{ app.Job.location || 'Not specified' }}</td>
+            <td>{{ app.Job.salary || 'Not specified' }}</td>
+            <td>{{ app.Job.type || 'Not specified' }}</td>
+            <td>
+              <p-button
+                label="Withdraw"
+                styleClass="p-button-sm p-button-rounded p-button-danger text-sm"
+                (click)="confirmWithdraw(app.id)"
+              ></p-button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+
+  <!-- Confirmation Dialog -->
+  <p-confirmDialog
+    header="Confirm Withdrawal"
+    icon="pi pi-exclamation-triangle"
+    [style]="{ width: '30rem' }"
+    [baseZIndex]="10000"
+  ></p-confirmDialog>
+</div>

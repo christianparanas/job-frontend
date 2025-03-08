@@ -19,7 +19,7 @@ export class UsersComponent {
   ngOnInit() {
     this.tabs = [
       { title: 'Users', value: 0, content: 'Tab 1 Content' },
-      { title: 'Moderators', value: 1, content: 'Tab 2 Content' },
+      { title: 'Employers', value: 1, content: 'Tab 2 Content' },
     ];
   }
 

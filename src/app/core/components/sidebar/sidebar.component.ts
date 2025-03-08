@@ -15,7 +15,12 @@ export class SidebarComponent implements OnInit {
   routesArr: any = [
     {
       title: 'Jobs',
-      route: '/',
+      route: 'jobs',
+      icon: 'fal fa-chart-line',
+    },
+    {
+      title: 'Applications',
+      route: 'applications',
       icon: 'fal fa-chart-line',
     },
     {

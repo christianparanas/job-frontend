@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+
+
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -7,15 +9,15 @@ import { CommonModule } from '@angular/common';
   imports: [RouterModule, CommonModule],
   standalone: true,
   templateUrl: './admin-sidebar.component.html',
-  styleUrl: './admin-sidebar.component.css',
+  styleUrls: ['./admin-sidebar.component.css'],
 })
-export class AdminSidebarComponent {
-  currentRoute: any;
+export class AdminSidebarComponent implements OnInit {
+  currentRoute: string = '/'; // Default to root
 
   routesArr: any = [
     {
       title: 'Dashboard',
-      route: '/',
+      route: 'dashboard',
       icon: 'fal fa-chart-line',
     },
     {
@@ -28,11 +30,6 @@ export class AdminSidebarComponent {
       route: 'reports',
       icon: 'fal fa-retweet',
     },
-    // {
-    //   title: 'Notifications',
-    //   route: 'notifications',
-    //   icon: 'fal fa-info-circle',
-    // },
     {
       title: 'Settings',
       route: 'settings',
@@ -50,13 +47,21 @@ export class AdminSidebarComponent {
     },
   ];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    this.getCurrentRouteURL(this.route.snapshot.children[0].routeConfig?.path);
+    // Initial route setup
+    this.updateCurrentRoute();
+
+    // Subscribe to route changes
+    this.router.events.subscribe(() => {
+      this.updateCurrentRoute();
+    });
   }
 
-  getCurrentRouteURL(route: any) {
-    route == '' ? (this.currentRoute = '/') : (this.currentRoute = route);
+  updateCurrentRoute() {
+    const fullPath = this.router.url; // e.g., '/employer/jobs'
+    const routeSegment = fullPath.split('/admin/')[1] || ''; // Extract after '/employer/'
+    this.currentRoute = routeSegment === '' ? '' : routeSegment; // Normalize root to ''
   }
 }

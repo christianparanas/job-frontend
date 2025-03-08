@@ -83,7 +83,7 @@ export class ModComponent implements OnInit {
   }
 
   getUsers() {
-    this.adminService.getUsers().subscribe(
+    this.adminService.getAllUsers().subscribe(
       (data: any) => {
         if (Array.isArray(data.users)) {
           this.users = data.users.map((user: any) => ({
