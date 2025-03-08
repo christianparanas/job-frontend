@@ -25,11 +25,11 @@ export class AdminSidebarComponent implements OnInit {
       route: 'users',
       icon: 'fal fa-box-ballot',
     },
-    {
-      title: 'Reports',
-      route: 'reports',
-      icon: 'fal fa-retweet',
-    },
+    // {
+    //   title: 'Reports',
+    //   route: 'reports',
+    //   icon: 'fal fa-retweet',
+    // },
     {
       title: 'Settings',
       route: 'settings',

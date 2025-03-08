@@ -71,7 +71,6 @@ export class ModComponent implements OnInit {
 
     // Table Columns
     this.cols = [
-      { field: 'username', header: 'Username' },
       { field: 'name', header: 'Name' },
       { field: 'email', header: 'Email' },
       { field: 'status', header: 'Status' },
@@ -83,16 +82,12 @@ export class ModComponent implements OnInit {
   }
 
   getUsers() {
-    this.adminService.getAllUsers().subscribe(
+    this.adminService.getUsersByRole('Employer').subscribe(
       (data: any) => {
-        if (Array.isArray(data.users)) {
-          this.users = data.users.map((user: any) => ({
-            ...user,
-            name: `${user.firstname} ${user.lastname}`,
-          }));
-        } else {
-          console.error('Expected an array but received:', data.users);
-        }
+        this.users = data.map((user: any) => ({
+          ...user,
+          name: `${user.firstname}`,
+        }));
       },
       (error) => {
         console.error('Error fetching users:', error);

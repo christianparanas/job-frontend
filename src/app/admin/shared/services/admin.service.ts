@@ -7,7 +7,7 @@ import { AuthService } from '../../../core/shared/services/auth.service';
   providedIn: 'root',
 })
 export class AdminService {
-  private apiUrl = 'http://localhost:3000/api/users'; // Adjust base URL
+  private apiUrl = 'http://localhost:3000/api/user'; // Adjust base URL
 
   constructor(
     private http: HttpClient,
@@ -23,6 +23,10 @@ export class AdminService {
   // Get all users
   getAllUsers(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl, { headers: this.getHeaders() });
+  }
+
+  getUsersByRole(role: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/role/${role}`, { headers: this.getHeaders() });
   }
 
   // Get user statistics

@@ -8,6 +8,7 @@ import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
 import { MenuItem } from 'primeng/api';
 import { UserService } from '../../shared/services/user.service';
+import { AdminService } from '../../shared/services/admin.service';
 
 interface Column {
   field: string;
@@ -45,7 +46,7 @@ export class SeekersComponent implements OnInit {
   cols: Column[] = [];
   actionItems: MenuItem[] | undefined;
 
-  constructor(private userService: UserService) {}
+  constructor(private adminService: AdminService) {}
 
   ngOnInit() {
     this.actionItems = [
@@ -71,7 +72,6 @@ export class SeekersComponent implements OnInit {
 
     // Table Columns
     this.cols = [
-      { field: 'username', header: 'Username' },
       { field: 'name', header: 'Name' },
       { field: 'email', header: 'Email' },
       { field: 'status', header: 'Status' },
@@ -83,16 +83,13 @@ export class SeekersComponent implements OnInit {
   }
 
   getUsers() {
-    this.userService.getUsers().subscribe(
+    this.adminService.getUsersByRole("User").subscribe(
       (data: any) => {
-        if (Array.isArray(data.users)) {
-          this.users = data.users.map((user: any) => ({
+          this.users = data.map((user: any) => ({
             ...user,
             name: `${user.firstname} ${user.lastname}`,
           }));
-        } else {
-          console.error('Expected an array but received:', data.users);
-        }
+
       },
       (error) => {
         console.error('Error fetching users:', error);
