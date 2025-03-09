@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
+import { JobService } from '../../shared/services/emp-job.service'; // Adjust path
+import { AuthService } from '../../../core/shared/services/auth.service'; // Adjust path
+import { HotToastService } from '@ngxpert/hot-toast';
+import { Observable } from 'rxjs';
 
 interface Job {
   id: number;
@@ -14,7 +18,7 @@ interface Job {
   type: string;
   status: string;
   postedDate: string;
-  applications: number;
+  applications: [];
 }
 
 interface Applicant {
@@ -34,41 +38,78 @@ export class EmpViewJobComponent implements OnInit {
   job: Job | null = null;
   applicants: Applicant[] = [];
 
-  // Mock job and applicant data (replace with API calls in a real app)
-  private mockJobs: Job[] = [
-    {
-      id: 1,
-      title: 'Software Engineer',
-      description: 'Develop and maintain web applications using Angular and Node.js. Collaborate with the team to deliver high-quality software solutions.',
-      requirements: [
-        { skill: 'Agile Software Development', proficiency: 3 },
-        { skill: 'Applications Development', proficiency: 4 },
-        { skill: 'Data Analytics', proficiency: 2 },
-      ],
-      location: 'Remote',
-      salary: '$100,000 - $120,000',
-      type: 'Full-time',
-      status: 'Active',
-      postedDate: '2025-03-07',
-      applications: 3,
-    },
-  ];
-
-  private mockApplicants: Applicant[] = [
-    { id: 1, name: 'John Doe', appliedDate: '2025-03-08' },
-    { id: 2, name: 'Jane Smith', appliedDate: '2025-03-09' },
-    { id: 3, name: 'Alex Brown', appliedDate: '2025-03-10' },
-  ];
-
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private jobService: JobService,
+    private authService: AuthService,
+    private toast: HotToastService
+  ) {}
 
   ngOnInit() {
-    // const jobId = this.route.snapshot.paramMap.get('id');
-    const jobId = 1;
-    this.job = this.mockJobs.find((j) => j.id === Number(jobId)) || null;
-    if (this.job) {
-      this.applicants = this.mockApplicants; // In a real app, fetch applicants for this job
-    }
+    this.route.queryParams.subscribe((params) => {
+      const jobId = params['id'];
+      if (jobId) {
+        this.loadJob(+jobId);
+      } else {
+        this.toast.error('No job ID provided.');
+        this.router.navigate(['/employer/jobs']);
+      }
+    });
+  }
+
+  loadJob(jobId: number): void {
+    this.jobService.getJob(jobId).subscribe({
+      next: (response) => {
+        // Map backend response to Job interface
+        console.log(response);
+
+        this.job = {
+          id: response.id,
+          title: response.title,
+          description: response.description,
+          requirements: response.Skills.map((req: any) => ({
+            skill: req.name,
+            proficiency: req.JobRequirement.proficiency,
+          })),
+          location: response.location,
+          salary: response.salary,
+          type: response.type,
+          status: response.status,
+          postedDate: response.updatedAt || response.createdAt, // Fallback to createdAt if needed
+          applications: response.Candidates,
+        };
+
+        console.log(response);
+        // Fetch applicants if not included in job response
+        this.loadApplicants(jobId);
+      },
+      error: (err) => {
+        console.error('Error loading job:', err);
+        this.job = null;
+        this.toast.error('Failed to load job details.');
+      },
+    });
+  }
+
+  loadApplicants(jobId: number): void {
+    this.jobService.getJobApplicants(jobId).subscribe({
+      next: (response) => {
+        console.log(response)
+
+        this.applicants = response.map((applicant: any) => ({
+          id: applicant.id,
+          name:
+            applicant.applicant?.firstname + ' ' + applicant.applicant?.lastname,
+          appliedDate: applicant.appliedDate || applicant.createdAt, // Adjust based on backend
+        }));
+      },
+      error: (err) => {
+        console.error('Error loading applicants:', err);
+        this.applicants = [];
+        this.toast.error('Failed to load applicants.');
+      },
+    });
   }
 
   getStatusColor(status: string): string {
@@ -84,18 +125,26 @@ export class EmpViewJobComponent implements OnInit {
     }
   }
 
-  getProficiencyLabel(proficiency: number): string {
-    switch (proficiency) {
-      case 1: return 'Basic';
-      case 2: return 'Intermediate';
-      case 3: return 'Advanced';
-      case 4: return 'Expert';
-      default: return 'Unknown';
-    }
+  // getProficiencyLabel(proficiency: number): string {
+  //   switch (proficiency) {
+  //     case 1:
+  //       return 'Basic';
+  //     case 2:
+  //       return 'Intermediate';
+  //     case 3:
+  //       return 'Advanced';
+  //     case 4:
+  //       return 'Expert';
+  //     default:
+  //       return 'Unknown';
+  //   }
+  // }
+
+  messageApplicant(id: number) {
+    this.router.navigate(['/employer/chats'], { queryParams: { id } });
   }
 
-  messageApplicant(applicantId: number) {
-    // Navigate to Chats page with applicant pre-selected (e.g., via query param)
-    this.router.navigate(['/employer/chats'], { queryParams: { applicantId } });
+  viewApplicant(id: number) {
+    this.router.navigate(['/employer/candidate'], { queryParams: { id } });
   }
 }

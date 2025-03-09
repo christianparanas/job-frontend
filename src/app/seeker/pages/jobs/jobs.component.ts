@@ -18,9 +18,9 @@ interface Job {
   salary: string;
   type: string;
   status: string;
-  postedDate: string;
+  updatedAt: string;
   applications: number;
-  employer: { username: string };
+  employer: { firstname: string };
   JobRequirements: {
     skillId: number;
     proficiency: number;

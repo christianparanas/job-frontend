@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +8,9 @@ import { TextareaModule } from 'primeng/textarea';
 import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { JobService } from '../../shared/services/emp-job.service';
+import { HotToastService } from '@ngxpert/hot-toast';
+import { AuthService } from '../../../core/shared/services/auth.service';
 
 @Component({
   selector: 'app-emp-create-job', // Matches your routing
@@ -26,11 +29,11 @@ import { MultiSelectModule } from 'primeng/multiselect';
   templateUrl: './emp-create-job.component.html',
   styleUrls: ['./emp-create-job.component.css'],
 })
-export class EmpCreateJobComponent {
+export class EmpCreateJobComponent implements OnInit {
   job = {
     title: '',
     description: '',
-    requirements: [] as { skill: string; proficiency: number }[], // Array for multiple skills with proficiency
+    requirements: [] as { skillId: string; label: string; proficiency: number }[], // Array for multiple skills with proficiency
     location: '',
     salary: '',
     type: '',
@@ -51,39 +54,10 @@ export class EmpCreateJobComponent {
   ];
 
   skillOptions = [
-    { label: 'Agile Software Development', value: 'Agile Software Development' },
-    { label: 'Applications Development', value: 'Applications Development' },
-    { label: 'Applications Integration', value: 'Applications Integration' },
-    { label: 'Artificial Intelligence Ethics and Governance', value: 'Artificial Intelligence Ethics and Governance' },
-    { label: 'Business Environment Analysis', value: 'Business Environment Analysis' },
-    { label: 'Business Needs Analysis', value: 'Business Needs Analysis' },
-    { label: 'Change Management', value: 'Change Management' },
-    { label: 'Cloud Computing', value: 'Cloud Computing' },
-    { label: 'Computational Modelling', value: 'Computational Modelling' },
-    { label: 'Computer Vision Technology', value: 'Computer Vision Technology' },
-    { label: 'Configuration Tracking', value: 'Configuration Tracking' },
-    { label: 'Continuous Integration and Continuous Deployment', value: 'Continuous Integration and Continuous Deployment' },
-    { label: 'Cyber and Data Breach Incident Management', value: 'Cyber and Data Breach Incident Management' },
-    { label: 'Data Analytics', value: 'Data Analytics' },
-    { label: 'Data Design', value: 'Data Design' },
-    { label: 'Data Engineering', value: 'Data Engineering' },
-    { label: 'Data Ethics', value: 'Data Ethics' },
-    { label: 'Data Migration', value: 'Data Migration' },
-    { label: 'Data Visualisation', value: 'Data Visualisation' },
-    { label: 'Database Administration', value: 'Database Administration' },
-    { label: 'Design Thinking Practice', value: 'Design Thinking Practice' },
-    { label: 'Intelligent Reasoning', value: 'Intelligent Reasoning' },
-    { label: 'Pattern Recognition Systems', value: 'Pattern Recognition Systems' },
-    { label: 'Research', value: 'Research' },
-    { label: 'Security Architecture', value: 'Security Architecture' },
-    { label: 'Self-Learning Systems', value: 'Self-Learning Systems' },
-    { label: 'Software Configuration', value: 'Software Configuration' },
-    { label: 'Software Design', value: 'Software Design' },
-    { label: 'Software Testing', value: 'Software Testing' },
-    { label: 'Stakeholder Management', value: 'Stakeholder Management' },
-    { label: 'System Integration', value: 'System Integration' },
-    { label: 'Test Planning', value: 'Test Planning' },
-    { label: 'Text Analytics and Processing', value: 'Text Analytics and Processing' },
+    {
+      label: '',
+      value: '',
+    },
   ];
 
   proficiencyOptions = [
@@ -95,44 +69,87 @@ export class EmpCreateJobComponent {
 
   selectedSkills: string[] = [];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private jobService: JobService,
+    private toast: HotToastService,
+    private authService: AuthService
+  ) {}
 
-  onSkillsChange(event: any) {
-    const currentSkills = this.job.requirements.map(r => r.skill);
-    const newSkills = event.value;
+  ngOnInit(): void {
+    this.getSkills();
+  }
+
+  getSkills(): void {
+    this.jobService.getSkills().subscribe({
+      next: (response: any[]) => {
+        console.log('Skills response:', response);
+        this.skillOptions = response.map((skill) => ({
+          label: skill.name, // Use 'name' as label
+          value: skill.id, // Use 'id' as value
+        }));
+      },
+      error: (error: any) => {
+        console.log('Error fetching skills:', error);
+      },
+    });
+  }
+
+  onSkillsChange(event: any): void {
+    const currentSkillIds = this.job.requirements.map(r => r.skillId); // Compare by skillId
+    const newSkillIds = event.value; // Array of skill IDs from MultiSelect
 
     // Add new skills with default proficiency (2)
-    newSkills.forEach((skill: string) => {
-      if (!currentSkills.includes(skill)) {
-        this.job.requirements.push({ skill, proficiency: 2 });
+    newSkillIds.forEach((skillId: string) => {
+      if (!currentSkillIds.includes(skillId)) {
+        const skill = this.skillOptions.find(s => s.value == skillId);
+        if (skill) {
+          this.job.requirements.push({
+            skillId: skill.value,       // Skill ID
+            label: skill.label,
+            proficiency: 1     // Skill name for display
+          });
+        }
       }
     });
 
     // Remove deselected skills
-    this.job.requirements = this.job.requirements.filter(r => newSkills.includes(r.skill));
+    this.job.requirements = this.job.requirements.filter(r =>
+      newSkillIds.includes(r.skillId)
+    );
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (!this.job.title || !this.job.description) {
-      alert('Title and Description are required.');
+      this.toast.error('Title and Description are required.');
       return;
     }
 
+    const userId = this.authService.getUser()?.id;
+
     const newJob = {
-      id: Date.now(), // Temporary ID
       title: this.job.title,
-      status: this.job.status,
-      applications: 0,
-      postedDate: new Date().toISOString().split('T')[0],
       description: this.job.description,
-      requirements: this.job.requirements, // Multiple skills with proficiency
+      requirements: this.job.requirements, // Array of { skillId, proficiency }
       location: this.job.location,
       salary: this.job.salary,
       type: this.job.type,
+      status: this.job.status,
+      userId
     };
-    console.log('New Job Created:', newJob);
-    // Add API call here (e.g., this.jobService.createJob(newJob).subscribe(...))
-    this.router.navigate(['/employer/jobs', newJob.id]);
+
+    console.log(newJob);
+
+    this.jobService.createJob(newJob).subscribe({
+      next: (response: any) => {
+        this.toast.success('Job created successfully!');
+        this.router.navigate(['/emp-jobs'], { queryParams: { id: response.id } });
+      },
+      error: (error: any) => {
+        console.error('Error creating job:', error);
+        this.toast.error('Failed to create job.');
+      },
+    });
   }
 
   cancel() {

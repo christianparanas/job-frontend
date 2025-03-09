@@ -1,8 +1,8 @@
 <div class="relative z-40 mt-20 pb-20">
   <!-- Header -->
   <div class="mb-5">
-    <h1 class="font-bold text-xl md:text-3xl text-gray-900">Modify Job</h1>
-    <p class="text-gray-800 text-[12px]">Edit your job posting</p>
+    <h1 class="font-bold text-xl md:text-3xl text-gray-900">Edit Job</h1>
+    <p class="text-gray-800 text-[12px]">Your employer dashboard</p>
   </div>
 
   <hr />
@@ -10,19 +10,15 @@
   <!-- Main Content -->
   <div class="max-w-7xl mx-auto mt-10">
     <div class="bg-white rounded-lg animate-fade-in">
-      <form
-        (ngSubmit)="onSubmit()"
-        class="grid grid-cols-1 md:grid-cols-2 gap-6"
-      >
+      <div *ngIf="isLoading" class="p-6 text-center">
+        <p class="text-gray-500">Loading job details...</p>
+      </div>
+      <form *ngIf="!isLoading" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
         <!-- Left Column -->
         <div class="space-y-6">
           <!-- Job Title -->
           <div>
-            <label
-              for="title"
-              class="block text-xs font-semibold text-gray-500 uppercase"
-              >Job Title *</label
-            >
+            <label for="title" class="block text-xs font-semibold text-gray-500 uppercase">Job Title *</label>
             <input
               pInputText
               id="title"
@@ -34,12 +30,9 @@
             />
           </div>
 
+          <!-- Description -->
           <div>
-            <label
-              for="description"
-              class="block text-xs font-semibold text-gray-500 uppercase"
-              >Description *</label
-            >
+            <label for="description" class="block text-xs font-semibold text-gray-500 uppercase">Description *</label>
             <textarea
               pInputTextarea
               id="description"
@@ -52,13 +45,9 @@
             ></textarea>
           </div>
 
-
-
-          <!-- Job Type -->
+          <!-- Skills & Proficiency -->
           <div>
-            <label class="block text-xs font-semibold text-gray-500 uppercase"
-              >Skills & Proficiency</label
-            >
+            <label class="block text-xs font-semibold text-gray-500 uppercase">Skills & Proficiency</label>
             <p-multiSelect
               [options]="skillOptions"
               [(ngModel)]="selectedSkills"
@@ -72,45 +61,28 @@
               selectedItemsLabel="{0} skills selected"
             ></p-multiSelect>
             <div class="mt-2 space-y-2">
-              <div
-                *ngFor="let req of job.requirements"
-                class="flex items-center gap-2"
-              >
-                <span
-                  class="text-sm text-gray-700 font-medium w-1/2 truncate"
-                  >{{ req.skill }}</span
-                >
+              <div *ngFor="let req of job.requirements" class="flex items-center gap-2">
+                <span class="text-sm text-gray-700 font-medium w-1/2 truncate">{{ req.label }}</span>
                 <p-dropdown
                   [options]="proficiencyOptions"
                   [(ngModel)]="req.proficiency"
-                  [name]="'proficiency-' + req.skill"
+                  [name]="'proficiency-' + req.skillId"
                   [style]="{ width: '50%' }"
                   class="text-sm"
                   panelStyleClass="shadow-md border border-gray-200 rounded-md"
                 ></p-dropdown>
               </div>
-              <p
-                *ngIf="job.requirements.length === 0"
-                class="text-xs text-gray-500"
-              >
-                No skills selected
-              </p>
+              <p *ngIf="job.requirements.length === 0" class="text-xs text-gray-500">No skills selected</p>
             </div>
           </div>
         </div>
 
-        <!-- Skills and Proficiency -->
-
         <!-- Right Column -->
         <div class="space-y-6">
-          <!-- Description -->
+          <!-- Job Type & Status -->
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label
-                for="type"
-                class="block text-xs font-semibold text-gray-500 uppercase"
-                >Job Type</label
-              >
+              <label for="type" class="block text-xs font-semibold text-gray-500 uppercase">Job Type</label>
               <p-dropdown
                 id="type"
                 [options]="typeOptions"
@@ -122,13 +94,8 @@
                 panelStyleClass="shadow-md border border-gray-200 rounded-md"
               ></p-dropdown>
             </div>
-            <!-- Status -->
             <div>
-              <label
-                for="status"
-                class="block text-xs font-semibold text-gray-500 uppercase"
-                >Status</label
-              >
+              <label for="status" class="block text-xs font-semibold text-gray-500 uppercase">Status</label>
               <p-dropdown
                 id="status"
                 [options]="statusOptions"
@@ -146,13 +113,9 @@
             </div>
           </div>
 
-           <!-- Location -->
-           <div>
-            <label
-              for="location"
-              class="block text-xs font-semibold text-gray-500 uppercase"
-              >Location</label
-            >
+          <!-- Location -->
+          <div>
+            <label for="location" class="block text-xs font-semibold text-gray-500 uppercase">Location</label>
             <input
               pInputText
               id="location"
@@ -165,11 +128,7 @@
 
           <!-- Salary -->
           <div>
-            <label
-              for="salary"
-              class="block text-xs font-semibold text-gray-500 uppercase"
-              >Salary</label
-            >
+            <label for="salary" class="block text-xs font-semibold text-gray-500 uppercase">Salary</label>
             <input
               pInputText
               id="salary"
@@ -189,7 +148,7 @@
             (click)="cancel()"
           ></p-button>
           <p-button
-            label="Save Changes"
+            label="Update Job"
             type="submit"
             styleClass="p-button-sm bg-black hover:bg-slate-700 transition-all duration-200"
           ></p-button>

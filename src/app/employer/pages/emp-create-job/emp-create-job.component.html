@@ -78,12 +78,12 @@
               >
                 <span
                   class="text-sm text-gray-700 font-medium w-1/2 truncate"
-                  >{{ req.skill }}</span
+                  >{{ req.label }}</span
                 >
                 <p-dropdown
                   [options]="proficiencyOptions"
                   [(ngModel)]="req.proficiency"
-                  [name]="'proficiency-' + req.skill"
+                  [name]="'proficiency-' + req.skillId"
                   [style]="{ width: '50%' }"
                   class="text-sm"
                   panelStyleClass="shadow-md border border-gray-200 rounded-md"

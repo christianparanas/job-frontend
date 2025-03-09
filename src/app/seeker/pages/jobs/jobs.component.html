@@ -43,7 +43,7 @@
 
         <!-- Job Meta -->
         <p class="mt-2 text-xs text-gray-500 truncate">
-          Posted by {{ job.employer.username }} on {{ job.postedDate | date:'mediumDate' }}
+          Posted by {{ job.employer.firstname }} on {{ job.updatedAt | date:'mediumDate' }}
         </p>
 
         <!-- Description (Expandable) -->
