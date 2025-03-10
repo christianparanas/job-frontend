@@ -64,4 +64,25 @@ export class AuthService {
     const user = this.getUser();
     return user?.Roles[0].name || null;
   }
+
+  // Fetch user profile with role and takenAssessment (optional, if needed for refreshing user data)
+  getUserProfile(): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.apiUrl}/profile`, { headers });
+  }
+
+  // Check if the user has taken the assessment
+  hasTakenAssessment(): boolean {
+    const user = this.getUser();
+    return user ? user.takenAssessment || false : false; // Default to false if not set
+  }
+
+  updateTakenAssessment(taken: boolean): void {
+    const user = this.getUser();
+    if (user) {
+      user.takenAssessment = taken;
+      localStorage.setItem(this.USER_KEY, JSON.stringify(user)); // Update user data in localStorage
+    }
+  }
 }

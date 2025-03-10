@@ -6,8 +6,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { CardModule } from 'primeng/card';
 import { PaginatorModule } from 'primeng/paginator';
 import { AssessmentService } from '../../shared/services/assessment.service';
-import { SeekerAuthService } from '../../shared/services/seeker-auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../core/shared/services/auth.service';
 
 interface Question {
   id: number;
@@ -47,7 +47,7 @@ export class AssessmentComponent implements OnInit {
   constructor(
     private router: Router,
     private assessmentService: AssessmentService,
-    private authService: SeekerAuthService // Use SeekerAuthService
+    private authService: AuthService // Use SeekerAuthService
   ) {
     // Initialize static questions (remove or fetch dynamically later)
     this.questions = Array.from({ length: 33 }, (_, i) => ({
