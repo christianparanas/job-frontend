@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { SeekerAuthService } from './seeker-auth.service'; // Import for user ID
 import { catchError, tap } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../core/shared/services/auth.service';
 
 export interface UserProfile {
   id: number;
@@ -30,11 +31,11 @@ export interface UserProfile {
   providedIn: 'root',
 })
 export class ProfileService {
-  private apiUrl = 'http://localhost:3000/api/user'; // Adjust to your backend URL
+  private apiUrl = `${environment.apiUrl}/api/user`;
 
   constructor(
     private http: HttpClient,
-    private authService: SeekerAuthService // Inject SeekerAuthService for user ID only
+    private authService: AuthService // Inject SeekerAuthService for user ID only
   ) {}
 
   getProfile() {

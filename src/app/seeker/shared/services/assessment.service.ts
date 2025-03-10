@@ -1,37 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { SeekerAuthService } from './seeker-auth.service'; // Import SeekerAuthService for user authentication
 import { catchError, tap } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../core/shared/services/auth.service';
 
 interface SkillLevel {
   skill: string;
-  level: number; // Proficiency level (1-4)
+  level: number;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class AssessmentService {
-  private apiUrl = 'http://localhost:3000/api/assessment'; // Adjust the backend URL here
-  private userLevels: { [skill: string]: number } = {}; // Store user proficiency levels by skill
+  private apiUrl = `${environment.apiUrl}/api/assessment`;
+  private userLevels: { [skill: string]: number } = {};
 
   constructor(
     private http: HttpClient,
-    private authService: SeekerAuthService
+    private authService: AuthService
   ) {}
 
-  // Submit assessment skill levels to the backend
   submitAnswers(skillLevels: SkillLevel[]): Observable<any> {
-    const userId = this.authService.getUser()?.id; // Get user ID from SeekerAuthService
-    if (!userId) {
-      throw new Error('User not authenticated');
-    }
-
-    // Prepare data for backend submission
+    const userId = this.authService.getUser()?.id;
     const assessmentData = {
       userId,
-      skillLevels, // Array of { skill, level } objects
+      skillLevels,
     };
 
     const token = this.authService.getToken();
@@ -40,12 +35,10 @@ export class AssessmentService {
     return this.http.post(`${this.apiUrl}/submit`, assessmentData, { headers });
   }
 
-  // Get the user's current proficiency levels
   getUserLevels(): { [skill: string]: number } {
-    return { ...this.userLevels }; // Return a copy to prevent direct modification
+    return { ...this.userLevels };
   }
 
-  // Clear assessment data (e.g., on logout or retake)
   clearAssessment(): void {
     this.userLevels = {};
   }
