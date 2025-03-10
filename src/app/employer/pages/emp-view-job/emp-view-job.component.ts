@@ -52,7 +52,6 @@ export class EmpViewJobComponent implements OnInit {
       if (jobId) {
         this.loadJob(+jobId);
       } else {
-        this.toast.error('No job ID provided.');
         this.router.navigate(['/employer/jobs']);
       }
     });
@@ -95,12 +94,14 @@ export class EmpViewJobComponent implements OnInit {
   loadApplicants(jobId: number): void {
     this.jobService.getJobApplicants(jobId).subscribe({
       next: (response) => {
-        console.log(response)
+        console.log(response);
 
         this.applicants = response.map((applicant: any) => ({
           id: applicant.id,
           name:
-            applicant.applicant?.firstname + ' ' + applicant.applicant?.lastname,
+            applicant.applicant?.firstname +
+            ' ' +
+            applicant.applicant?.lastname,
           appliedDate: applicant.appliedDate || applicant.createdAt, // Adjust based on backend
         }));
       },
@@ -144,7 +145,9 @@ export class EmpViewJobComponent implements OnInit {
     this.router.navigate(['/employer/chats'], { queryParams: { id } });
   }
 
-  viewApplicant(id: number) {
-    this.router.navigate(['/employer/candidate'], { queryParams: { id } });
+  viewApplicant(id: number, jobId: any) {
+    this.router.navigate(['/employer/candidate'], {
+      queryParams: { id, jobId },
+    });
   }
 }
