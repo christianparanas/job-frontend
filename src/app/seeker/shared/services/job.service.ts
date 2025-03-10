@@ -16,7 +16,7 @@ export class JobService {
   }
 
   getAppliedJobs(userId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/candidate?userId=${userId}`);
+    return this.http.get<any[]>(`${this.apiUrl}/candidate/applied-jobs/${userId}`);
   }
 
   applyForJob(jobId: number, userId: number): Observable<any> {

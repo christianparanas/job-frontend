@@ -143,7 +143,7 @@ export class EmpCreateJobComponent implements OnInit {
     this.jobService.createJob(newJob).subscribe({
       next: (response: any) => {
         this.toast.success('Job created successfully!');
-        this.router.navigate(['/emp-jobs'], { queryParams: { id: response.id } });
+        this.router.navigate(['/employer/job/view'], { queryParams: { id: response.id } });
       },
       error: (error: any) => {
         console.error('Error creating job:', error);

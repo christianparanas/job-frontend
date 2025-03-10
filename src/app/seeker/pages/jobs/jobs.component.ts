@@ -89,8 +89,8 @@ export class JobsComponent implements OnInit {
 
   fetchAppliedJobs(): void {
     this.jobService.getAppliedJobs(this.user?.id).subscribe(
-      (response) => {
-        this.appliedJobs = response.map((candidate) => candidate.jobId);
+      (response: any) => {
+        this.appliedJobs = response.map((candidate: any) => candidate.jobId);
       },
       (error) => console.error('Error fetching applied jobs:', error)
     );

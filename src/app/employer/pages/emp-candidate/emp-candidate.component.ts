@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { AuthService } from '../../../core/shared/services/auth.service';
 import { CandidateService } from '../../shared/services/emp-candidate.service';
+import { BadgeModule } from 'primeng/badge';
 
 @Component({
   selector: 'app-emp-candidate',
@@ -18,6 +19,7 @@ import { CandidateService } from '../../shared/services/emp-candidate.service';
     DropdownModule,
     CardModule,
     FormsModule,
+    BadgeModule,
   ],
   standalone: true,
   templateUrl: './emp-candidate.component.html',
@@ -25,14 +27,28 @@ import { CandidateService } from '../../shared/services/emp-candidate.service';
 })
 export class EmpCandidateComponent implements OnInit {
   candidate: any = {
-    id: 0,
-    name: 'Unknown Candidate',
-    email: 'N/A',
-    gender: 'N/A',
-    address: 'N/A',
-    skills: [],
-    education: 'N/A',
-    notes: 'No notes available.',
+    appliedDate: '',
+    status: '',
+    applicant: {
+      id: 0,
+      name: '',
+      image: '',
+      gender: '',
+      address: '',
+      website: '',
+      about: '',
+      PersonalInformation: {
+        dateOfBirth: '', // YYYY-MM-DD format
+        phoneNumber: '',
+        occupation: '',
+        educationalAttainment: '',
+        school: '',
+        yearGraduated: 0,
+        degreeEarned: '',
+        maritalStatus: '',
+        gwa: 0,
+      },
+    },
   };
 
   jobApplication: any = {
@@ -63,34 +79,38 @@ export class EmpCandidateComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       const userId = params['id'];
+      const jobId = params['jobId'];
       if (userId) {
-        this.loadCandidate(+userId);
+        this.loadCandidate(+userId, +jobId);
       } else {
         this.router.navigate(['/employer/candidates']);
       }
     });
   }
 
-  loadCandidate(userId: number): void {
-    this.candidateService.getCandidate(userId).subscribe({
+  calculateAge(birthdate: any) {
+    const birthDate = new Date(birthdate);
+    const today = new Date(); // Current date as per your context
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    // Adjust age if birthday hasn't occurred this year
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  }
+
+  loadCandidate(userId: number, jobId: number): void {
+    this.candidateService.getCandidate(userId, jobId).subscribe({
       next: (response: any) => {
-        this.candidate = {
-          id: response.id || 0,
-          name:
-            response.firstname + ' ' + response.lastname || 'Unknown Candidate',
-          email: response.email || 'N/A',
-          address: response.address || 'N/A',
-          gender: response.gender || 'N/A',
-          skills:
-            response.skills?.map((s: any) => ({
-              name: s.name || s.skill || 'Unknown Skill',
-              proficiency: s.proficiency || 1,
-            })) || [],
-          education: response.PInfo?.educationalAttainment || 'N/A',
-          notes: response.notes || 'No notes available.',
-        };
-        console.log('Candidate loaded:', response);
-        console.log('Candidate loaded:', this.candidate);
+        this.candidate = response;
+
+        console.log(response);
       },
       error: (err: any) => {
         console.error('Error loading candidate:', err);

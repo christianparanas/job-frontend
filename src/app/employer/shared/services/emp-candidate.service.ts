@@ -17,10 +17,8 @@ export class CandidateService {
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
-  getCandidate(id: number): Observable<any> {
-    console.log(id);
-
-    return this.http.get<any>(`${this.apiUrl}/${id}`, {
+  getCandidate(id: number, jobId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/candidate/${id}?jobId=${jobId}`, {
       headers: this.getHeaders(),
     });
   }
