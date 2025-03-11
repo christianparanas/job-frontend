@@ -32,7 +32,7 @@
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} jobs"
         [tableStyle]="{ 'min-width': '50rem' }"
         [rowHover]="true"
-        [globalFilterFields]="['title', 'status', 'applications', 'postedDate']"
+        [globalFilterFields]="['title', 'status', 'applications', 'updatedAt']"
         [(selection)]="selectedJobs"
         [selectionMode]="'multiple'"
 
@@ -63,10 +63,10 @@
               Status <p-sortIcon field="status"></p-sortIcon>
             </th>
             <th
-              pSortableColumn="postedDate"
+              pSortableColumn="updatedAt"
               class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"
             >
-              Posted <p-sortIcon field="postedDate"></p-sortIcon>
+              Posted <p-sortIcon field="updatedAt"></p-sortIcon>
             </th>
             <th
               class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"

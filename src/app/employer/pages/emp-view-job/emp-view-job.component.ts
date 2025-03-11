@@ -17,7 +17,7 @@ interface Job {
   salary: string;
   type: string;
   status: string;
-  postedDate: string;
+  updatedAt: string;
   applications: [];
 }
 
@@ -75,7 +75,7 @@ export class EmpViewJobComponent implements OnInit {
           salary: response.salary,
           type: response.type,
           status: response.status,
-          postedDate: response.updatedAt || response.createdAt, // Fallback to createdAt if needed
+          updatedAt: response.updatedAt || response.createdAt, // Fallback to createdAt if needed
           applications: response.Candidates,
         };
 

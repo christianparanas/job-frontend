@@ -30,7 +30,7 @@
         </div>
         <p class="mt-3 text-sm text-gray-500 flex items-center gap-2">
           <i class="pi pi-calendar text-gray-400"></i>
-          Posted on {{ job.postedDate | date : "mediumDate" }} •
+          Posted on {{ job.updatedAt | date : "mediumDate" }} •
           <span class="font-medium text-gray-600 flex items-center gap-1">
             <i class="pi pi-users text-gray-400"></i>
             {{ job.applications.length }} applications
