@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../../core/shared/services/auth.service';
 import { environment } from '../../../../environments/environment';
+// Import forkJoin from rxjs
+import { forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +30,26 @@ export class CandidateService {
       `${this.apiUrl}/${id}/status`,
       { status },
       { headers: this.getHeaders() }
+    );
+  }
+
+  // Placeholder for getting employer job IDs (requires JobService or endpoint)
+  private getEmployerJobIds(employerId: number): Observable<number[]> {
+    // This should be replaced with a real API call to get job IDs by employer
+    // Example: return this.http.get<number[]>(`${this.apiUrl}/jobs/employer/${employerId}`);
+    return new Observable((observer) => {
+      // Mock data for now
+      observer.next([1, 2, 3]); // Replace with real job IDs
+      observer.complete();
+    });
+  }
+
+  getAllCandidatesForEmployerJobs(employerId: any): Observable<any[]> {
+    return this.http.get<any>(
+      `${this.apiUrl}/employer-candidates/${employerId}`,
+      {
+        headers: this.getHeaders(),
+      }
     );
   }
 }

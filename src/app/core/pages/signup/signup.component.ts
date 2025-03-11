@@ -43,6 +43,7 @@ export class SignupComponent implements OnInit {
   password: string = '';
   accept: boolean = false;
   role: string = 'candidate'; // Default to candidate
+  loading: boolean = false;
 
   constructor(
     public router: Router,
@@ -58,6 +59,8 @@ export class SignupComponent implements OnInit {
       return;
     }
 
+    this.loading = true;
+
     const signupData = {
       email: this.email,
       password: this.password,
@@ -68,6 +71,7 @@ export class SignupComponent implements OnInit {
 
     this.authService.signup(signupData).subscribe(
       (response) => {
+        this.loading = false;
         this.toast.info(response.message, {
           autoClose: false,
           dismissible: true,
@@ -76,8 +80,11 @@ export class SignupComponent implements OnInit {
         this.router.navigate(['/login']);
       },
       (error) => {
+        this.loading = false;
         console.error('Signup failed', error);
-        this.toast.error(error.error?.message || 'Signup failed. Please try again.');
+        this.toast.error(
+          error.error?.message || 'Signup failed. Please try again.'
+        );
       }
     );
   }

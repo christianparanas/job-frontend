@@ -40,6 +40,7 @@ import { HotToastService } from '@ngxpert/hot-toast';
 export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
+  loading: boolean = false; // Add loading state
 
   constructor(
     public router: Router,
@@ -51,35 +52,39 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
+    this.loading = true; // Set loading to true when submission starts
+
     const loginData = {
       email: this.email,
       password: this.password,
     };
 
-    // Call the login method from UserService
     this.authService.login(loginData).subscribe({
       next: (response) => {
         this.toast.success('Login successful!');
         const role = this.authService.getUserRole();
 
-        // Redirect based on role
         switch (role) {
           case 'User':
-            this.router.navigate(['/jobs']); // Candidate dashboard
+            this.router.navigate(['/jobs']);
             break;
           case 'Employer':
-            this.router.navigate(['/employer/dashboard']); // Employer dashboard
+            this.router.navigate(['/employer/dashboard']);
             break;
           case 'Admin':
-            this.router.navigate(['/admin/dashboard']); // Admin dashboard
+            this.router.navigate(['/admin/dashboard']);
             break;
           default:
-            this.router.navigate(['/']); // Fallback
+            this.router.navigate(['/']);
         }
+        this.loading = false; // Reset loading state on success
       },
       error: (error) => {
         console.error('Login failed', error);
-        this.toast.error(error.error?.message || 'Login failed. Please try again.');
+        this.toast.error(
+          error.error?.message || 'Login failed. Please try again.'
+        );
+        this.loading = false; // Reset loading state on error
       },
     });
   }

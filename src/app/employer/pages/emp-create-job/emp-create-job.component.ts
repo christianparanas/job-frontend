@@ -33,12 +33,17 @@ export class EmpCreateJobComponent implements OnInit {
   job = {
     title: '',
     description: '',
-    requirements: [] as { skillId: string; label: string; proficiency: number }[], // Array for multiple skills with proficiency
+    requirements: [] as {
+      skillId: string;
+      label: string;
+      proficiency: number;
+    }[], // Array for multiple skills with proficiency
     location: '',
     salary: '',
     type: '',
     status: 'Draft',
   };
+  isSubmitting: boolean = false;
 
   statusOptions = [
     { label: 'Active', value: 'Active' },
@@ -96,25 +101,25 @@ export class EmpCreateJobComponent implements OnInit {
   }
 
   onSkillsChange(event: any): void {
-    const currentSkillIds = this.job.requirements.map(r => r.skillId); // Compare by skillId
+    const currentSkillIds = this.job.requirements.map((r) => r.skillId); // Compare by skillId
     const newSkillIds = event.value; // Array of skill IDs from MultiSelect
 
     // Add new skills with default proficiency (2)
     newSkillIds.forEach((skillId: string) => {
       if (!currentSkillIds.includes(skillId)) {
-        const skill = this.skillOptions.find(s => s.value == skillId);
+        const skill = this.skillOptions.find((s) => s.value == skillId);
         if (skill) {
           this.job.requirements.push({
-            skillId: skill.value,       // Skill ID
+            skillId: skill.value, // Skill ID
             label: skill.label,
-            proficiency: 1     // Skill name for display
+            proficiency: 1, // Skill name for display
           });
         }
       }
     });
 
     // Remove deselected skills
-    this.job.requirements = this.job.requirements.filter(r =>
+    this.job.requirements = this.job.requirements.filter((r) =>
       newSkillIds.includes(r.skillId)
     );
   }
@@ -124,6 +129,8 @@ export class EmpCreateJobComponent implements OnInit {
       this.toast.error('Title and Description are required.');
       return;
     }
+
+    this.isSubmitting = true;
 
     const userId = this.authService.getUser()?.id;
 
@@ -135,7 +142,7 @@ export class EmpCreateJobComponent implements OnInit {
       salary: this.job.salary,
       type: this.job.type,
       status: this.job.status,
-      userId
+      userId,
     };
 
     console.log(newJob);
@@ -143,11 +150,15 @@ export class EmpCreateJobComponent implements OnInit {
     this.jobService.createJob(newJob).subscribe({
       next: (response: any) => {
         this.toast.success('Job created successfully!');
-        this.router.navigate(['/employer/job/view'], { queryParams: { id: response.id } });
+        this.isSubmitting = false;
+        this.router.navigate(['/employer/job/view'], {
+          queryParams: { id: response.id },
+        });
       },
       error: (error: any) => {
         console.error('Error creating job:', error);
         this.toast.error('Failed to create job.');
+        this.isSubmitting = false;
       },
     });
   }

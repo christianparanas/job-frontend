@@ -1,11 +1,10 @@
-<div class="min-h-screen bg-gray-50 py-10">
-  <!-- Header -->
+<div class="min-h-screen bg-gray-50 py-10 md:mt-24">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fade-in-down">
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-4">
         <p-button
           icon="pi pi-arrow-left"
-          styleClass="p-button-text p-button-sm text-gray-600 hover:text-gray-800 cursor-pointer"
+          styleClass="p-button-sm text-gray-600 hover:text-gray-800 cursor-pointer bg-gray-200"
           [routerLink]="['/employer/candidates']"
         ></p-button>
         <div>
@@ -34,13 +33,10 @@
     </div>
   </div>
 
-  <!-- Main Content -->
   <div
     class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-6"
   >
-    <!-- Left Column: Personal Info & Actions -->
     <div class="lg:col-span-1 space-y-6 animate-fade-in">
-      <!-- Personal Info -->
       <p-card
         header="Personal Information"
         class="bg-white rounded-lg shadow-sm border border-gray-100"

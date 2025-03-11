@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
@@ -24,7 +24,7 @@ export interface UserProfile {
     yearGraduated?: number;
     degreeEarned?: string;
     maritalStatus?: string;
-    gwa: number
+    gwa: number;
   };
 }
 @Injectable({
@@ -38,9 +38,20 @@ export class ProfileService {
     private authService: AuthService // Inject SeekerAuthService for user ID only
   ) {}
 
+  private getHeaders(): HttpHeaders {
+    const token = this.authService.getToken();
+    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  }
+
   getProfile() {
     const userId = this.authService.getUser()?.id;
     return this.http.get<any>(`${this.apiUrl}/profile/${userId}`);
+  }
+
+  getPathway() {
+    return this.http.get<any>(`${this.apiUrl}/career-pathway`, {
+      headers: this.getHeaders(),
+    });
   }
 
   getProf() {
@@ -51,8 +62,10 @@ export class ProfileService {
   // Update user profile using the user ID from localStorage as a path parameter
   updateProfile(profile: UserProfile): Observable<UserProfile> {
     const userId = this.authService.getUser()?.id;
-    return this.http
-      .put<UserProfile>(`${this.apiUrl}/profile/${userId}`, profile)
+    return this.http.put<UserProfile>(
+      `${this.apiUrl}/profile/${userId}`,
+      profile
+    );
   }
 
   // Upload profile picture using the user ID from localStorage

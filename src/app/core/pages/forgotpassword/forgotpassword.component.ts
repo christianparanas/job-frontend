@@ -50,6 +50,7 @@ export class ForgotpasswordComponent {
   onSubmit() {
     if (this.email == '' && !this.isValidEmail(this.email)) {
       this.toast.info('Please enter a valid email address');
+      return;
     }
 
     // Start loading spinner

@@ -12,39 +12,62 @@
   <!-- Intro/Status Section -->
   <div *ngIf="showIntro" class="mb-6 mt-16 grid place-items-center">
     <div class="md:w-[600px] text-center">
-      <p *ngIf="!hasTakenAssessment" class="text-gray-700 text-base md:text-lg leading-relaxed">
-        Welcome to the PSF Assessment! Dive into 33 questions crafted to test your expertise in Analytics and Artificial Intelligence under the Philippine Skills Framework. Ready to showcase your skills? Let’s get started!
+      <p
+        *ngIf="!hasTakenAssessment"
+        class="text-gray-700 text-base md:text-lg leading-relaxed"
+      >
+        Welcome to the PSF Assessment! Dive into 33 questions crafted to test
+        your expertise in Analytics and Artificial Intelligence under the
+        Philippine Skills Framework. Ready to showcase your skills? Let’s get
+        started!
       </p>
-      <p *ngIf="hasTakenAssessment" class="text-gray-700 text-base md:text-lg leading-relaxed">
+      <p
+        *ngIf="hasTakenAssessment"
+        class="text-gray-700 text-base md:text-lg leading-relaxed"
+      >
         You have already taken this assessment. Would you like to retake it?
       </p>
       <p-button
         *ngIf="!hasTakenAssessment"
         label="Start Assessment"
         styleClass="mt-6 p-button-raised p-button-primary"
-        (click)="startAssessment()">
+        (click)="startAssessment()"
+      >
       </p-button>
       <p-button
         *ngIf="hasTakenAssessment"
         label="Retake Assessment"
         styleClass="mt-6 p-button-raised p-button-primary"
-        (click)="startAssessment()">
+        (click)="startAssessment()"
+      >
       </p-button>
     </div>
   </div>
 
   <!-- Questions Section -->
-  <div *ngIf="!showIntro && !showThankYou" class="mb-6 mt-16 grid place-items-center">
+  <div
+    *ngIf="!showIntro && !showThankYou"
+    class="mb-6 mt-16 grid place-items-center"
+  >
     <div class="md:w-[600px] text-center">
-      <div *ngFor="let question of paginatedQuestions; let i = index" class="mb-8 text-left">
-        <p class="text-gray-800 font-semibold">{{ (currentPage - 1) * 5 + i + 1 }}. {{ question.questionText }}</p>
+      <div
+        *ngFor="let question of paginatedQuestions; let i = index"
+        class="mb-8 text-left"
+      >
+        <p class="text-gray-800 font-semibold">
+          {{ (currentPage - 1) * 5 + i + 1 }}. {{ question.questionText }}
+        </p>
         <div class="mt-2">
-          <div *ngFor="let option of question.options" class="mb-2 flex items-center">
+          <div
+            *ngFor="let option of question.options"
+            class="mb-2 flex items-center"
+          >
             <p-radioButton
               [name]="'question' + ((currentPage - 1) * 5 + i)"
               [value]="option"
               [(ngModel)]="question.selectedOption"
-              class="mr-2">
+              class="mr-2"
+            >
             </p-radioButton>
             <label class="text-gray-700">{{ option }}</label>
           </div>
@@ -56,16 +79,43 @@
         [rows]="5"
         [totalRecords]="questions.length"
         (onPageChange)="onPageChange($event)"
-        [first]="(currentPage - 1) * 5">
+        [first]="(currentPage - 1) * 5"
+      >
       </p-paginator>
 
       <!-- Submit Button (Conditional Visibility) -->
+
       <p-button
-        *ngIf="showSubmitButton()"
-        label="Submit Answers"
-        styleClass="mt-6 p-button-raised p-button-success"
+        type="submit"
+        class="mt-2"
+        styleClass=" mt-2 w-fit"
         (click)="submitAnswers()"
-        [disabled]="isSubmitting">
+        [disabled]="isSubmitting"
+      >
+        <div class="flex items-center justify-center">
+          <span *ngIf="!isSubmitting">Submit</span>
+          <svg
+            *ngIf="isSubmitting"
+            class="animate-spin h-5 w-5 text-gray-600 mx-auto"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v8z"
+            ></path>
+          </svg>
+        </div>
       </p-button>
     </div>
   </div>
@@ -74,12 +124,17 @@
   <div *ngIf="showThankYou" class="mb-6 mt-16 grid place-items-center">
     <div class="md:w-[600px] text-center">
       <p class="text-gray-700 text-base md:text-lg leading-relaxed">
-        Thank you for taking the PSF Assessment! Your responses have been successfully submitted, and your skills have been evaluated under the Philippine Skills Framework (Analytics & Artificial Intelligence). We appreciate your participation and will use your results to provide personalized insights and recommendations.
+        Thank you for taking the PSF Assessment! Your responses have been
+        successfully submitted, and your skills have been evaluated under the
+        Philippine Skills Framework (Analytics & Artificial Intelligence). We
+        appreciate your participation and will use your results to provide
+        personalized insights and recommendations.
       </p>
       <p-button
         label="Return to Dashboard"
         styleClass="mt-6 p-button-raised p-button-primary"
-        (click)="returnToDashboard()">
+        (click)="returnToDashboard()"
+      >
       </p-button>
     </div>
   </div>
