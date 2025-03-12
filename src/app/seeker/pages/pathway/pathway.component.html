@@ -1,128 +1,257 @@
-<!-- pathway.component.html -->
 <div class="relative z-40 mt-20 pb-20">
   <div class="mb-5">
-    <h1 class="font-bold text-xl md:text-3xl text-gray-900">Your Career Pathway</h1>
+    <h1 class="font-bold text-xl md:text-3xl text-gray-900">
+      Your Career Pathway
+    </h1>
     <p class="text-gray-800 text-[12px]">
-      Explore your career progression based on your skills. Click on a role to view details.
+      Explore your career progression based on your skills. Click a role to view
+      details.
     </p>
   </div>
 
-  <hr />
+  <hr class="border-gray-200 mb-6" />
 
   <!-- Loading and Error States -->
-  <div *ngIf="!isPathwayLoaded && !error" class="text-center text-gray-600">
-    <svg class="animate-spin h-5 w-5 text-gray-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-    </svg>
-    Loading career pathway...
+  <div *ngIf="!isPathwayLoaded && !error" class="text-center py-10">
+    <i class="fas fa-spinner fa-spin text-2xl text-gray-600 mb-2"></i>
+    <p class="text-gray-600">Loading career pathway...</p>
   </div>
-  <div *ngIf="error" class="text-center text-red-600">
-    {{ error }}
+  <div
+    *ngIf="error"
+    class="text-center py-10 bg-red-100 text-red-600 rounded-lg p-4"
+  >
+    <i class="fas fa-exclamation-triangle mr-2"></i> {{ error }}
   </div>
 
-  <!-- Pathway Visualization -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 py-8" *ngIf="isPathwayLoaded">
-    <div class="flex">
-      <!-- SVG Pathway -->
-      <div class="flex-1">
-        <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" class="border">
-          <!-- Draw connections (arrows) between roles -->
-          <g fill="none" stroke="#000" stroke-width="2">
-            <ng-container *ngFor="let connection of connections">
-              <ng-container *ngIf="getNodePosition(connection.from) as fromPos">
-                <ng-container *ngIf="getNodePosition(connection.to) as toPos">
-                  <path
-                    [attr.d]="
-                      'M' +
-                      (fromPos.x) +
-                      ',' +
-                      (fromPos.y + 30) +
-                      ' L' +
-                      (toPos.x) +
-                      ',' +
-                      (toPos.y - 30)
-                    "
-                    marker-end="url(#arrow)"
-                  />
-                </ng-container>
-              </ng-container>
-            </ng-container>
-          </g>
-
-          <!-- Define arrow marker -->
-          <defs>
-            <marker
-              id="arrow"
-              markerWidth="10"
-              markerHeight="10"
-              refX="8"
-              refY="3"
-              orient="auto"
-              markerUnits="strokeWidth"
-            >
-              <path d="M0,0 L0,6 L9,3 z" fill="#000" />
-            </marker>
-          </defs>
-
-          <!-- Draw nodes (roles) as rectangles -->
-          <g *ngFor="let node of nodePositions">
-            <!-- Rectangle for the role -->
-            <rect
-              [attr.x]="node.x - 80"
-              [attr.y]="node.y - 20"
-              width="160"
-              height="40"
-              rx="5"
-              [ngClass]="{
-                'fill-green-300': pathway[node.roleKey].isEligible,
-                'fill-yellow-300': !pathway[node.roleKey].isEligible && pathway[node.roleKey].missingSkills.length > 0,
-                'fill-gray-300': !pathway[node.roleKey].isEligible && pathway[node.roleKey].missingSkills.length === pathway[node.roleKey].requirements.length
-              }"
-              stroke="#000"
-              stroke-width="1"
-              class="cursor-pointer"
-              (click)="selectRole(node.roleKey)"
-            />
-            <!-- Text inside the rectangle -->
-            <text
-              [attr.x]="node.x"
-              [attr.y]="node.y + 5"
-              text-anchor="middle"
-              alignment-baseline="middle"
-              class="text-sm text-gray-700"
-            >
-              {{ pathway[node.roleKey].role }}
-            </text>
-          </g>
-        </svg>
+  <!-- Pathway Visualization with PrimeNG OrganizationChart -->
+  <div class="pathway-content" *ngIf="isPathwayLoaded">
+    <div class="flex flex-col lg:flex-row justify-center items-start gap-8">
+      <!-- OrganizationChart Component -->
+      <div class="chart-container w-full lg:w-2/3">
+        <div class="bg-white shadow-md border border-slate-200 rounded-lg p-6">
+          <h2
+            class="text-xl font-semibold text-gray-800 flex items-center mb-10"
+          >
+            <i class="fas fa-chart-network mr-2 text-green-500"></i> Career
+            Hierarchy
+          </h2>
+          <p-organizationChart
+            [value]="chartData"
+            selectionMode="single"
+            [(selection)]="selectedNode"
+            (onNodeSelect)="onNodeSelect($event)"
+            class="custom-org-chart"
+            [style]="{ 'max-height': '600px', 'overflow-y': 'auto' }"
+          >
+            <ng-template let-node pTemplate="default">
+              <div
+                class="node-content"
+                [ngClass]="getNodeClass(node)"
+                pTooltip="{{ node.label }} Details"
+                tooltipPosition="top"
+              >
+                <div class="flex items-center justify-center h-full">
+                  <i
+                    class="fas"
+                    [ngClass]="{
+                      'fa-user-tie': node.data?.level === 'Associate',
+                      'fa-user-graduate':
+                        node.data?.level === 'Senior Associate',
+                      'fa-user-secret': node.data?.level === 'Professional'
+                    }"
+                    [class.text-blue-500]="node.data?.key === currentRoleKey"
+                    [class.text-yellow-500]="node.data?.key === nextRoleKey"
+                  ></i>
+                  <span class="ml-2">{{ node.label }}</span>
+                </div>
+              </div>
+            </ng-template>
+          </p-organizationChart>
+        </div>
       </div>
 
-      <!-- Details Panel -->
-      <div class="w-1/3 pl-4" *ngIf="selectedRole">
-        <div class="p-4 rounded-lg shadow-sm border bg-white">
-          <h4 class="font-medium text-gray-900">{{ selectedRole.role }}</h4>
-          <p class="text-sm text-gray-600">Level: {{ selectedRole.level }}</p>
-          <p class="text-sm text-gray-600">
-            Status: {{ selectedRole.isEligible ? 'Eligible' : 'Not Eligible' }}
-          </p>
-          <div *ngIf="!selectedRole.isEligible && selectedRole.missingSkills.length > 0">
-            <p class="text-sm text-gray-600">Skills to Improve:</p>
-            <ul class="list-disc list-inside text-sm text-gray-600">
-              <li *ngFor="let skill of selectedRole.missingSkills">
-                {{ skill.skill }} (Current: {{ skill.userLevel }} / Required: {{ skill.requiredLevel }})
-              </li>
-            </ul>
-          </div>
-          <div class="mt-2">
-            <p class="text-sm text-gray-600">
-              Progress: {{ (selectedRole.requirements.length - selectedRole.missingSkills.length) / selectedRole.requirements.length * 100 | number: '1.0-0' }}%
+      <!-- Details and Summary Panel -->
+      <div class="details-container w-full lg:w-2/3">
+        <!-- Summary Card -->
+        <div
+          class="bg-white shadow-md border border-slate-200 rounded-lg p-6 mb-6"
+        >
+          <h3
+            class="text-lg font-semibold text-gray-800 flex items-center mb-4"
+          >
+            <i class="fas fa-info-circle mr-2 text-blue-500"></i> Career Summary
+          </h3>
+          <div class="space-y-2 text-gray-600">
+            <p>
+              <strong>Current Role:</strong>
+              {{ currentRoleKey ? pathway[currentRoleKey].role : "N/A" }}
             </p>
-            <div class="w-full bg-gray-200 rounded-full h-2.5">
+            <p>
+              <strong>Next Role:</strong>
+              {{ nextRoleKey ? pathway[nextRoleKey].role : "N/A" }}
+            </p>
+            <p>
+              <strong>Overall Progress:</strong>
+              <span class="text-green-600 font-medium"
+                >{{ calculateOverallProgress() | number : "1.0-0" }}%</span
+              >
+            </p>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
               <div
-                class="bg-blue-600 h-2.5 rounded-full"
-                [style.width]="(selectedRole.requirements.length - selectedRole.missingSkills.length) / selectedRole.requirements.length * 100 + '%'"
+                class="bg-green-600 h-2.5 rounded-full"
+                [style.width]="calculateOverallProgress() + '%'"
               ></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Details Card -->
+        <div
+          class="bg-white shadow-md border border-slate-200 rounded-lg p-6"
+          *ngIf="selectedRole"
+        >
+          <h4
+            class="text-lg font-semibold text-gray-800 flex items-center mb-4"
+          >
+            <i class="fas fa-user-check mr-2 text-purple-500"></i>
+            {{ selectedRole.role }} Details
+          </h4>
+          <div class="space-y-4 text-gray-600">
+            <p><strong>Level:</strong> {{ selectedRole.level }}</p>
+            <p><strong>Description:</strong> {{ selectedRole.description }}</p>
+            <p>
+              <strong>Status:</strong>
+              <span
+                [ngClass]="{
+                  'text-green-600': selectedRole.isEligible,
+                  'text-red-600': !selectedRole.isEligible
+                }"
+              >
+                {{ selectedRole.isEligible ? "Eligible" : "Not Eligible" }}
+              </span>
+            </p>
+
+            <div
+              *ngIf="
+                !selectedRole.isEligible &&
+                selectedRole.missingSkills.length > 0
+              "
+              class="bg-yellow-100 p-3 rounded-md"
+            >
+              <h5 class="font-medium text-gray-800 flex items-center mb-2">
+                <i class="fas fa-exclamation-circle mr-2 text-yellow-600"></i>
+                Skills to Improve:
+              </h5>
+              <ul class="list-disc list-inside text-sm">
+                <li *ngFor="let skill of selectedRole.missingSkills">
+                  {{ skill.skill }} (Current: {{ skill.userLevel }} / Required:
+                  {{ skill.requiredLevel }})
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <p class="font-medium text-gray-800 flex items-center mb-2">
+                <i class="fas fa-chart-line mr-2 text-blue-500"></i> Progress:
+              </p>
+              <p class="text-sm">
+                {{
+                  ((selectedRole.requirements.length -
+                    selectedRole.missingSkills.length) /
+                    selectedRole.requirements.length) *
+                    100 | number : "1.0-0"
+                }}%
+              </p>
+              <div class="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+                <div
+                  class="bg-blue-500 h-2.5 rounded-full"
+                  [style.width]="
+                    ((selectedRole.requirements.length -
+                      selectedRole.missingSkills.length) /
+                      selectedRole.requirements.length) *
+                      100 +
+                    '%'
+                  "
+                ></div>
+              </div>
+            </div>
+
+            <!-- All Requirements -->
+            <div>
+              <h5 class="font-medium text-gray-800 flex items-center mb-2">
+                <i class="fas fa-list-ul mr-2 text-green-500"></i> Required
+                Skills:
+              </h5>
+              <ul class="list-disc list-inside text-sm">
+                <li
+                  *ngFor="let req of selectedRole.requirements"
+                  class="hover:bg-gray-100 p-1 rounded"
+                >
+                  {{ req.skill }} (Required: {{ req.requiredLevel }}, Current:
+                  {{ req.userLevel }})
+                  <span
+                    *ngIf="req.meetsRequirement"
+                    class="text-green-500 ml-2"
+                  >
+                    <i class="fas fa-check"></i>
+                  </span>
+                  <span *ngIf="!req.meetsRequirement" class="text-red-500 ml-2">
+                    <i class="fas fa-times"></i>
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Recommendations -->
+            <div *ngIf="recommendations.length > 0">
+              <h5 class="font-medium text-gray-800 flex items-center mb-2">
+                <i class="fas fa-lightbulb mr-2 text-yellow-500"></i>
+                Recommendations
+              </h5>
+              <ul class="list-disc list-inside text-sm">
+                <li
+                  *ngFor="let rec of recommendations"
+                  class="hover:bg-gray-100 p-1 rounded"
+                >
+                  {{ rec.action }}
+                  <a
+                    *ngIf="rec.resource"
+                    [href]="rec.resource"
+                    target="_blank"
+                    class="text-blue-500 underline ml-1"
+                  >
+                    <i class="fas fa-external-link-alt"></i> Learn More
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Learning Resources -->
+            <div
+              *ngIf="
+                selectedRole.recommendedResources &&
+                selectedRole.recommendedResources.length > 0
+              "
+            >
+              <h5 class="font-medium text-gray-800 flex items-center mb-2">
+                <i class="fas fa-book mr-2 text-indigo-500"></i> Learning
+                Resources
+              </h5>
+              <ul class="list-disc list-inside text-sm">
+                <li
+                  *ngFor="let resource of selectedRole.recommendedResources"
+                  class="hover:bg-gray-100 p-1 rounded"
+                >
+                  <a
+                    [href]="resource.url"
+                    target="_blank"
+                    class="text-indigo-500 underline"
+                  >
+                    {{ resource.title }}
+                    <i class="fas fa-external-link-alt ml-1"></i>
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
