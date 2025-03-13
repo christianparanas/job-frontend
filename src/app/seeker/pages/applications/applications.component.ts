@@ -17,7 +17,7 @@ interface Application {
     id: number;
     title: string;
     status: string;
-    employer: { username: string };
+    employer: { name: string };
     location?: string;
     salary?: string;
     type?: string;
@@ -67,7 +67,7 @@ export class ApplicationsComponent implements OnInit {
             id: app.Job.id,
             title: app.Job.title,
             status: app.Job.status,
-            employer: { username: app.Job.employer.username },
+            employer: { name: app.Job.employer.firstname },
             location: app.Job.location,
             salary: app.Job.salary,
             type: app.Job.type,

@@ -2,6 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
+
+interface JwtPayload {
+  id: string; // Matches the 'id' from backend token payload
+  exp: number; // Automatically added by jwt.sign with expiresIn
+  iat?: number; // Issued at, optional
+  [key: string]: any; // Allow other potential claims
+}
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +20,7 @@ export class AuthService {
   private readonly TOKEN_KEY = 'authToken';
   private readonly USER_KEY = 'currentUser';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   signup(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/signup`, userData);
@@ -51,8 +60,33 @@ export class AuthService {
     return user ? JSON.parse(user) : null;
   }
 
+  isTokenExpired(token: string | null): boolean {
+    if (!token) return true; // No token means it's "expired"
+
+    try {
+      const decoded = jwtDecode<JwtPayload>(token);
+      const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+      return decoded.exp < currentTime; // Expired if exp is less than current time
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return true; // Treat invalid tokens as expired
+    }
+  }
+
   isAuthenticated(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+    if (!token) {
+      return false;
+    }
+
+    if (this.isTokenExpired(token)) {
+      // Token is expired, clear storage and redirect to login
+      this.logout();
+      this.router.navigate(['/login']);
+      return false;
+    }
+
+    return true;
   }
 
   logout(): void {

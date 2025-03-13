@@ -2,10 +2,15 @@
   <div>
     <div>
       <div class="w-full h-[200px] md:h-[300px] bg-gray-400 rounded-xl"></div>
-      <div class="py-5 rounded-lg grid place-items-center absolute top-24 md:top-44 ml-10">
+      <div
+        class="py-5 rounded-lg grid place-items-center absolute top-24 md:top-44 ml-10"
+      >
         <div class="w-fit rounded-full h-fit border-4 border-gray-200">
           <img
-            [src]="profile.image || 'https://avatars.githubusercontent.com/u/73870953?v=4'"
+            [src]="
+              profile.image ||
+              'https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg'
+            "
             alt="Profile picture"
             class="w-[150px] h-[150px] md:w-[150px] md:h-[150px] object-cover rounded-full"
           />
@@ -14,7 +19,7 @@
           <h2
             class="text-center mt-4 font-bold text-[15px] md:text-[20px] text-black"
           >
-            {{ profile.firstname + " " + profile.lastname || 'Loading...' }}
+            {{ profile.firstname + " " + profile.lastname || "Loading..." }}
           </h2>
         </div>
       </div>
@@ -25,7 +30,11 @@
 
   <div class="mt-10 bg-white w-full">
     <div class="w-[400px] sm:w-full">
-      <p-tabs [(value)]="selectedTabIndex" scrollable (onChange)="onTabChange($event)">
+      <p-tabs
+        [(value)]="selectedTabIndex"
+        scrollable
+        (onChange)="onTabChange($event)"
+      >
         <p-tablist>
           @for(tab of tabs; track trackTabValue){
           <p-tab [value]="tab.value">

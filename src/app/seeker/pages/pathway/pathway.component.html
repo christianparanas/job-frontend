@@ -12,34 +12,86 @@
   <hr class="border-gray-200 mb-6" />
 
   <!-- Loading and Error States -->
-  <div *ngIf="!isPathwayLoaded && !error" class="text-center py-10">
+  <section class="text-center py-10" *ngIf="!isPathwayLoaded && !error">
     <i class="fas fa-spinner fa-spin text-2xl text-gray-600 mb-2"></i>
     <p class="text-gray-600">Loading career pathway...</p>
-  </div>
-  <div
-    *ngIf="error"
+  </section>
+  <section
     class="text-center py-10 bg-red-100 text-red-600 rounded-lg p-4"
+    *ngIf="error"
   >
     <i class="fas fa-exclamation-triangle mr-2"></i> {{ error }}
-  </div>
+  </section>
 
-  <!-- Pathway Visualization with PrimeNG OrganizationChart -->
-  <div class="pathway-content" *ngIf="isPathwayLoaded">
-    <div class="flex flex-col lg:flex-row justify-center items-start gap-8">
-      <!-- OrganizationChart Component -->
-
-      <!-- Details and Summary Panel -->
-      <div class="details-container w-full lg:w-[600px]">
-        <!-- Summary Card -->
+  <!-- Main Content -->
+  <main class="pathway-content bg-gray-100 p-5 rounded-md" *ngIf="isPathwayLoaded">
+    <div class="flex flex-col lg:flex-row gap-6 justify-center items-start">
+      <!-- Chart Section -->
+      <aside
+        class="chart-container w-full lg:w-1/2 bg-white rounded-lg shadow-md p-6"
+      >
+        <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+          <i class="fas fa-chart-network mr-2 text-green-500"></i> Career
+          Hierarchy
+        </h2>
         <div
-          class="bg-white shadow-md border border-slate-200 rounded-lg p-6 mb-6"
+          class="custom-org-chart"
+          [style]="{ 'max-height': '600px', 'overflow-y': 'auto' }"
         >
+          <p-organizationChart
+            [value]="chartData"
+            selectionMode="single"
+            [(selection)]="selectedNode"
+            (onNodeSelect)="onNodeSelect($event)"
+          >
+            <ng-template let-node pTemplate="default">
+              <div
+                class="node-content p-2 rounded-lg transition-all duration-300"
+                [ngClass]="getNodeClass(node)"
+                pTooltip="{{ node.label }} Details"
+                tooltipPosition="top"
+                (click)="onNodeSelect({ node: node })"
+              >
+                <div class="flex items-center justify-center h-full">
+                  <i
+                    class="fas"
+                    [ngClass]="{
+                      'fa-user-tie': node.data?.level === 'Associate',
+                      'fa-user-graduate':
+                        node.data?.level === 'Senior Associate',
+                      'fa-user-secret': node.data?.level === 'Professional'
+                    }"
+                    [class.text-blue-500]="node.data?.key === currentRoleKey"
+                    [class.text-yellow-500]="node.data?.key === nextRoleKey"
+                  ></i>
+                  <span class="ml-2 text-sm md:text-base">{{
+                    node.label
+                  }}</span>
+                  <!-- <span
+                    *ngIf="node.data?.relatedRoles"
+                    class="ml-2 text-xs text-gray-500"
+                  >
+                    (Related: {{ node.data.relatedRoles.join(", ") }})
+                  </span> -->
+                </div>
+              </div>
+            </ng-template>
+          </p-organizationChart>
+        </div>
+      </aside>
+
+      <!-- Details Section -->
+      <section
+        class="details-container w-full lg:w-1/2 bg-white rounded-lg shadow-md p-6"
+      >
+        <!-- Summary Card -->
+        <article class="mb-6">
           <h3
-            class="text-lg font-semibold text-gray-800 flex items-center mb-4"
+            class="text-lg font-semibold text-gray-800 mb-4 flex items-center"
           >
             <i class="fas fa-info-circle mr-2 text-blue-500"></i> Career Summary
           </h3>
-          <div class="space-y-2 text-gray-600">
+          <div class="space-y-3 text-gray-600">
             <p>
               <strong>Current Role:</strong>
               {{ currentRoleKey ? pathway[currentRoleKey].role : "N/A" }}
@@ -54,22 +106,19 @@
                 >{{ calculateOverallProgress() | number : "1.0-0" }}%</span
               >
             </p>
-            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+            <div class="w-full bg-gray-200 rounded-full h-2">
               <div
-                class="bg-green-600 h-2.5 rounded-full"
+                class="bg-green-600 h-2 rounded-full transition-all duration-300"
                 [style.width]="calculateOverallProgress() + '%'"
               ></div>
             </div>
           </div>
-        </div>
+        </article>
 
         <!-- Details Card -->
-        <div
-          class="bg-white shadow-md border border-slate-200 rounded-lg p-6"
-          *ngIf="selectedRole"
-        >
+        <article *ngIf="selectedRole">
           <h4
-            class="text-lg font-semibold text-gray-800 flex items-center mb-4"
+            class="text-lg font-semibold text-gray-800 mb-4 flex items-center"
           >
             <i class="fas fa-user-check mr-2 text-purple-500"></i>
             {{ selectedRole.role }} Details
@@ -94,13 +143,13 @@
                 !selectedRole.isEligible &&
                 selectedRole.missingSkills.length > 0
               "
-              class="bg-yellow-100 p-3 rounded-md"
+              class="bg-yellow-50 p-3 rounded-md"
             >
               <h5 class="font-medium text-gray-800 flex items-center mb-2">
                 <i class="fas fa-exclamation-circle mr-2 text-yellow-600"></i>
-                Skills to Improve:
+                Skills to Improve
               </h5>
-              <ul class="list-disc list-inside text-sm">
+              <ul class="list-disc list-inside text-sm space-y-1">
                 <li *ngFor="let skill of selectedRole.missingSkills">
                   {{ skill.skill }} (Current: {{ skill.userLevel }} / Required:
                   {{ skill.requiredLevel }})
@@ -110,9 +159,9 @@
 
             <div>
               <p class="font-medium text-gray-800 flex items-center mb-2">
-                <i class="fas fa-chart-line mr-2 text-blue-500"></i> Progress:
+                <i class="fas fa-chart-line mr-2 text-blue-500"></i> Progress
               </p>
-              <p class="text-sm">
+              <p class="text-sm mb-1">
                 {{
                   ((selectedRole.requirements.length -
                     selectedRole.missingSkills.length) /
@@ -120,9 +169,9 @@
                     100 | number : "1.0-0"
                 }}%
               </p>
-              <div class="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+              <div class="w-full bg-gray-200 rounded-full h-2">
                 <div
-                  class="bg-blue-500 h-2.5 rounded-full"
+                  class="bg-blue-500 h-2 rounded-full transition-all duration-300"
                   [style.width]="
                     ((selectedRole.requirements.length -
                       selectedRole.missingSkills.length) /
@@ -134,16 +183,15 @@
               </div>
             </div>
 
-            <!-- All Requirements -->
             <div>
               <h5 class="font-medium text-gray-800 flex items-center mb-2">
                 <i class="fas fa-list-ul mr-2 text-green-500"></i> Required
-                Skills:
+                Skills
               </h5>
-              <ul class="list-disc list-inside text-sm">
+              <ul class="list-disc list-inside text-sm space-y-1">
                 <li
                   *ngFor="let req of selectedRole.requirements"
-                  class="hover:bg-gray-100 p-1 rounded"
+                  class="hover:bg-gray-100 p-1 rounded transition duration-200"
                 >
                   {{ req.skill }} (Required: {{ req.requiredLevel }}, Current:
                   {{ req.userLevel }})
@@ -160,23 +208,22 @@
               </ul>
             </div>
 
-            <!-- Recommendations -->
             <div *ngIf="recommendations.length > 0">
               <h5 class="font-medium text-gray-800 flex items-center mb-2">
                 <i class="fas fa-lightbulb mr-2 text-yellow-500"></i>
                 Recommendations
               </h5>
-              <ul class="list-disc list-inside text-sm">
+              <ul class="list-disc list-inside text-sm space-y-1">
                 <li
                   *ngFor="let rec of recommendations"
-                  class="hover:bg-gray-100 p-1 rounded"
+                  class="hover:bg-gray-100 p-1 rounded transition duration-200"
                 >
                   {{ rec.action }}
                   <a
                     *ngIf="rec.resource"
                     [href]="rec.resource"
                     target="_blank"
-                    class="text-blue-500 underline ml-1"
+                    class="text-blue-500 underline ml-1 hover:text-blue-700 transition duration-200"
                   >
                     <i class="fas fa-external-link-alt"></i> Learn More
                   </a>
@@ -184,7 +231,6 @@
               </ul>
             </div>
 
-            <!-- Learning Resources -->
             <div
               *ngIf="
                 selectedRole.recommendedResources &&
@@ -195,15 +241,15 @@
                 <i class="fas fa-book mr-2 text-indigo-500"></i> Learning
                 Resources
               </h5>
-              <ul class="list-disc list-inside text-sm">
+              <ul class="list-disc list-inside text-sm space-y-1">
                 <li
                   *ngFor="let resource of selectedRole.recommendedResources"
-                  class="hover:bg-gray-100 p-1 rounded"
+                  class="hover:bg-gray-100 p-1 rounded transition duration-200"
                 >
                   <a
                     [href]="resource.url"
                     target="_blank"
-                    class="text-indigo-500 underline"
+                    class="text-indigo-500 underline hover:text-indigo-700 transition duration-200"
                   >
                     {{ resource.title }}
                     <i class="fas fa-external-link-alt ml-1"></i>
@@ -212,52 +258,8 @@
               </ul>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div class="chart-container w-full lg:w-2/3">
-        <div class="bg-white shadow-md border border-slate-200 rounded-lg p-6">
-          <h2
-            class="text-xl font-semibold text-gray-800 flex items-center mb-10"
-          >
-            <i class="fas fa-chart-network mr-2 text-green-500"></i> Career
-            Hierarchy
-          </h2>
-          <p-organizationChart
-            [value]="chartData"
-            selectionMode="single"
-            [(selection)]="selectedNode"
-            (onNodeSelect)="onNodeSelect($event)"
-            class="custom-org-chart"
-
-            [style]="{ 'max-height': '600px', 'overflow-y': 'auto' }"
-          >
-            <ng-template let-node pTemplate="default">
-              <div
-                class="node-content"
-                [ngClass]="getNodeClass(node)"
-                pTooltip="{{ node.label }} Details"
-                tooltipPosition="top"
-              >
-                <div class="flex items-center justify-center h-full">
-                  <i
-                    class="fas"
-                    [ngClass]="{
-                      'fa-user-tie': node.data?.level === 'Associate',
-                      'fa-user-graduate':
-                        node.data?.level === 'Senior Associate',
-                      'fa-user-secret': node.data?.level === 'Professional'
-                    }"
-                    [class.text-blue-500]="node.data?.key === currentRoleKey"
-                    [class.text-yellow-500]="node.data?.key === nextRoleKey"
-                  ></i>
-                  <span class="ml-2">{{ node.label }}</span>
-                </div>
-              </div>
-            </ng-template>
-          </p-organizationChart>
-        </div>
-      </div>
+        </article>
+      </section>
     </div>
-  </div>
+  </main>
 </div>
