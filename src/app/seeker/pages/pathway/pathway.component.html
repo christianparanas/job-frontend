@@ -27,51 +27,9 @@
   <div class="pathway-content" *ngIf="isPathwayLoaded">
     <div class="flex flex-col lg:flex-row justify-center items-start gap-8">
       <!-- OrganizationChart Component -->
-      <div class="chart-container w-full lg:w-2/3">
-        <div class="bg-white shadow-md border border-slate-200 rounded-lg p-6">
-          <h2
-            class="text-xl font-semibold text-gray-800 flex items-center mb-10"
-          >
-            <i class="fas fa-chart-network mr-2 text-green-500"></i> Career
-            Hierarchy
-          </h2>
-          <p-organizationChart
-            [value]="chartData"
-            selectionMode="single"
-            [(selection)]="selectedNode"
-            (onNodeSelect)="onNodeSelect($event)"
-            class="custom-org-chart"
-            [style]="{ 'max-height': '600px', 'overflow-y': 'auto' }"
-          >
-            <ng-template let-node pTemplate="default">
-              <div
-                class="node-content"
-                [ngClass]="getNodeClass(node)"
-                pTooltip="{{ node.label }} Details"
-                tooltipPosition="top"
-              >
-                <div class="flex items-center justify-center h-full">
-                  <i
-                    class="fas"
-                    [ngClass]="{
-                      'fa-user-tie': node.data?.level === 'Associate',
-                      'fa-user-graduate':
-                        node.data?.level === 'Senior Associate',
-                      'fa-user-secret': node.data?.level === 'Professional'
-                    }"
-                    [class.text-blue-500]="node.data?.key === currentRoleKey"
-                    [class.text-yellow-500]="node.data?.key === nextRoleKey"
-                  ></i>
-                  <span class="ml-2">{{ node.label }}</span>
-                </div>
-              </div>
-            </ng-template>
-          </p-organizationChart>
-        </div>
-      </div>
 
       <!-- Details and Summary Panel -->
-      <div class="details-container w-full lg:w-2/3">
+      <div class="details-container w-full lg:w-[600px]">
         <!-- Summary Card -->
         <div
           class="bg-white shadow-md border border-slate-200 rounded-lg p-6 mb-6"
@@ -254,6 +212,50 @@
               </ul>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="chart-container w-full lg:w-2/3">
+        <div class="bg-white shadow-md border border-slate-200 rounded-lg p-6">
+          <h2
+            class="text-xl font-semibold text-gray-800 flex items-center mb-10"
+          >
+            <i class="fas fa-chart-network mr-2 text-green-500"></i> Career
+            Hierarchy
+          </h2>
+          <p-organizationChart
+            [value]="chartData"
+            selectionMode="single"
+            [(selection)]="selectedNode"
+            (onNodeSelect)="onNodeSelect($event)"
+            class="custom-org-chart"
+
+            [style]="{ 'max-height': '600px', 'overflow-y': 'auto' }"
+          >
+            <ng-template let-node pTemplate="default">
+              <div
+                class="node-content"
+                [ngClass]="getNodeClass(node)"
+                pTooltip="{{ node.label }} Details"
+                tooltipPosition="top"
+              >
+                <div class="flex items-center justify-center h-full">
+                  <i
+                    class="fas"
+                    [ngClass]="{
+                      'fa-user-tie': node.data?.level === 'Associate',
+                      'fa-user-graduate':
+                        node.data?.level === 'Senior Associate',
+                      'fa-user-secret': node.data?.level === 'Professional'
+                    }"
+                    [class.text-blue-500]="node.data?.key === currentRoleKey"
+                    [class.text-yellow-500]="node.data?.key === nextRoleKey"
+                  ></i>
+                  <span class="ml-2">{{ node.label }}</span>
+                </div>
+              </div>
+            </ng-template>
+          </p-organizationChart>
         </div>
       </div>
     </div>
