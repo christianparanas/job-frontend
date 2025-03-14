@@ -1,46 +1,122 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { FormsModule } from '@angular/forms';
+import { ChatService } from '../../shared/services/chat.service';
+import { AuthService } from '../../../core/shared/services/auth.service';
 
 interface Chat {
   id: number;
-  name: string;
-  lastMessage: string;
+  employerId: number;
+  candidateId: number;
+  lastMessage: string | null;
   timestamp: string;
-  unread: number;
+  unreadEmployer: number;
+  unreadCandidate: number;
+  employer: { id: number; username: string };
+  candidate: { id: number; username: string };
+  Messages?: Message[]; // Updated to include Messages
 }
 
 interface Message {
-  sender: string;
+  chatId: number;
+  senderId: number;
   content: string;
   timestamp: string;
-  isSentByUser: boolean;
 }
 
 @Component({
   selector: 'app-chats',
-  imports: [CommonModule, ButtonModule],
+  imports: [CommonModule, ButtonModule, FormsModule],
   templateUrl: './chats.component.html',
   styleUrls: ['./chats.component.css'],
   standalone: true,
 })
-export class ChatsComponent {
-  chats: Chat[] = [
-    { id: 1, name: 'John Doe', lastMessage: 'Looking forward to the interview!', timestamp: '10:45 AM', unread: 2 },
-    { id: 2, name: 'Jane Smith', lastMessage: 'Thanks for the opportunity.', timestamp: 'Yesterday', unread: 0 },
-    { id: 3, name: 'Alex Brown', lastMessage: 'Can we reschedule?', timestamp: 'Mar 6', unread: 1 },
-  ];
+export class ChatsComponent implements OnInit, OnDestroy {
+  chats: Chat[] = [];
+  messages: Message[] = [];
+  selectedChat: Chat | null = null;
+  currentUserId: number | null = null;
+  newMessage: string = '';
 
-  messages: Message[] = [
-    { sender: 'John Doe', content: 'Hi, I’m excited about the Software Engineer role!', timestamp: '10:30 AM', isSentByUser: false },
-    { sender: 'You', content: 'Great to hear, John! Let’s schedule an interview.', timestamp: '10:32 AM', isSentByUser: true },
-    { sender: 'John Doe', content: 'Looking forward to it!', timestamp: '10:45 AM', isSentByUser: false },
-  ];
+  constructor(
+    private chatService: ChatService,
+    private authService: AuthService
+  ) {}
 
-  selectedChat: Chat | null = this.chats[0]; // Default to first chat
+  ngOnInit(): void {
+    const user = this.authService.getUser();
+    this.currentUserId = user?.id;
 
-  selectChat(chat: Chat) {
+    if (this.currentUserId) {
+      this.chatService.getChatsByUserId(this.currentUserId).subscribe({
+        next: (chats: any) => {
+          this.chats = chats;
+          if (chats.length > 0) {
+            this.selectChat(chats[0]);
+          }
+        },
+        error: (error: any) => {
+          console.error('Error fetching chats:', error);
+        },
+      });
+
+      this.chatService.getMessages().subscribe((messages: any) => {
+        this.messages = messages;
+        this.scrollToBottom();
+      });
+    }
+  }
+
+  selectChat(chat: Chat): void {
     this.selectedChat = chat;
-    // In a real app, fetch messages for the selected chat here
+    this.chatService.joinChat(chat.id);
+    this.chatService.clearMessages();
+
+    this.chatService.getChatById(chat.id).subscribe({
+      next: (chatDetails: any) => {
+        this.messages = chatDetails.Messages || []; // Use Messages property
+        this.scrollToBottom();
+      },
+      error: (error: any) => {
+        console.error('Error fetching chat messages:', error);
+      },
+    });
+  }
+
+  sendMessage(): void {
+    if (this.newMessage.trim() && this.selectedChat) {
+      this.chatService.sendMessage(this.selectedChat.id, this.newMessage);
+      this.newMessage = '';
+    }
+  }
+
+  getOtherUser(chat: Chat): string {
+    return chat.employerId === this.currentUserId
+      ? chat.candidate.username
+      : chat.employer.username;
+  }
+
+  getUnreadCount(chat: Chat): number {
+    return chat.employerId === this.currentUserId
+      ? chat.unreadEmployer
+      : chat.unreadCandidate;
+  }
+
+  isSentByUser(message: Message): boolean {
+    return message.senderId === this.currentUserId;
+  }
+
+  scrollToBottom(): void {
+    setTimeout(() => {
+      const messagesContainer = document.querySelector('.messages-container');
+      if (messagesContainer) {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
+    }, 0);
+  }
+
+  ngOnDestroy(): void {
+    this.chatService.disconnect();
   }
 }
