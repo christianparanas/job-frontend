@@ -1,5 +1,3 @@
-
-
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -25,24 +23,20 @@ export class AdminSidebarComponent implements OnInit {
       route: 'users',
       icon: 'fal fa-box-ballot',
     },
-    // {
-    //   title: 'Reports',
-    //   route: 'reports',
-    //   icon: 'fal fa-retweet',
-    // },
     {
-      title: 'Settings',
-      route: 'settings',
-      icon: 'fal fa-info-circle',
+      title: 'Jobs',
+      route: 'jobs',
+      icon: 'fal fa-box-ballot',
     },
+    {
+      title: 'Assessments',
+      route: 'assessments',
+      icon: 'fal fa-box-ballot',
+    },
+
     {
       title: 'Logs',
       route: 'logs',
-      icon: 'fal fa-info-circle',
-    },
-    {
-      title: 'Tickets',
-      route: 'tickets',
       icon: 'fal fa-info-circle',
     },
   ];

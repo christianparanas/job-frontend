@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { ChatService } from '../../../seeker/shared/services/chat.service';
 import { AuthService } from '../../../core/shared/services/auth.service';
 
@@ -14,8 +14,13 @@ interface Chat {
   timestamp: string;
   unreadEmployer: number;
   unreadCandidate: number;
-  employer: { id: number; username: string };
-  candidate: { id: number; username: string; image?: string }; // Add image for candidate
+  employer: { id: number; name: string };
+  candidate: {
+    id: number;
+    firstname: string;
+    lastname: string;
+    image?: string;
+  }; // Add image for candidate
   Messages?: Message[];
 }
 
@@ -28,9 +33,9 @@ interface Message {
 
 @Component({
   selector: 'app-emp-chats',
-  imports: [CommonModule, ButtonModule, FormsModule],
+  imports: [CommonModule, ButtonModule, FormsModule, RouterModule],
   templateUrl: './emp-chats.component.html',
-  styleUrls: ['./emp-chats.component.css'],
+  styleUrls: ['./emp-chats.component.scss'],
   standalone: true,
 })
 export class EmpChatsComponent implements OnInit, OnDestroy {
@@ -39,7 +44,7 @@ export class EmpChatsComponent implements OnInit, OnDestroy {
   selectedChat: Chat | null = null;
   currentUserId: number | null = null;
   newMessage: string = '';
-  isLoading: boolean = false;
+  isLoaded: boolean = false;
 
   constructor(
     private chatService: ChatService,
@@ -53,9 +58,9 @@ export class EmpChatsComponent implements OnInit, OnDestroy {
     this.currentUserId = user?.id;
 
     if (this.currentUserId) {
-      // Fetch chats where the current user is the employer
       this.chatService.getChatsByUserId(this.currentUserId).subscribe({
         next: (chats: any) => {
+          console.log(chats);
           this.chats = chats.filter(
             (chat: { employerId: number | null }) =>
               chat.employerId === this.currentUserId
@@ -72,6 +77,8 @@ export class EmpChatsComponent implements OnInit, OnDestroy {
         },
       });
 
+      this.isLoaded = true;
+
       // Subscribe to incoming messages
       this.chatService.getMessages().subscribe((messages: any) => {
         this.messages = messages;
@@ -81,31 +88,36 @@ export class EmpChatsComponent implements OnInit, OnDestroy {
   }
 
   initializeConversation(applicantId: number): void {
-    this.isLoading = true;
     const existingChat = this.chats.find(
       (chat) => chat.candidateId === applicantId
     );
 
     if (existingChat) {
-      console.log(existingChat);
-      // Open existing chat
       this.selectChat(existingChat);
+      this.isLoaded = true;
     } else {
-      // Create new chat if it doesn't exist
       this.chatService.createChat(this.currentUserId!, applicantId).subscribe({
         next: (newChat: any) => {
-          this.chats = [...this.chats, newChat];
+          this.chats = [newChat, ...this.chats];
           this.selectChat(newChat);
+          this.isLoaded = true;
         },
         error: (error: any) => {
           console.error('Error creating chat:', error);
-          this.isLoading = false;
-        },
-        complete: () => {
-          this.isLoading = false;
+          this.isLoaded = true;
+          this.router.navigate(['/employer/chats']);
         },
       });
     }
+  }
+
+  unselectChat() {
+    this.router.navigate(['/employer/chats']);
+
+    this.messages = [];
+    this.scrollToBottom();
+
+    this.selectChat(null);
   }
 
   selectChat(chat: Chat | null): void {
@@ -117,20 +129,18 @@ export class EmpChatsComponent implements OnInit, OnDestroy {
 
     if (chat) {
       this.chatService.joinChat(chat.id);
-      // this.chatService.clearMessages();
+      this.chatService.clearMessages();
 
       // Fetch messages for the selected chat
       this.chatService.getChatById(chat.id).subscribe({
         next: (chatDetails: any) => {
           this.messages = chatDetails.Messages || [];
           this.scrollToBottom();
+          this.isLoaded = true;
         },
         error: (error: any) => {
           console.error('Error fetching chat messages:', error);
-          this.isLoading = false;
-        },
-        complete: () => {
-          this.isLoading = false;
+          this.isLoaded = true;
         },
       });
     }
@@ -144,12 +154,16 @@ export class EmpChatsComponent implements OnInit, OnDestroy {
   }
 
   getOtherUser(chat: Chat): string {
-    return chat.candidate.username;
+    if (Object.keys(chat).length == 5) {
+      return 'User';
+    }
+
+    return chat.candidate.firstname + ' ' + chat.candidate.lastname;
   }
 
   getUserImage(chat: Chat): string {
     return (
-      chat.candidate.image ||
+      // chat.candidate.image ||
       'https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg'
     ); // Fallback image
   }

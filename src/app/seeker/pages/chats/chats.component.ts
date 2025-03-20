@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { ChatService } from '../../shared/services/chat.service';
 import { AuthService } from '../../../core/shared/services/auth.service';
 
@@ -13,9 +14,14 @@ interface Chat {
   timestamp: string;
   unreadEmployer: number;
   unreadCandidate: number;
-  employer: { id: number; username: string };
-  candidate: { id: number; username: string };
-  Messages?: Message[]; // Updated to include Messages
+  employer: { id: number; firstname: string };
+  candidate: {
+    id: number;
+    firstname: string;
+    lastname: string;
+    image?: string;
+  }; // Add image for candidate
+  Messages?: Message[];
 }
 
 interface Message {
@@ -27,9 +33,9 @@ interface Message {
 
 @Component({
   selector: 'app-chats',
-  imports: [CommonModule, ButtonModule, FormsModule],
+  imports: [CommonModule, ButtonModule, FormsModule, RouterModule],
   templateUrl: './chats.component.html',
-  styleUrls: ['./chats.component.css'],
+  styleUrls: ['./chats.component.scss'],
   standalone: true,
 })
 export class ChatsComponent implements OnInit, OnDestroy {
@@ -38,10 +44,13 @@ export class ChatsComponent implements OnInit, OnDestroy {
   selectedChat: Chat | null = null;
   currentUserId: number | null = null;
   newMessage: string = '';
+  isLoaded: boolean = false;
 
   constructor(
     private chatService: ChatService,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -51,16 +60,20 @@ export class ChatsComponent implements OnInit, OnDestroy {
     if (this.currentUserId) {
       this.chatService.getChatsByUserId(this.currentUserId).subscribe({
         next: (chats: any) => {
-          this.chats = chats;
-          if (chats.length > 0) {
-            this.selectChat(chats[0]);
-          }
+          console.log(chats);
+          this.chats = chats.filter(
+            (chat: { candidateId: number | null }) =>
+              chat.candidateId === this.currentUserId
+          );
         },
         error: (error: any) => {
           console.error('Error fetching chats:', error);
         },
       });
 
+      this.isLoaded = true;
+
+      // Subscribe to incoming messages
       this.chatService.getMessages().subscribe((messages: any) => {
         this.messages = messages;
         this.scrollToBottom();
@@ -68,20 +81,39 @@ export class ChatsComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectChat(chat: Chat): void {
-    this.selectedChat = chat;
-    this.chatService.joinChat(chat.id);
-    this.chatService.clearMessages();
+  unselectChat() {
+    this.router.navigate(['/chats']);
 
-    this.chatService.getChatById(chat.id).subscribe({
-      next: (chatDetails: any) => {
-        this.messages = chatDetails.Messages || []; // Use Messages property
-        this.scrollToBottom();
-      },
-      error: (error: any) => {
-        console.error('Error fetching chat messages:', error);
-      },
+    this.messages = [];
+    this.scrollToBottom();
+
+    this.selectChat(null);
+  }
+
+  selectChat(chat: Chat | null): void {
+    this.selectedChat = chat;
+
+    this.router.navigate(['/chats'], {
+      queryParams: { id: this.selectedChat?.candidateId },
     });
+
+    if (chat) {
+      this.chatService.joinChat(chat.id);
+      this.chatService.clearMessages();
+
+      // Fetch messages for the selected chat
+      this.chatService.getChatById(chat.id).subscribe({
+        next: (chatDetails: any) => {
+          this.messages = chatDetails.Messages || [];
+          this.scrollToBottom();
+          this.isLoaded = true;
+        },
+        error: (error: any) => {
+          console.error('Error fetching chat messages:', error);
+          this.isLoaded = true;
+        },
+      });
+    }
   }
 
   sendMessage(): void {
@@ -92,15 +124,24 @@ export class ChatsComponent implements OnInit, OnDestroy {
   }
 
   getOtherUser(chat: Chat): string {
-    return chat.employerId === this.currentUserId
-      ? chat.candidate.username
-      : chat.employer.username;
+    console.log(chat);
+
+    if (Object.keys(chat).length == 5) {
+      return 'User';
+    }
+
+    return chat.employer.firstname;
+  }
+
+  getUserImage(chat: Chat): string {
+    return (
+      // chat.candidate.image ||
+      'https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg'
+    ); // Fallback image
   }
 
   getUnreadCount(chat: Chat): number {
-    return chat.employerId === this.currentUserId
-      ? chat.unreadEmployer
-      : chat.unreadCandidate;
+    return chat.unreadCandidate;
   }
 
   isSentByUser(message: Message): boolean {

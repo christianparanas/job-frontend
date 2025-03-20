@@ -9,6 +9,7 @@ import { HotToastService } from '@ngxpert/hot-toast';
 import { AuthService } from '../../../core/shared/services/auth.service';
 import { CandidateService } from '../../shared/services/emp-candidate.service';
 import { BadgeModule } from 'primeng/badge';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-emp-candidate',
@@ -20,6 +21,7 @@ import { BadgeModule } from 'primeng/badge';
     CardModule,
     FormsModule,
     BadgeModule,
+    SelectModule
   ],
   standalone: true,
   templateUrl: './emp-candidate.component.html',
@@ -57,6 +59,7 @@ export class EmpCandidateComponent implements OnInit {
 
   statusOptions = [
     { label: 'Pending', value: 'Pending' },
+    { label: 'Hired', value: 'Hired' },
     { label: 'Shortlisted', value: 'Shortlisted' },
     { label: 'Rejected', value: 'Rejected' },
   ];
@@ -119,7 +122,9 @@ export class EmpCandidateComponent implements OnInit {
   }
 
   toggleStatus(newStatus: string): void {
-    if (this.candidate.status === newStatus) return;
+    // if (this.candidate.status === newStatus) return;
+
+    console.log('asdasd');
 
     this.candidate.status = newStatus;
     this.candidateService
@@ -134,7 +139,7 @@ export class EmpCandidateComponent implements OnInit {
           console.error('Error updating status:', err);
           this.toast.error('Failed to update status.');
           this.candidate.status =
-            this.candidate.status === 'Pending'
+            this.candidate.status == 'Pending' || this.candidate.status == null
               ? 'Pending'
               : this.candidate.status; // Revert
         },

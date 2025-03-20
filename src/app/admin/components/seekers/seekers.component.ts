@@ -55,16 +55,12 @@ export class SeekersComponent implements OnInit {
         icon: 'pi pi-cog',
         items: [
           {
-            label: 'Components',
+            label: 'View',
             icon: 'pi pi-bolt',
           },
           {
-            label: 'Blocks',
+            label: 'Suspend',
             icon: 'pi pi-server',
-          },
-          {
-            label: 'UI Kit',
-            icon: 'pi pi-pencil',
           },
         ],
       },
@@ -83,13 +79,12 @@ export class SeekersComponent implements OnInit {
   }
 
   getUsers() {
-    this.adminService.getUsersByRole("User").subscribe(
+    this.adminService.getUsersByRole('User').subscribe(
       (data: any) => {
-          this.users = data.map((user: any) => ({
-            ...user,
-            name: `${user.firstname} ${user.lastname}`,
-          }));
-
+        this.users = data.map((user: any) => ({
+          ...user,
+          name: `${user.firstname} ${user.lastname}`,
+        }));
       },
       (error) => {
         console.error('Error fetching users:', error);

@@ -17,18 +17,19 @@
         </div>
       </div>
       <div class="flex items-center gap-4">
-        <p-dropdown
+        <p-select
           [options]="statusOptions"
           [(ngModel)]="candidate.status"
           (onChange)="toggleStatus($event.value)"
           [style]="{ 'min-width': '150px' }"
           class="text-sm"
           [ngClass]="{
-            'p-dropdown-yellow': candidate.status === 'Pending',
-            'p-dropdown-green': candidate.status === 'Shortlisted',
-            'p-dropdown-red': candidate.status === 'Rejected'
+            'p-select-yellow':
+              candidate.status === 'Pending' || candidate.status === 'Hired',
+            'p-select-green': candidate.status === 'Shortlisted',
+            'p-select-red': candidate.status === 'Rejected'
           }"
-        ></p-dropdown>
+        ></p-select>
       </div>
     </div>
   </div>
@@ -115,7 +116,7 @@
               ></p-badge>
               <p
                 class="text-sm text-gray-400 italic"
-                *ngIf="candidate.applicant.skills.length === 0"
+                *ngIf="candidate.applicant.skills?.length === 0"
               >
                 No skills specified
               </p>

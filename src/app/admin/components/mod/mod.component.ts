@@ -54,17 +54,14 @@ export class ModComponent implements OnInit {
         icon: 'pi pi-cog',
         items: [
           {
-            label: 'Components',
+            label: 'View',
             icon: 'pi pi-bolt',
           },
           {
-            label: 'Blocks',
+            label: 'Suspend',
             icon: 'pi pi-server',
           },
-          {
-            label: 'UI Kit',
-            icon: 'pi pi-pencil',
-          },
+
         ],
       },
     ];

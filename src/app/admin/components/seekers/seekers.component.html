@@ -28,26 +28,19 @@
           </div>
 
           <!-- Status Column with Dynamic Colors -->
-          <div *ngIf="col.field == 'status'">
+          <ng-container *ngIf="col.field === 'status'">
             <span
-              class="text-xs font-semibold px-3 py-2 rounded-full"
+              class="text-xs font-semibold px-3 py-1 rounded-full"
               [ngClass]="{
-                'bg-green-300 text-white': rowData[col.field] === 'Active',
-                'bg-red-500 text-gray-100 decoration-none':
-                  rowData[col.field] === 'Inactive',
-                'bg-yellow-300 text-black': rowData[col.field] === 'Pending',
-                'bg-gray-200 text-white': ![
-                  'Active',
-                  'Inactive',
-                  'Pending'
-                ].includes(rowData[col.field])
+                'bg-green-100 text-green-800': rowData[col.field],
+                'bg-red-100 text-red-800': !rowData[col.field]
               }"
             >
-              {{ rowData[col.field] }}
+              {{ rowData[col.field] ? 'Active' : 'Inactive' }}
             </span>
-          </div>
+          </ng-container>
 
-          <div *ngIf="col.field == 'action'" class="flex items-start bg-slate-300">
+          <div *ngIf="col.field == 'action'" class="">
             <p-menubar [model]="actionItems" />
           </div>
 

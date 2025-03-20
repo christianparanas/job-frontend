@@ -101,6 +101,8 @@ export class EmpCreateJobComponent implements OnInit {
   }
 
   onSkillsChange(event: any): void {
+    console.log("adsa")
+
     const currentSkillIds = this.job.requirements.map((r) => r.skillId); // Compare by skillId
     const newSkillIds = event.value; // Array of skill IDs from MultiSelect
 

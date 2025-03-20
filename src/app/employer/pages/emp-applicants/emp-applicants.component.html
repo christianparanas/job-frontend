@@ -10,7 +10,7 @@
   <!-- Main Content -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 py-8">
     <div
-      class="bg-white rounded-lg shadow-sm border border-gray-100 animate-fade-in"
+      class="bg-white rounded-lg shadow-sm border border-gray-100 animate-fade-in w-[calc(100vw - 20px)] lg:w-full overflow-y-auto"
     >
       <p-table
         #dt
@@ -78,7 +78,8 @@
                     candidate.status === 'Pending',
                   'bg-green-100 text-green-800':
                     candidate.status === 'Shortlisted',
-                  'bg-red-100 text-red-800': candidate.status === 'Rejected'
+                  'bg-red-100 text-red-800': candidate.status === 'Rejected',
+                  'bg-red-100 text-purple-800': candidate.status === 'Hired'
                 }"
               >
                 {{ candidate.status || "N/A" }}

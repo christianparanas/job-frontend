@@ -35,7 +35,11 @@ export class EmpEditJobComponent implements OnInit {
     id: 0,
     title: '',
     description: '',
-    requirements: [] as { skillId: string; label: string; proficiency: number }[],
+    requirements: [] as {
+      skillId: string;
+      label: string;
+      proficiency: number;
+    }[],
     location: '',
     salary: '',
     type: '',
@@ -82,6 +86,7 @@ export class EmpEditJobComponent implements OnInit {
   async loadSkillsAndJob(): Promise<void> {
     try {
       await this.getSkills(); // Ensure skills are loaded first
+
       this.route.queryParams.subscribe((params) => {
         const jobId = params['id'];
         if (jobId) {
@@ -106,7 +111,6 @@ export class EmpEditJobComponent implements OnInit {
           label: skill.name,
           value: String(skill.id), // Ensure string
         }));
-        console.log('Skill options loaded:', this.skillOptions);
       } else {
         throw new Error('Invalid skills response');
       }
@@ -117,38 +121,40 @@ export class EmpEditJobComponent implements OnInit {
     }
   }
 
-  loadJob(jobId: number): void {
+  loadJob(jobId: number) {
     this.jobService.getJob(jobId).subscribe({
       next: (response) => {
-        console.log('Raw job response:', response); // Debug raw response
+        console.log(response);
+
         this.job = {
           id: response.id,
           title: response.title || '',
           description: response.description || '',
-          requirements: response.requirements?.map((req: any) => {
-            const skillId = String(req.skill?.id || req.skillId);
-            const skill = this.skillOptions.find((s) => s.value === skillId);
-            return {
-              skillId: skillId,
-              label: skill ? skill.label : req.skill?.name || req.skill || 'Unknown Skill',
-              proficiency: req.proficiency || 1,
-            };
-          }) || [],
+          requirements:
+            response.Skills?.map((req: any) => {
+              const skillId = req.id;
+              const skill = this.skillOptions.find((s) => s.value == skillId);
+              return {
+                skillId: skillId,
+                label: skill?.label,
+                proficiency: req.JobRequirement.proficiency,
+              };
+            }) || [],
           location: response.location || '',
           salary: response.salary || '',
           type: response.type || '',
           status: response.status || 'Draft',
         };
-        // Pre-select skills based on saved requirements
-        this.selectedSkills = this.job.requirements.map((req) => req.skillId);
-        console.log('Job loaded:', this.job);
-        console.log('Requirements:', this.job.requirements);
-        console.log('Pre-selected skills:', this.selectedSkills);
-        console.log('Skill options available:', this.skillOptions);
 
         // Force change detection
         this.cdr.detectChanges();
         this.isLoading = false;
+
+        this.job.requirements?.forEach((req: any) => {
+          console.log(req);
+
+          this.onSkillsChange(req);
+        });
       },
       error: (err) => {
         console.error('Error loading job:', err);
@@ -171,7 +177,7 @@ export class EmpEditJobComponent implements OnInit {
           this.job.requirements.push({
             skillId: skill.value,
             label: skill.label,
-            proficiency: 1,
+            proficiency: event.JobRequirement.proficiency,
           });
         }
       }
