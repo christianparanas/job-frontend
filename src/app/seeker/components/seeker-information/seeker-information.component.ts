@@ -84,7 +84,6 @@ export class SeekerInformationComponent implements OnInit {
         };
         this.loading = false;
 
-        this.user);
       },
       error: (error) => {
         console.error('Error loading profile:', error);
