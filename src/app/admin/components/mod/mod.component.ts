@@ -8,6 +8,7 @@ import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
 import { MenuItem } from 'primeng/api';
 import { AdminService } from '../../shared/services/admin.service';
+import { Router } from '@angular/router';
 
 interface Column {
   field: string;
@@ -45,27 +46,9 @@ export class ModComponent implements OnInit {
   cols: Column[] = [];
   actionItems: MenuItem[] | undefined;
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, public router: Router) {}
 
   ngOnInit() {
-    this.actionItems = [
-      {
-        label: '',
-        icon: 'pi pi-cog',
-        items: [
-          {
-            label: 'View',
-            icon: 'pi pi-bolt',
-          },
-          {
-            label: 'Suspend',
-            icon: 'pi pi-server',
-          },
-
-        ],
-      },
-    ];
-
     // Table Columns
     this.cols = [
       { field: 'name', header: 'Name' },
@@ -84,11 +67,78 @@ export class ModComponent implements OnInit {
         this.users = data.map((user: any) => ({
           ...user,
           name: `${user.firstname}`,
+          actionItems: this.getActionItems(user),
         }));
+
       },
       (error) => {
         console.error('Error fetching users:', error);
       }
     );
+  }
+
+  viewUser(user: any) {
+    this.router.navigate(['/admin/employer'], { queryParams: { id: user.id } });
+  }
+
+  suspendUser(user: User | undefined) {
+    if (user) {
+      // this.adminService.suspendUser(user.username).subscribe(
+      //   () => {
+      //     console.log('User suspended:', user.username);
+      //     this.getUsers(); // Refresh the list
+      //   },
+      //   (error) => {
+      //     console.error('Error suspending user:', error);
+      //   }
+      // );
+    }
+  }
+
+  deleteUser(user: User | undefined) {
+    if (user) {
+      if (confirm(`Are you sure you want to delete ${user.firstname} account?`)) {
+        this.adminService.deleteUser(user.username).subscribe(
+          () => {
+            console.log('User account deleted:', user.firstname);
+            this.getUsers(); // Refresh the list
+          },
+          (error) => {
+            console.error('Error deleting user:', error);
+          }
+        );
+      }
+    }
+  }
+
+  // Helper to pass user data to menu items
+  getActionItems(user: User): MenuItem[] {
+    return [
+      {
+        label: '',
+        icon: 'fal fa-cog',
+        items: [
+          {
+            label: 'View',
+            icon: 'fal fa-eye',
+            command: () => this.viewUser(user),
+          },
+          // {
+          //   label: 'Suspend',
+          //   icon: 'fal fa-pause-circle',
+          //   command: () => this.suspendUser(user),
+          // },
+          {
+            label: 'Delete',
+            icon: 'fal fa-trash-alt',
+            command: () => this.deleteUser(user),
+          },
+        ],
+      },
+    ];
+  }
+
+  trackByField(index: number, col: Column): string {
+    return col.field; // Unique identifier for tracking
   }
 }

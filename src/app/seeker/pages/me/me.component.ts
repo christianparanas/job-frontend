@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
 import { SeekerAssessmentTableComponent } from '../../components/seeker-assessment-table/seeker-assessment-table.component';
 import { SeekerInformationComponent } from '../../components/seeker-information/seeker-information.component';
-import { SeekerRecommendationComponent } from '../../components/seeker-recommendation/seeker-recommendation.component';
 import {
   ProfileService,
   UserProfile,
@@ -16,7 +15,6 @@ import {
     CommonModule,
     SeekerAssessmentTableComponent,
     SeekerInformationComponent,
-    SeekerRecommendationComponent,
   ],
   standalone: true,
   templateUrl: './me.component.html',
@@ -39,7 +37,7 @@ export class MeComponent implements OnInit {
     this.tabs = [
       { title: 'Personal Information', value: 0, content: 'Tab 1 Content' },
       { title: 'Skill Proficiencies', value: 1, content: 'Tab 2 Content' },
-      { title: 'Recommended For You', value: 3, content: 'Tab 3 Content' },
+      // { title: 'Recommended For You', value: 3, content: 'Tab 3 Content' },
     ];
   }
 

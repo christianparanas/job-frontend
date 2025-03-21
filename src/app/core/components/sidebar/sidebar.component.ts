@@ -16,12 +16,12 @@ export class SidebarComponent implements OnInit {
     {
       title: 'Jobs',
       route: 'jobs',
-      icon: 'fal fa-chart-line',
+      icon: 'fal fa-briefcase',
     },
     {
       title: 'Applications',
       route: 'applications',
-      icon: 'fal fa-chart-line',
+      icon: 'fal fa-file-alt',
     },
     {
       title: 'Assessment',
@@ -31,7 +31,7 @@ export class SidebarComponent implements OnInit {
     {
       title: 'Pathway',
       route: 'pathway',
-      icon: 'fal fa-retweet',
+      icon: 'fal fa-road',
     },
     {
       title: 'Chat',

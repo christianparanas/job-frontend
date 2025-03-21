@@ -9,7 +9,7 @@
   >
     <ng-template #header let-columns>
       <tr class="p-3 bg-gray-800">
-        <th *ngFor="let col of columns">
+        <th *ngFor="let col of columns; trackBy: trackByField">
           {{ col.header }}
         </th>
       </tr>
@@ -17,7 +17,7 @@
 
     <ng-template #body let-rowData let-columns="columns">
       <tr class="border-b">
-        <td *ngFor="let col of columns" class="p-3">
+        <td *ngFor="let col of columns; trackBy: trackByField" class="p-3">
           <!-- Role Column -->
           <div *ngIf="col.field == 'role'">
             <p-chip
@@ -36,19 +36,23 @@
                 'bg-red-100 text-red-800': !rowData[col.field]
               }"
             >
-              {{ rowData[col.field] ? 'Active' : 'Inactive' }}
+              {{ rowData[col.field] ? "Active" : "Inactive" }}
             </span>
           </ng-container>
 
-          <div *ngIf="col.field == 'action'" class="">
-            <p-menubar [model]="actionItems" />
+          <div *ngIf="col.field == 'createdAt'" class="">
+            {{ rowData[col.field] | date : "mediumDate" }}
           </div>
 
-          <!-- Default Columns -->
+          <div *ngIf="col.field == 'action'" class="">
+            <p-menubar [model]="rowData['actionItems']" />
+          </div>
+
           <div
             *ngIf="
               col.field != 'role' &&
               col.field != 'status' &&
+              col.field != 'createdAt' &&
               col.field != 'action'
             "
           >

@@ -48,4 +48,8 @@ export class AdminService {
   updateUserRole(userId: string, role: string): Observable<any> {
     return this.http.put(`${this.apiUrl}/${userId}/role`, { role }, { headers: this.getHeaders() });
   }
+
+  getUser(userId: any) {
+    return this.http.get<any>(`${this.apiUrl}/profile/${userId}`);
+  }
 }

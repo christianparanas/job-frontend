@@ -139,7 +139,7 @@ export class AssessmentComponent implements OnInit {
   }
 
   returnToDashboard(): void {
-    this.router.navigate(['/dashboard']); // Adjust the route as needed
+    this.router.navigate(['/pathway']); // Adjust the route as needed
   }
 
   // Helper to get proficiency level (1-4) from selected option

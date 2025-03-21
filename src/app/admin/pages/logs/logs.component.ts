@@ -82,7 +82,9 @@ export class LogsComponent implements OnInit {
           ...log,
           timestamp: `${this.datePipe.transform(log.createdAt, 'dd MMM yyyy')}
                            ${this.datePipe.transform(log.createdAt, 'HH:mm')}`, // Combine date and time
-          user: `${log.user.firstname} ${log.user.lastname}`,
+          user: `${log.user.firstname} ${
+            log.user.lastname == null ? '' : log.user.lastname
+          }`,
           role: log.user.Roles.map((role: any) => role.name),
         }));
       },

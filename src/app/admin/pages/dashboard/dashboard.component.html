@@ -6,28 +6,39 @@
 
   <hr class="my-4" />
 
-  <div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      <div class="bg-white shadow-md border border-slate-100 rounded-xl p-6">
-        <h2 class="text-lg font-semibold text-gray-900">Total Users</h2>
-        <p class="mt-2 text-3xl font-bold text-indigo-600">
-          {{ stats.totalUsers }}
-        </p>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="bg-white shadow-sm border border-gray-100 rounded-xl p-5 hover:shadow-lg transition-all duration-200 hover:-translate-y-1 cursor-pointer">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="bg-indigo-50 p-2 rounded-lg">
+            <i class="fal fa-users text-indigo-600 text-xl"></i>
+          </div>
+          <h2 class="text-base font-medium text-gray-800">Total Users</h2>
+        </div>
+        <p class="text-6xl font-semibold text-indigo-600">{{ stats.totalUsers }}</p>
       </div>
-      <div class="bg-white shadow-md border border-slate-100 rounded-xl p-6">
-        <h2 class="text-lg font-semibold text-gray-900">Employers</h2>
-        <p class="mt-2 text-3xl font-bold text-indigo-600">
-          {{ stats.employers }}
-        </p>
+    </div>
+    <div class="bg-white shadow-sm border border-gray-100 rounded-xl p-5 hover:shadow-lg transition-all duration-200 hover:-translate-y-1 cursor-pointer">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="bg-indigo-50 p-2 rounded-lg">
+            <i class="fal fa-briefcase text-indigo-600 text-xl"></i>
+          </div>
+          <h2 class="text-base font-medium text-gray-800">Employers</h2>
+        </div>
+        <p class="text-6xl font-semibold text-indigo-600">{{ stats.employers }}</p>
       </div>
-      <div class="bg-white shadow-md border border-slate-100 rounded-xl p-6">
-        <h2 class="text-lg font-semibold text-gray-900">Job Seeker</h2>
-        <p class="mt-2 text-3xl font-bold text-indigo-600">
-          {{ stats.candidates }}
-        </p>
+    </div>
+    <div class="bg-white shadow-sm border border-gray-100 rounded-xl p-5 hover:shadow-lg transition-all duration-200 hover:-translate-y-1 cursor-pointer">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="bg-indigo-50 p-2 rounded-lg">
+            <i class="fal fa-user text-indigo-600 text-xl"></i>
+          </div>
+          <h2 class="text-base font-medium text-gray-800">Job Seekers</h2>
+        </div>
+        <p class="text-6xl font-semibold text-indigo-600">{{ stats.candidates }}</p>
       </div>
     </div>
   </div>
-
-  <p-toast></p-toast>
 </div>

@@ -29,12 +29,12 @@ export class HeaderComponent {
     {
       title: 'Jobs',
       route: 'jobs',
-      icon: 'fal fa-chart-line',
+      icon: 'fal fa-briefcase',
     },
     {
       title: 'Applications',
       route: 'applications',
-      icon: 'fal fa-chart-line',
+      icon: 'fal fa-file-alt',
     },
     {
       title: 'Assessment',
@@ -44,7 +44,7 @@ export class HeaderComponent {
     {
       title: 'Pathway',
       route: 'pathway',
-      icon: 'fal fa-retweet',
+      icon: 'fal fa-road',
     },
     {
       title: 'Chat',
@@ -57,7 +57,7 @@ export class HeaderComponent {
       icon: 'fal fa-info-circle',
     },
   ];
-
+  
   ngOnInit(): void {
     window.addEventListener('scroll', this.listenScrollEvent);
 

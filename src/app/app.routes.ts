@@ -29,7 +29,6 @@ import { EmpCreateJobComponent } from './employer/pages/emp-create-job/emp-creat
 import { EmpEditJobComponent } from './employer/pages/emp-edit-job/emp-edit-job.component';
 import { ChatsComponent } from './seeker/pages/chats/chats.component';
 import { EmpChatsComponent } from './employer/pages/emp-chats/emp-chats.component';
-import { EmpChatComponent } from './employer/pages/emp-chat/emp-chat.component';
 import { EmpViewJobComponent } from './employer/pages/emp-view-job/emp-view-job.component';
 import { ApplicationsComponent } from './seeker/pages/applications/applications.component';
 import { seekerGuard } from './core/shared/guard/seeker-guard.guard';
@@ -37,6 +36,8 @@ import { employerGuard } from './core/shared/guard/employer-guard.guard';
 import { adminGuard } from './core/shared/guard/admin-guard.guard';
 import { UnauthorizedComponent } from './core/pages/unauthorized/unauthorized.component';
 import { EmpAccountComponent } from './employer/pages/emp-account/emp-account.component';
+import { EmployerComponent } from './admin/pages/employer/employer.component';
+import { SeekerComponent } from './admin/pages/seeker/seeker.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -74,6 +75,8 @@ export const routes: Routes = [
       { path: 'reports', component: ReportsComponent },
       { path: 'settings', component: SettingsComponent },
       { path: 'users', component: UsersComponent },
+      { path: 'seeker', component: SeekerComponent },
+      { path: 'employer', component: EmployerComponent },
     ],
   },
 
@@ -86,7 +89,6 @@ export const routes: Routes = [
       { path: 'account', component: EmpAccountComponent },
       { path: 'jobs', component: EmpJobsComponent },
       { path: 'chats', component: EmpChatsComponent },
-      { path: 'chat', component: EmpChatComponent },
       { path: 'candidates', component: EmpApplicantsComponent },
       { path: 'candidate', component: EmpCandidateComponent },
       { path: 'job', component: EmpJobComponent },

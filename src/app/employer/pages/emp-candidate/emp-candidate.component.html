@@ -173,7 +173,7 @@
               >Applied Date</label
             >
             <p class="text-sm text-gray-900">
-              {{ candidate.appliedDate || "meddium" }}
+              {{ candidate.appliedDate | date : "mediumDate" }}
             </p>
           </div>
           <div>

@@ -57,21 +57,34 @@
             <td>{{ app.Job.title }}</td>
             <td>{{ app.Job.employer.name }}</td>
             <td>{{ app.appliedDate | date : "mediumDate" }}</td>
-            <td>
-              <p-badge
-                [value]="app.Job.status"
-                [styleClass]="getStatusStyle(app.Job.status)"
-              ></p-badge>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span
+                class="inline-block px-3 py-1 text-sm font-medium rounded-full"
+                [ngClass]="{
+                  'bg-yellow-100 text-yellow-800': app.status === 'Pending',
+                  'bg-green-100 text-green-800': app.status === 'Shortlisted',
+                  'bg-red-100 text-red-800': app.status === 'Rejected',
+                  'bg-red-100 text-purple-800': app.status === 'Hired'
+                }"
+              >
+                {{ app.status || "N/A" }}
+              </span>
             </td>
             <td>{{ app.Job.location || "Not specified" }}</td>
             <td>{{ app.Job.salary || "Not specified" }}</td>
             <td>{{ app.Job.type || "Not specified" }}</td>
             <td>
               <p-button
+                *ngIf="app.status != 'Hired'"
                 label="Withdraw"
                 styleClass="p-button-sm p-button-rounded p-button-danger text-sm"
                 (click)="confirmWithdraw(app.id)"
               ></p-button>
+              <!-- <p-button
+                *ngIf="app.status == 'Hired'"
+                label="View"
+                styleClass="p-button-sm p-button-rounded p-button-gray text-sm"
+              ></p-button> -->
             </td>
           </tr>
         </ng-template>

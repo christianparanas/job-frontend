@@ -29,30 +29,29 @@ export class AdminHeaderComponent {
     {
       title: 'Dashboard',
       route: 'dashboard',
-      icon: 'fal fa-chart-line',
+      icon: 'fal fa-tachometer-alt',
     },
     {
       title: 'User Management',
       route: 'users',
-      icon: 'fal fa-box-ballot',
+      icon: 'fal fa-users',
     },
-    {
-      title: 'Jobs',
-      route: 'jobs',
-      icon: 'fal fa-box-ballot',
-    },
-    {
-      title: 'Assessments',
-      route: 'assessments',
-      icon: 'fal fa-box-ballot',
-    },
-
+    // {
+    //   title: 'Jobs',
+    //   route: 'jobs',
+    //   icon: 'fal fa-briefcase',
+    // },
+    // {
+    //   title: 'Assessments',
+    //   route: 'assessments',
+    //   icon: 'fal fa-clipboard-check',
+    // },
     {
       title: 'Logs',
       route: 'logs',
-      icon: 'fal fa-info-circle',
+      icon: 'fal fa-file-alt',
     },
-  ];
+];
 
   ngOnInit(): void {
     window.addEventListener('scroll', this.listenScrollEvent);

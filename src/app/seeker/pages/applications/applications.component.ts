@@ -59,10 +59,13 @@ export class ApplicationsComponent implements OnInit {
     this.isLoading = true;
     this.jobService.getAppliedJobs(this.user?.id).subscribe({
       next: (response) => {
+        console.log(response);
+
         this.applications = response.map((app) => ({
           id: app.id,
           jobId: app.jobId,
           appliedDate: app.appliedDate,
+          status: app.status,
           Job: {
             id: app.Job.id,
             title: app.Job.title,
@@ -85,7 +88,7 @@ export class ApplicationsComponent implements OnInit {
 
   getStatusStyle(status: string): string {
     switch (status.toLowerCase()) {
-      case 'active':
+      case 'pending':
         return 'p-badge-success';
       case 'draft':
         return 'p-badge-warning';
