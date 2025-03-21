@@ -102,7 +102,6 @@ export class SeekersComponent implements OnInit {
       ) {
         this.adminService.deleteUser(user.username).subscribe(
           () => {
-            console.log('User account deleted:', user.firstname);
             this.getUsers(); // Refresh the list
           },
           (error) => {

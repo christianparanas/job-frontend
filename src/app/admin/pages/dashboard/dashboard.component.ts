@@ -36,7 +36,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.loadStats();
 
-    console.log(this.stats)
   }
 
   loadStats(): void {

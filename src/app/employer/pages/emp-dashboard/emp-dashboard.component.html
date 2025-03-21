@@ -1,88 +1,126 @@
+<!-- emp-dashboard.component.html -->
 <div class="relative z-40 mt-20 pb-20">
   <!-- Header -->
-  <div class="mb-5">
-    <h1 class="font-bold text-xl md:text-3xl text-gray-900">
-      Welcome, {{ companyName }}
+  <div class="mb-6 px-4 sm:px-6 lg:px-0">
+    <h1
+      class="text-3xl md:text-4xl font-bold text-gray-900 flex items-center gap-3"
+    >
+      <i class="pi pi-home text-indigo-500"></i>
+      Welcome, {{ employerName }}
     </h1>
-    <p class="text-gray-800 text-[12px]">Your employer dashboard</p>
+    <p class="text-gray-600 text-sm mt-1">
+      Your employer dashboard • {{ currentDate }}
+    </p>
   </div>
 
-  <hr />
+  <hr class="border-gray-200 mb-8" />
 
   <!-- Main Content -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 py-8">
-    <!-- Key Metrics -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-      <div
-        *ngFor="let metric of metricsList"
-        class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200 hover:-translate-y-1 animate-fade-in"
-      >
-        <div class="flex items-center gap-4">
-          <i class="{{ metric.icon }} {{ metric.color }} text-2xl"></i>
-          <div>
-            <p class="text-gray-500 text-sm">{{ metric.label }}</p>
-            <h3 class="text-2xl font-semibold text-gray-800">
-              {{ metric.value }}
-            </h3>
-          </div>
-        </div>
-        <a
-          [routerLink]="metric.link"
-          class="mt-4 text-blue-500 text-sm hover:underline"
-          >View {{ metric.label }}</a
-        >
-      </div>
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="text-center py-10">
+      <i class="pi pi-spin pi-spinner text-3xl text-indigo-500"></i>
+      <p class="text-gray-600 mt-2">Loading dashboard...</p>
     </div>
 
-    <!-- Recent Activity & Quick Actions -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <!-- Recent Activity -->
-      <!-- <div
-        class="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm border border-gray-200 animate-fade-in"
+    <!-- Error State -->
+    <div *ngIf="errorMessage && !isLoading" class="text-center py-10">
+      <i class="pi pi-exclamation-triangle text-3xl text-red-500"></i>
+      <p class="text-red-600 mt-2">{{ errorMessage }}</p>
+      <button
+        (click)="fetchDashboardData()"
+        class="mt-4 text-blue-500 hover:underline"
       >
-        <h2 class="text-lg font-semibold text-gray-900 mb-4">
-          Recent Activity
-        </h2>
-        <div class="max-h-80 overflow-y-auto space-y-4">
-          <div
-            *ngFor="let activity of recentActivities"
-            class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 cursor-pointer transition-colors duration-200"
-          >
-            <i class="fal fa-circle text-blue-400 text-xs"></i>
-            <div class="flex-1">
-              <p class="text-gray-700 text-sm">{{ activity.message }}</p>
-              <p class="text-gray-400 text-xs">{{ activity.timestamp }}</p>
+        Retry
+      </button>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div *ngIf="!isLoading && !errorMessage">
+      <!-- Key Metrics -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+        <div
+          *ngFor="let metric of metricsList"
+          class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 hover:-translate-y-1 animate-fade-in"
+        >
+          <div class="flex items-center gap-4">
+            <i class="{{ metric.icon }} {{ metric.color }} text-3xl"></i>
+            <div>
+              <p class="text-gray-500 text-sm font-medium">
+                {{ metric.label }}
+              </p>
+              <h3 class="text-2xl font-semibold text-gray-800 mt-1">
+                {{ metric.value }}
+              </h3>
             </div>
           </div>
-          <div
-            *ngIf="recentActivities.length === 0"
-            class="text-gray-500 text-sm text-center py-4"
+          <a
+            [routerLink]="metric.link"
+            class="mt-4 inline-block text-blue-500 text-sm font-medium hover:underline transition-colors duration-200"
           >
-            No recent activity yet
+            View {{ metric.label }}
+          </a>
+        </div>
+      </div>
+
+      <!-- Recent Activity & Quick Actions -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Recent Activity -->
+        <div
+          class="lg:col-span-2 bg-white p-6 rounded-xl shadow-md border border-gray-200 animate-fade-in"
+        >
+          <h2
+            class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2"
+          >
+            <i class="pi pi-clock text-indigo-500"></i>
+            Recent Activity
+          </h2>
+          <div class="max-h-80 overflow-y-auto space-y-4 pr-2">
+            <div
+              *ngFor="let activity of recentActivities"
+              class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-50 cursor-pointer transition-colors duration-200"
+            >
+              <i class="pi pi-circle-fill text-blue-400 text-xs"></i>
+              <div class="flex-1">
+                <p class="text-gray-700 text-sm">{{ activity.message }}</p>
+                <p class="text-gray-400 text-xs">{{ activity.timestamp }}</p>
+              </div>
+            </div>
+            <div
+              *ngIf="recentActivities.length === 0"
+              class="text-gray-500 text-sm text-center py-4"
+            >
+              No recent activity yet
+            </div>
           </div>
         </div>
-      </div> -->
 
-      <!-- Quick Actions -->
-      <div
-        class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 animate-fade-in h-fit"
-      >
-        <h2 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
-        <div class="space-y-4">
-          <button
-            routerLink="/employer/job/create"
-            class="w-full bg-slate-900 hover:bg-slate-700 text-white px-4 py-2 rounded-md transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
+        <!-- Quick Actions -->
+        <div
+          class="bg-white p-6 rounded-xl shadow-md border border-gray-200 animate-fade-in h-fit"
+        >
+          <h2
+            class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2"
           >
-            <i class="fal fa-plus"></i>
-            Create New Job
-          </button>
-          <button
-            routerLink="/employer/candidates"
-            class="w-full bg-gray-50 border border-slate-300 hover:bg-gray-100 text-gray-700 px-4 py-2 rounded-md transition-all duration-200 hover:shadow-sm flex items-center justify-center gap-2"
-          >
-            <i class="fal fa-eye"></i>
-            View Candidates
-          </button>
+            <i class="pi pi-bolt text-indigo-500"></i>
+            Quick Actions
+          </h2>
+          <div class="space-y-3">
+            <button
+              routerLink="/employer/job/create"
+              class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-3 rounded-md transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2 text-sm font-medium"
+            >
+              <i class="pi pi-plus"></i>
+              Create New Job
+            </button>
+            <button
+              routerLink="/employer/candidates"
+              class="w-full bg-gray-50 border border-gray-300 hover:bg-gray-100 text-gray-700 px-4 py-3 rounded-md transition-all duration-200 hover:shadow-sm flex items-center justify-center gap-2 text-sm font-medium"
+            >
+              <i class="pi pi-eye"></i>
+              View Candidates
+            </button>
+          </div>
         </div>
       </div>
     </div>

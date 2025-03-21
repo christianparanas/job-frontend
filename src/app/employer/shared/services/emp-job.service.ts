@@ -57,4 +57,6 @@ export class JobService {
   updateJob(jobId: number, jobData: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/${jobId}`, jobData, { headers: this.getHeaders() });
   }
+
+  
 }

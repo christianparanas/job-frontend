@@ -76,7 +76,6 @@ export class LogsComponent implements OnInit {
   getLogs() {
     this.logService.getUsers().subscribe(
       (data: any) => {
-        console.log(data.logs);
 
         this.logs = data.logs.map((log: any) => ({
           ...log,

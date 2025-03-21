@@ -60,7 +60,6 @@ export class TicketsComponent implements OnInit {
   getTickets() {
     this.ticketService.getTickets().subscribe(
       (data: any) => {
-        console.log(data);
         this.tickets = data.map((ticket: any) => ({
           ...ticket,
           timestamp: `${this.datePipe.transform(

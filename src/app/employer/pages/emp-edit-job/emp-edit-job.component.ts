@@ -124,7 +124,6 @@ export class EmpEditJobComponent implements OnInit {
   loadJob(jobId: number) {
     this.jobService.getJob(jobId).subscribe({
       next: (response) => {
-        console.log(response);
 
         this.job = {
           id: response.id,
@@ -151,8 +150,6 @@ export class EmpEditJobComponent implements OnInit {
         this.isLoading = false;
 
         this.job.requirements?.forEach((req: any) => {
-          console.log(req);
-
           this.onSkillsChange(req);
         });
       },
@@ -187,7 +184,6 @@ export class EmpEditJobComponent implements OnInit {
     this.job.requirements = this.job.requirements.filter((r) =>
       newSkillIds.includes(r.skillId)
     );
-    console.log('Updated requirements:', this.job.requirements);
     this.cdr.detectChanges(); // Force update after modifying requirements
   }
 

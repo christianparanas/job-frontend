@@ -113,7 +113,6 @@ export class EmpCandidateComponent implements OnInit {
       next: (response: any) => {
         this.candidate = response;
 
-        console.log(response);
       },
       error: (err: any) => {
         console.error('Error loading candidate:', err);
@@ -122,10 +121,6 @@ export class EmpCandidateComponent implements OnInit {
   }
 
   toggleStatus(newStatus: string): void {
-    // if (this.candidate.status === newStatus) return;
-
-    console.log('asdasd');
-
     this.candidate.status = newStatus;
     this.candidateService
       .updateCandidateStatus(this.candidate.id, newStatus)

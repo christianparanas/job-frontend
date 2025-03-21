@@ -60,7 +60,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
     if (this.currentUserId) {
       this.chatService.getChatsByUserId(this.currentUserId).subscribe({
         next: (chats: any) => {
-          console.log(chats);
           this.chats = chats.filter(
             (chat: { candidateId: number | null }) =>
               chat.candidateId === this.currentUserId

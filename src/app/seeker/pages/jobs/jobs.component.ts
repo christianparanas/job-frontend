@@ -130,7 +130,6 @@ export class JobsComponent implements OnInit {
   apply(jobId: number): void {
     this.jobService.applyForJob(jobId, this.user?.id).subscribe({
       next: () => {
-        console.log(`Applied to job ${jobId}`);
         this.appliedJobs.push(jobId);
         const job = this.jobs.find((j) => j.id === jobId);
         if (job) job.applications += 1;

@@ -87,7 +87,6 @@ export class EmployerComponent implements OnInit {
       next: (response: any) => {
         this.employerData = response;
 
-        console.log(response);
       },
       error: (err: any) => {
         console.error('Error loading user:', err);

@@ -59,7 +59,6 @@ export class ApplicationsComponent implements OnInit {
     this.isLoading = true;
     this.jobService.getAppliedJobs(this.user?.id).subscribe({
       next: (response) => {
-        console.log(response);
 
         this.applications = response.map((app) => ({
           id: app.id,
@@ -105,7 +104,6 @@ export class ApplicationsComponent implements OnInit {
       accept: () => {
         this.withdrawApplication(candidateId);
 
-        console.log(candidateId);
       },
       reject: () => {
         console.log('Withdrawal cancelled');

@@ -87,7 +87,6 @@ export class SeekerComponent implements OnInit {
       next: (response: any) => {
         this.seekerData = response;
 
-        console.log(response);
       },
       error: (err: any) => {
         console.error('Error loading user:', err);

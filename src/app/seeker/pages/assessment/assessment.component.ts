@@ -117,11 +117,9 @@ export class AssessmentComponent implements OnInit {
       }
     });
 
-    console.log('Submitting skill levels:', skillLevels); // Log for debugging
 
     this.assessmentService.submitAnswers(skillLevels).subscribe({
       next: (response) => {
-        console.log('Assessment submitted successfully', response);
         alert('Assessment submitted successfully! Your results have been updated.');
 
         this.authService.updateTakenAssessment(true);

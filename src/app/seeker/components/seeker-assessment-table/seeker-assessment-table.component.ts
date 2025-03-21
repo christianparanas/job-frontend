@@ -43,7 +43,6 @@ export class SeekerAssessmentTableComponent {
       next: (prfd: Proficiency[]) => {
         this.profs = prfd;
         this.loading = false;
-        console.log('Loaded profs:', prfd);
       },
       error: (error) => {
         console.error('Error loading profile:', error);

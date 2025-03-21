@@ -84,7 +84,7 @@ export class SeekerInformationComponent implements OnInit {
         };
         this.loading = false;
 
-        console.log(this.user);
+        this.user);
       },
       error: (error) => {
         console.error('Error loading profile:', error);
@@ -114,7 +114,6 @@ export class SeekerInformationComponent implements OnInit {
   }
 
   saveProfile() {
-    console.log(this.user);
 
     this.loading = true;
     this.profileService.updateProfile(this.user).subscribe({
@@ -123,7 +122,6 @@ export class SeekerInformationComponent implements OnInit {
         this.loading = false;
         this.showSuccess('Profile saved successfully');
 
-        console.log(updatedProfile);
       },
       error: (error) => {
         console.error('Error saving profile:', error);

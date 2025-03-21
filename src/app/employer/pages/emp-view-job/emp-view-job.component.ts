@@ -61,7 +61,6 @@ export class EmpViewJobComponent implements OnInit {
     this.jobService.getJob(jobId).subscribe({
       next: (response) => {
         // Map backend response to Job interface
-        console.log(response);
 
         this.job = {
           id: response.id,
@@ -79,7 +78,6 @@ export class EmpViewJobComponent implements OnInit {
           applications: response.Candidates,
         };
 
-        console.log(response);
         // Fetch applicants if not included in job response
         this.loadApplicants(jobId);
       },
@@ -94,7 +92,6 @@ export class EmpViewJobComponent implements OnInit {
   loadApplicants(jobId: number): void {
     this.jobService.getJobApplicants(jobId).subscribe({
       next: (response) => {
-        console.log(response);
 
         this.applicants = response.map((applicant: any) => ({
           id: applicant.id,

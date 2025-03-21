@@ -1,18 +1,13 @@
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* emp-dashboard.component.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* Custom animation for fade-in effect */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(5px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -20,10 +15,25 @@
   }
 }
 
-.animate-fade-in-down {
-  animation: fadeInDown 0.4s ease-out;
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.4s ease-out;
+/* Custom scrollbar for recent activity */
+.max-h-80::-webkit-scrollbar {
+  width: 6px;
+}
+
+.max-h-80::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.max-h-80::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}
+
+.max-h-80::-webkit-scrollbar-thumb:hover {
+  background: #b0b3b8;
 }

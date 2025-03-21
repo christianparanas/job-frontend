@@ -70,8 +70,6 @@ export class EmpApplicantsComponent implements OnInit {
             }))
           );
 
-          console.log(candidates);
-          console.log(this.candidates);
         },
         error: (err: any) => {
           console.error('Error loading candidates:', err);

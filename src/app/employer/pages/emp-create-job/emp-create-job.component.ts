@@ -88,7 +88,6 @@ export class EmpCreateJobComponent implements OnInit {
   getSkills(): void {
     this.jobService.getSkills().subscribe({
       next: (response: any[]) => {
-        console.log('Skills response:', response);
         this.skillOptions = response.map((skill) => ({
           label: skill.name, // Use 'name' as label
           value: skill.id, // Use 'id' as value
@@ -101,7 +100,6 @@ export class EmpCreateJobComponent implements OnInit {
   }
 
   onSkillsChange(event: any): void {
-    console.log("adsa")
 
     const currentSkillIds = this.job.requirements.map((r) => r.skillId); // Compare by skillId
     const newSkillIds = event.value; // Array of skill IDs from MultiSelect
@@ -147,7 +145,6 @@ export class EmpCreateJobComponent implements OnInit {
       userId,
     };
 
-    console.log(newJob);
 
     this.jobService.createJob(newJob).subscribe({
       next: (response: any) => {

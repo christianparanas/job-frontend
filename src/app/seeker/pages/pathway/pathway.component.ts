@@ -1365,7 +1365,6 @@ export class PathwayComponent implements OnInit {
 
     this.profileService.getPathway().subscribe({
       next: (pathwayData) => {
-        console.log('Loaded pathway data:', pathwayData);
 
         const pathway: Pathway = {
           associateDataAnalyst: this.pathway.associateDataAnalyst,
@@ -1414,7 +1413,6 @@ export class PathwayComponent implements OnInit {
           this.selectedRole = this.pathway[this.currentRoleKey];
         }
 
-        console.log('Loaded pathway:', this.pathway);
       },
       error: (err) => {
         console.error('Error loading career pathway:', err);
