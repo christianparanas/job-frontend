@@ -113,7 +113,7 @@ export class SeekerComponent implements OnInit {
   // Helper method to get status color
   getStatusColor(): string {
     return this.seekerData.status === 'active'
-      ? 'bg-green-100 text-green-800'
+      ? 'bg-green-100 text-green-600'
       : 'bg-red-100 text-red-800';
   }
 

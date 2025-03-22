@@ -1,10 +1,17 @@
 <!-- seeker.component.html -->
 <div class="profile-container max-w-5xl mx-auto p-6">
   <!-- Header Section -->
-  <div class="header-card bg-white rounded-2xl shadow-md p-8 flex items-center mb-6 border border-gray-200 transition-all duration-300 ">
-    <div class="avatar w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center mr-6 border-4 border-gray-100">
+  <div
+    class="header-card bg-white rounded-2xl p-8 flex items-center mb-6 border border-gray-200 transition-all duration-300"
+  >
+    <div
+      class="avatar w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center mr-6 border-4 border-gray-100"
+    >
       <img
-        [src]="seekerData.image || 'https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg'"
+        [src]="
+          seekerData.image ||
+          'https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg'
+        "
         alt="Profile Image"
         class="w-full h-full rounded-full object-cover"
       />
@@ -12,27 +19,39 @@
     <div class="header-info flex-1">
       <div class="flex items-center justify-between">
         <div>
-          <h1 class="text-3xl font-bold text-gray-800">{{seekerData.firstname}} {{seekerData.lastname}}</h1>
+          <h1 class="text-3xl font-bold text-gray-800">
+            {{ seekerData.firstname }} {{ seekerData.lastname }}
+          </h1>
           <p class="text-md text-gray-600 flex items-center mt-1">
-            <i class="pi pi-id-card text-lg mr-2 text-blue-500"></i>
-            {{getRoleName()}}
+            <i class="pi pi-id-card text-lg mr-2"></i>
+            {{ getRoleName() }}
           </p>
         </div>
         <div class="flex space-x-3">
-          <span class="px-3 py-1 rounded-full text-sm font-medium {{getStatusColor()}} flex items-center">
+          <span
+            class="px-3 py-1 rounded-full text-sm font-medium {{
+              getStatusColor()
+            }} flex items-center"
+          >
             <i class="pi pi-circle-on text-sm mr-1"></i>
-            {{seekerData.status | titlecase}}
+            {{ seekerData.status | titlecase }}
           </span>
-          <span class="px-4 py-2 rounded-full text-sm font-medium {{getVerificationColor()}} flex items-center">
-            <i class="pi {{seekerData.isVerified ? 'pi-check-circle' : 'pi-exclamation-triangle'}} text-sm mr-1"></i>
-            {{getVerificationStatus()}}
+          <span
+            class="px-4 py-2 rounded-full text-sm font-medium {{
+              getVerificationColor()
+            }} flex items-center"
+          >
+            <i
+              class="pi {{
+                seekerData.isVerified
+                  ? 'pi-check-circle'
+                  : 'pi-exclamation-triangle'
+              }} text-sm mr-1"
+            ></i>
+            {{ getVerificationStatus() }}
           </span>
         </div>
       </div>
-      <p class="text-md text-gray-600 flex items-center mt-2">
-        <i class="pi pi-map-marker text-lg mr-2 text-red-500"></i>
-        {{seekerData.address}}
-      </p>
     </div>
   </div>
 
@@ -40,7 +59,9 @@
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     <!-- Left Column: Personal Information -->
     <div class="lg:col-span-2">
-      <div class="info-section bg-white rounded-2xl shadow-md p-8 mb-8 border border-gray-200 transition-all duration-300 ">
+      <div
+        class="info-section bg-white rounded-2xl p-8 mb-8 border border-gray-200 transition-all duration-300"
+      >
         <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
           Personal Information
         </h2>
@@ -49,49 +70,69 @@
             <i class="pi pi-user text-lg mr-3 text-gray-500"></i>
             <div>
               <label class="block text-sm text-gray-600 mb-1">First Name</label>
-              <p class="text-base text-gray-800 font-medium">{{seekerData.firstname}}</p>
+              <p class="text-base text-gray-800 font-medium">
+                {{ seekerData.firstname }}
+              </p>
             </div>
           </div>
           <div class="info-item flex items-start">
             <i class="pi pi-user text-lg mr-3 text-gray-500"></i>
             <div>
               <label class="block text-sm text-gray-600 mb-1">Last Name</label>
-              <p class="text-base text-gray-800 font-medium">{{seekerData.lastname}}</p>
+              <p class="text-base text-gray-800 font-medium">
+                {{ seekerData.lastname }}
+              </p>
             </div>
           </div>
           <div class="info-item flex items-start">
             <i class="pi pi-calendar text-lg mr-3 text-gray-500"></i>
             <div>
-              <label class="block text-sm text-gray-600 mb-1">Date of Birth</label>
-              <p class="text-base text-gray-800 font-medium">{{formatDate(seekerData.PersonalInformation.dateOfBirth)}}</p>
+              <label class="block text-sm text-gray-600 mb-1"
+                >Date of Birth</label
+              >
+              <p class="text-base text-gray-800 font-medium">
+                {{ formatDate(seekerData.PersonalInformation.dateOfBirth) }}
+              </p>
             </div>
           </div>
           <div class="info-item flex items-start">
             <i class="pi pi-users text-lg mr-3 text-gray-500"></i>
             <div>
               <label class="block text-sm text-gray-600 mb-1">Gender</label>
-              <p class="text-base text-gray-800 font-medium">{{seekerData.gender}}</p>
+              <p class="text-base text-gray-800 font-medium">
+                {{ seekerData.gender }}
+              </p>
             </div>
           </div>
           <div class="info-item flex items-start">
             <i class="pi pi-envelope text-lg mr-3 text-gray-500"></i>
             <div>
-              <label class="block text-sm text-gray-600 mb-1">Email Address</label>
-              <p class="text-base text-gray-800 font-medium">{{seekerData.email}}</p>
+              <label class="block text-sm text-gray-600 mb-1"
+                >Email Address</label
+              >
+              <p class="text-base text-gray-800 font-medium">
+                {{ seekerData.email }}
+              </p>
             </div>
           </div>
           <div class="info-item flex items-start">
             <i class="pi pi-phone text-lg mr-3 text-gray-500"></i>
             <div>
-              <label class="block text-sm text-gray-600 mb-1">Phone Number</label>
-              <p class="text-base text-gray-800 font-medium">{{seekerData.PersonalInformation.phoneNumber}}</p>
+              <label class="block text-sm text-gray-600 mb-1"
+                >Phone Number</label
+              >
+              <p class="text-base text-gray-800 font-medium">
+                {{ seekerData.PersonalInformation.phoneNumber }}
+              </p>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Education Section -->
-      <div class="info-section bg-white rounded-2xl shadow-md p-8 border border-gray-200 transition-all duration-300 ">
+      <div
+        class="info-section bg-white rounded-2xl p-8 border border-gray-200 transition-all duration-300"
+      >
         <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
           Education
         </h2>
@@ -99,15 +140,23 @@
           <div class="info-item flex items-start">
             <i class="pi pi-book text-lg mr-3 text-gray-500"></i>
             <div>
-              <label class="block text-sm text-gray-600 mb-1">Educational Attainment</label>
-              <p class="text-base text-gray-800 font-medium">{{seekerData.PersonalInformation.educationalAttainment || 'N/A'}}</p>
+              <label class="block text-sm text-gray-600 mb-1"
+                >Educational Attainment</label
+              >
+              <p class="text-base text-gray-800 font-medium">
+                {{
+                  seekerData.PersonalInformation.educationalAttainment || "N/A"
+                }}
+              </p>
             </div>
           </div>
           <div class="info-item flex items-start">
             <i class="pi pi-star text-lg mr-3 text-gray-500"></i>
             <div>
               <label class="block text-sm text-gray-600 mb-1">GWA</label>
-              <p class="text-base text-gray-800 font-medium">{{seekerData.PersonalInformation.gwa || 'N/A'}}</p>
+              <p class="text-base text-gray-800 font-medium">
+                {{ seekerData.PersonalInformation.gwa || "N/A" }}
+              </p>
             </div>
           </div>
         </div>
@@ -117,7 +166,9 @@
     <!-- Right Column: Additional Info -->
     <div class="lg:col-span-1">
       <!-- Address Section -->
-      <div class="info-section bg-white rounded-2xl shadow-md p-8 mb-8 border border-gray-200 transition-all duration-300 ">
+      <div
+        class="info-section bg-white rounded-2xl p-8 mb-8 border border-gray-200 transition-all duration-300"
+      >
         <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
           Address
         </h2>
@@ -125,13 +176,17 @@
           <i class="pi pi-map-marker text-lg mr-3 text-gray-500"></i>
           <div>
             <label class="block text-sm text-gray-600 mb-1">Address</label>
-            <p class="text-base text-gray-800 font-medium">{{seekerData.address}}</p>
+            <p class="text-base text-gray-800 font-medium">
+              {{ seekerData.address }}
+            </p>
           </div>
         </div>
       </div>
 
       <!-- Account Info Section -->
-      <div class="info-section bg-white rounded-2xl shadow-md p-8 border border-gray-200 transition-all duration-300 ">
+      <div
+        class="info-section bg-white rounded-2xl p-8 border border-gray-200 transition-all duration-300"
+      >
         <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
           Account Information
         </h2>
@@ -140,21 +195,29 @@
             <i class="pi pi-user text-lg mr-3 text-gray-500"></i>
             <div>
               <label class="block text-sm text-gray-600 mb-1">Username</label>
-              <p class="text-base text-gray-800 font-medium">{{seekerData.username}}</p>
+              <p class="text-base text-gray-800 font-medium">
+                {{ seekerData.username }}
+              </p>
             </div>
           </div>
           <div class="info-item flex items-start">
             <i class="pi pi-id-card text-lg mr-3 text-gray-500"></i>
             <div>
               <label class="block text-sm text-gray-600 mb-1">Role</label>
-              <p class="text-base text-gray-800 font-medium">{{getRoleName()}}</p>
+              <p class="text-base text-gray-800 font-medium">
+                {{ getRoleName() }}
+              </p>
             </div>
           </div>
           <div class="info-item flex items-start">
             <i class="pi pi-calendar text-lg mr-3 text-gray-500"></i>
             <div>
-              <label class="block text-sm text-gray-600 mb-1">Account Created</label>
-              <p class="text-base text-gray-800 font-medium">{{formatDate(seekerData.createdAt)}}</p>
+              <label class="block text-sm text-gray-600 mb-1"
+                >Account Created</label
+              >
+              <p class="text-base text-gray-800 font-medium">
+                {{ formatDate(seekerData.createdAt) }}
+              </p>
             </div>
           </div>
         </div>

@@ -16,20 +16,31 @@
           <p class="text-sm text-gray-600">Candidate Details</p>
         </div>
       </div>
-      <div class="flex items-center gap-4">
-        <p-select
-          [options]="statusOptions"
-          [(ngModel)]="candidate.status"
-          (onChange)="toggleStatus($event.value)"
-          [style]="{ 'min-width': '150px' }"
-          class="text-sm"
-          [ngClass]="{
-            'p-select-yellow':
-              candidate.status === 'Pending' || candidate.status === 'Hired',
-            'p-select-green': candidate.status === 'Shortlisted',
-            'p-select-red': candidate.status === 'Rejected'
+      <div class="flex gap-2">
+        <p-button
+          label="Message"
+          icon="pi pi-comment"
+          styleClass="p-button-sm w-full p-button-outlined mr-2 bg-white"
+          [routerLink]="['/employer/chats']"
+          [queryParams]="{
+            id: candidate.applicant.id,
           }"
-        ></p-select>
+        ></p-button>
+        <div class="flex items-center gap-4">
+          <p-select
+            [options]="statusOptions"
+            [(ngModel)]="candidate.status"
+            (onChange)="toggleStatus($event.value)"
+            [style]="{ 'min-width': '150px' }"
+            class="text-sm"
+            [ngClass]="{
+              'p-select-yellow':
+                candidate.status === 'Pending' || candidate.status === 'Hired',
+              'p-select-green': candidate.status === 'Shortlisted',
+              'p-select-red': candidate.status === 'Rejected'
+            }"
+          ></p-select>
+        </div>
       </div>
     </div>
   </div>
@@ -143,6 +154,10 @@
             icon="pi pi-arrow-left"
             styleClass="p-button-sm w-full p-button-outlined"
             [routerLink]="['/employer/candidates']"
+            [queryParams]="{
+              id: candidate.candidateId,
+              jobId: candidate.jobId
+            }"
           ></p-button>
         </div>
       </p-card>

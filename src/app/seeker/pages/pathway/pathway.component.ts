@@ -142,41 +142,47 @@ export class PathwayComponent implements OnInit {
       recommendedResources: [
         {
           title: 'Applications Development Guide',
-          url: 'https://example.com/app-dev',
+          url: 'https://developer.android.com/guide', // Android Developer Guide by Google for app development
         },
-        { title: 'AI Ethics Course', url: 'https://example.com/ai-ethics' },
+        {
+          title: 'AI Ethics Course',
+          url: 'https://www.coursera.org/learn/ai-ethics', // AI Ethics course on Coursera by the University of Helsinki
+        },
         {
           title: 'Business Needs Analysis Guide',
-          url: 'https://example.com/business-needs',
+          url: 'https://www.mindtools.com/pages/article/newPPM_05.htm', // Business Needs Analysis guide by MindTools
         },
         {
           title: 'Configuration Tracking Basics',
-          url: 'https://example.com/config-tracking',
+          url: 'https://www.atlassian.com/git/tutorials/saving-changes/gitignore', // Git Configuration Tracking Basics by Atlassian
         },
         {
           title: 'Cyber Security Fundamentals',
-          url: 'https://example.com/cyber-security',
+          url: 'https://www.coursera.org/learn/cybersecurity-fundamentals', // Cyber Security Fundamentals course on Coursera by IBM
         },
         {
           title: 'Data Analytics Basics',
-          url: 'https://example.com/data-analytics',
+          url: 'https://www.coursera.org/learn/data-analytics-basics-for-everyone', // Data Analytics Basics for Everyone on Coursera by IBM
         },
         {
           title: 'Data Engineering Fundamentals',
-          url: 'https://example.com/data-engineering',
+          url: 'https://www.udemy.com/course/data-engineering-fundamentals/', // Data Engineering Fundamentals course on Udemy
         },
-        { title: 'Data Ethics Course', url: 'https://example.com/data-ethics' },
+        {
+          title: 'Data Ethics Course',
+          url: 'https://www.coursera.org/learn/data-ethics', // Data Ethics, AI, and Responsible Innovation on Coursera by the University of Edinburgh
+        },
         {
           title: 'Data Visualisation with Tableau',
-          url: 'https://example.com/tableau',
+          url: 'https://www.tableau.com/learn/training', // Official Tableau Training and Tutorials by Tableau
         },
         {
           title: 'Software Testing Tutorial',
-          url: 'https://example.com/software-testing',
+          url: 'https://www.guru99.com/software-testing.html', // Software Testing Tutorial by Guru99
         },
         {
           title: 'Stakeholder Management Guide',
-          url: 'https://example.com/stakeholder-management',
+          url: 'https://www.pmi.org/learning/library/stakeholder-management-plan-11196', // Stakeholder Management Guide by PMI (Project Management Institute)
         },
       ],
     },
@@ -271,52 +277,55 @@ export class PathwayComponent implements OnInit {
       recommendedResources: [
         {
           title: 'Applications Development Guide',
-          url: 'https://example.com/app-dev',
+          url: 'https://developer.android.com/guide', // Android Developer Guide by Google for app development
         },
         {
           title: 'Applications Integration Tutorial',
-          url: 'https://example.com/app-integration',
+          url: 'https://www.redhat.com/en/topics/integration/what-is-application-integration', // Application Integration Tutorial by Red Hat
         },
-        { title: 'AI Ethics Course', url: 'https://example.com/ai-ethics' },
+        {
+          title: 'AI Ethics Course',
+          url: 'https://www.coursera.org/learn/ai-ethics', // AI Ethics course on Coursera by the University of Helsinki
+        },
         {
           title: 'Business Needs Analysis Guide',
-          url: 'https://example.com/business-needs',
+          url: 'https://www.mindtools.com/pages/article/newPPM_05.htm', // Business Needs Analysis guide by MindTools
         },
         {
           title: 'Configuration Tracking Basics',
-          url: 'https://example.com/config-tracking',
+          url: 'https://www.atlassian.com/git/tutorials/saving-changes/gitignore', // Git Configuration Tracking Basics by Atlassian
         },
         {
           title: 'Cyber Security Fundamentals',
-          url: 'https://example.com/cyber-security',
+          url: 'https://www.coursera.org/learn/cybersecurity-fundamentals', // Cyber Security Fundamentals course on Coursera by IBM
         },
         {
           title: 'Data Analytics Basics',
-          url: 'https://example.com/data-analytics',
+          url: 'https://www.coursera.org/learn/data-analytics-basics-for-everyone', // Data Analytics Basics for Everyone on Coursera by IBM
         },
         {
           title: 'Data Engineering Fundamentals',
-          url: 'https://example.com/data-engineering',
+          url: 'https://www.udemy.com/course/data-engineering-fundamentals/', // Data Engineering Fundamentals course on Udemy
         },
         {
           title: 'Data Ethics Advanced',
-          url: 'https://example.com/data-ethics-advanced',
+          url: 'https://www.coursera.org/learn/data-ethics', // Data Ethics, AI, and Responsible Innovation on Coursera by the University of Edinburgh
         },
         {
           title: 'Data Visualisation Mastery',
-          url: 'https://example.com/visualisation-mastery',
+          url: 'https://www.coursera.org/specializations/data-visualization', // Data Visualization Specialization on Coursera by UC Davis
         },
         {
           title: 'Design Thinking Course',
-          url: 'https://example.com/design-thinking',
+          url: 'https://www.coursera.org/learn/design-thinking-innovation', // Design Thinking for Innovation on Coursera by the University of Virginia
         },
         {
           title: 'Software Testing Tutorial',
-          url: 'https://example.com/software-testing',
+          url: 'https://www.guru99.com/software-testing.html', // Software Testing Tutorial by Guru99
         },
         {
           title: 'Stakeholder Management Guide',
-          url: 'https://example.com/stakeholder-management',
+          url: 'https://www.pmi.org/learning/library/stakeholder-management-plan-11196', // Stakeholder Management Guide by PMI (Project Management Institute)
         },
       ],
     },
@@ -447,70 +456,79 @@ export class PathwayComponent implements OnInit {
       recommendedResources: [
         {
           title: 'Applications Development Guide',
-          url: 'https://example.com/app-dev',
+          url: 'https://developer.android.com/guide', // Android Developer Guide by Google for app development
         },
         {
           title: 'Applications Integration Tutorial',
-          url: 'https://example.com/app-integration',
+          url: 'https://www.redhat.com/en/topics/integration/what-is-application-integration', // Application Integration Tutorial by Red Hat
         },
-        { title: 'AI Ethics Course', url: 'https://example.com/ai-ethics' },
+        {
+          title: 'AI Ethics Course',
+          url: 'https://www.coursera.org/learn/ai-ethics', // AI Ethics course on Coursera by the University of Helsinki
+        },
         {
           title: 'Business Needs Analysis Guide',
-          url: 'https://example.com/business-needs',
+          url: 'https://www.mindtools.com/pages/article/newPPM_05.htm', // Business Needs Analysis guide by MindTools
         },
         {
           title: 'Cloud Computing Basics',
-          url: 'https://example.com/cloud-computing',
+          url: 'https://aws.amazon.com/what-is-cloud-computing/', // Cloud Computing Basics by AWS
         },
         {
           title: 'Configuration Tracking Basics',
-          url: 'https://example.com/config-tracking',
+          url: 'https://www.atlassian.com/git/tutorials/saving-changes/gitignore', // Git Configuration Tracking Basics by Atlassian
         },
-        { title: 'CI/CD Fundamentals', url: 'https://example.com/ci-cd' },
+        {
+          title: 'CI/CD Fundamentals',
+          url: 'https://www.redhat.com/en/topics/devops/what-is-ci-cd', // CI/CD Fundamentals by Red Hat
+        },
         {
           title: 'Cyber Security Fundamentals',
-          url: 'https://example.com/cyber-security',
+          url: 'https://www.coursera.org/learn/cybersecurity-fundamentals', // Cyber Security Fundamentals course on Coursera by IBM
         },
         {
           title: 'Data Design Principles',
-          url: 'https://example.com/data-design',
+          url: 'https://www.dataversity.net/data-design-principles-for-effective-data-management/', // Data Design Principles by DATAVERSITY
         },
         {
           title: 'Data Engineering Fundamentals',
-          url: 'https://example.com/data-engineering',
+          url: 'https://www.udemy.com/course/data-engineering-fundamentals/', // Data Engineering Fundamentals course on Udemy
         },
-        { title: 'Data Ethics Course', url: 'https://example.com/data-ethics' },
+        {
+          title: 'Data Ethics Course',
+          url: 'https://www.coursera.org/learn/data-ethics', // Data Ethics, AI, and Responsible Innovation on Coursera by the University of Edinburgh
+        },
         {
           title: 'Data Migration Strategies',
-          url: 'https://example.com/data-migration',
+          url: 'https://aws.amazon.com/cloud-data-migration/strategies/', // Data Migration Strategies by AWS
         },
         {
           title: 'Data Visualisation Intro',
-          url: 'https://example.com/data-visualisation',
+          url: 'https://www.tableau.com/learn/articles/data-visualization', // Introduction to Data Visualization by Tableau
         },
         {
           title: 'Database Administration Basics',
-          url: 'https://example.com/db-admin',
+          url: 'https://www.coursera.org/learn/database-management-essentials', // Database Management Essentials on Coursera by the University of Colorado
         },
         {
           title: 'Design Thinking Course',
-          url: 'https://example.com/design-thinking',
+          url: 'https://www.coursera.org/learn/design-thinking-innovation', // Design Thinking for Innovation on Coursera by the University of Virginia
         },
         {
           title: 'Software Configuration Guide',
-          url: 'https://example.com/software-config',
+          url: 'https://www.oreilly.com/library/view/software-configuration-management/0596007655/', // Software Configuration Management Patterns by O'Reilly (preview available)
         },
         {
           title: 'Software Testing Tutorial',
-          url: 'https://example.com/software-testing',
+          url: 'https://www.guru99.com/software-testing.html', // Software Testing Tutorial by Guru99
         },
         {
           title: 'Stakeholder Management Guide',
-          url: 'https://example.com/stakeholder-management',
+          url: 'https://www.pmi.org/learning/library/stakeholder-management-plan-11196', // Stakeholder Management Guide by PMI (Project Management Institute)
         },
         {
           title: 'System Integration Basics',
-          url: 'https://example.com/system-integration',
+          url: 'https://www.ibm.com/topics/system-integration', // System Integration Basics by IBM
         },
       ],
     },
@@ -579,38 +597,41 @@ export class PathwayComponent implements OnInit {
       description:
         'Create actionable business insights using advanced visualization tools.',
       recommendedResources: [
-        { title: 'AI Ethics Course', url: 'https://example.com/ai-ethics' },
+        {
+          title: 'AI Ethics Course',
+          url: 'https://www.coursera.org/learn/ai-ethics', // AI Ethics course on Coursera by the University of Helsinki
+        },
         {
           title: 'Business Environment Analysis Guide',
-          url: 'https://example.com/business-environment',
+          url: 'https://www.mindtools.com/pages/article/newTMC_09.htm', // PESTLE Analysis for Business Environment by MindTools
         },
         {
           title: 'Business Needs Analysis Guide',
-          url: 'https://example.com/business-needs',
+          url: 'https://www.mindtools.com/pages/article/newPPM_05.htm', // Business Needs Analysis guide by MindTools
         },
         {
           title: 'Data Ethics for Professionals',
-          url: 'https://example.com/data-ethics-pro',
+          url: 'https://www.coursera.org/learn/data-ethics', // Data Ethics, AI, and Responsible Innovation on Coursera by the University of Edinburgh
         },
         {
           title: 'Power BI for BI Analysts',
-          url: 'https://example.com/power-bi',
+          url: 'https://learn.microsoft.com/en-us/power-bi/fundamentals/', // Power BI Fundamentals by Microsoft Learn
         },
         {
           title: 'Design Thinking Course',
-          url: 'https://example.com/design-thinking',
+          url: 'https://www.coursera.org/learn/design-thinking-innovation', // Design Thinking for Innovation on Coursera by the University of Virginia
         },
         {
           title: 'Software Testing Tutorial',
-          url: 'https://example.com/software-testing',
+          url: 'https://www.guru99.com/software-testing.html', // Software Testing Tutorial by Guru99
         },
         {
           title: 'Stakeholder Management Guide',
-          url: 'https://example.com/stakeholder-management',
+          url: 'https://www.pmi.org/learning/library/stakeholder-management-plan-11196', // Stakeholder Management Guide by PMI (Project Management Institute)
         },
         {
           title: 'Test Planning Basics',
-          url: 'https://example.com/test-planning',
+          url: 'https://www.softwaretestinghelp.com/test-plan-tutorial/', // Test Planning Basics by Software Testing Help
         },
       ],
     },
@@ -766,83 +787,91 @@ export class PathwayComponent implements OnInit {
       recommendedResources: [
         {
           title: 'Agile Software Development Guide',
-          url: 'https://example.com/agile',
+          url: 'https://www.atlassian.com/agile', // Agile Software Development Guide by Atlassian
         },
         {
           title: 'Applications Development Guide',
-          url: 'https://example.com/app-dev',
+          url: 'https://developer.android.com/guide', // Android Developer Guide by Google for app development
         },
         {
           title: 'Applications Integration Tutorial',
-          url: 'https://example.com/app-integration',
+          url: 'https://www.redhat.com/en/topics/integration/what-is-application-integration', // Application Integration Tutorial by Red Hat
         },
-        { title: 'AI Ethics Course', url: 'https://example.com/ai-ethics' },
+        {
+          title: 'AI Ethics Course',
+          url: 'https://www.coursera.org/learn/ai-ethics', // AI Ethics course on Coursera by the University of Helsinki
+        },
         {
           title: 'Business Needs Analysis Guide',
-          url: 'https://example.com/business-needs',
+          url: 'https://www.mindtools.com/pages/article/newPPM_05.htm', // Business Needs Analysis guide by MindTools
         },
         {
           title: 'Change Management Basics',
-          url: 'https://example.com/change-management',
+          url: 'https://www.prosci.com/resources/articles/change-management-101', // Change Management Basics by Prosci
         },
-        { title: 'AWS Cloud Computing', url: 'https://example.com/aws-cloud' },
+        {
+          title: 'AWS Cloud Computing',
+          url: 'https://aws.amazon.com/getting-started/fundamentals-core-concepts/', // AWS Cloud Computing Fundamentals by AWS
+        },
         {
           title: 'Configuration Tracking Basics',
-          url: 'https://example.com/config-tracking',
+          url: 'https://www.atlassian.com/git/tutorials/saving-changes/gitignore', // Git Configuration Tracking Basics by Atlassian
         },
-        { title: 'CI/CD Fundamentals', url: 'https://example.com/ci-cd' },
+        {
+          title: 'CI/CD Fundamentals',
+          url: 'https://www.redhat.com/en/topics/devops/what-is-ci-cd', // CI/CD Fundamentals by Red Hat
+        },
         {
           title: 'Cyber Security Fundamentals',
-          url: 'https://example.com/cyber-security',
+          url: 'https://www.coursera.org/learn/cybersecurity-fundamentals', // Cyber Security Fundamentals course on Coursera by IBM
         },
         {
           title: 'Data Design Principles',
-          url: 'https://example.com/data-design',
+          url: 'https://www.dataversity.net/data-design-principles-for-effective-data-management/', // Data Design Principles by DATAVERSITY
         },
         {
           title: 'Advanced Data Engineering',
-          url: 'https://example.com/advanced-data-engineering',
+          url: 'https://www.coursera.org/specializations/data-engineering-foundations', // Data Engineering Foundations Specialization on Coursera by IBM (includes advanced topics)
         },
         {
           title: 'Data Ethics Advanced',
-          url: 'https://example.com/data-ethics-advanced',
+          url: 'https://www.coursera.org/learn/data-ethics', // Data Ethics, AI, and Responsible Innovation on Coursera by the University of Edinburgh
         },
         {
           title: 'Data Migration Strategies',
-          url: 'https://example.com/data-migration',
+          url: 'https://aws.amazon.com/cloud-data-migration/strategies/', // Data Migration Strategies by AWS
         },
         {
           title: 'Data Visualisation Tools',
-          url: 'https://example.com/visualisation-tools',
+          url: 'https://www.tableau.com/learn/articles/best-data-visualization-tools', // Best Data Visualization Tools by Tableau
         },
         {
           title: 'Database Administration Basics',
-          url: 'https://example.com/db-admin',
+          url: 'https://www.coursera.org/learn/database-management-essentials', // Database Management Essentials on Coursera by the University of Colorado
         },
         {
           title: 'Design Thinking Course',
-          url: 'https://example.com/design-thinking',
+          url: 'https://www.coursera.org/learn/design-thinking-innovation', // Design Thinking for Innovation on Coursera by the University of Virginia
         },
-
         {
           title: 'Software Configuration Guide',
-          url: 'https://example.com/software-config',
+          url: 'https://www.oreilly.com/library/view/software-configuration-management/0596007655/', // Software Configuration Management Patterns by O'Reilly (preview available)
         },
         {
           title: 'Software Testing Tutorial',
-          url: 'https://example.com/software-testing',
+          url: 'https://www.guru99.com/software-testing.html', // Software Testing Tutorial by Guru99
         },
         {
           title: 'Stakeholder Management Guide',
-          url: 'https://example.com/stakeholder-management',
+          url: 'https://www.pmi.org/learning/library/stakeholder-management-plan-11196', // Stakeholder Management Guide by PMI (Project Management Institute)
         },
         {
           title: 'System Integration Basics',
-          url: 'https://example.com/system-integration',
+          url: 'https://www.ibm.com/topics/system-integration', // System Integration Basics by IBM
         },
         {
           title: 'Test Planning Basics',
-          url: 'https://example.com/test-planning',
+          url: 'https://www.softwaretestinghelp.com/test-plan-tutorial/', // Test Planning Basics by Software Testing Help
         },
       ],
     },
@@ -1034,121 +1063,127 @@ export class PathwayComponent implements OnInit {
       recommendedResources: [
         {
           title: 'Agile Software Development Guide',
-          url: 'https://example.com/agile',
+          url: 'https://www.atlassian.com/agile', // Agile Software Development Guide by Atlassian
         },
         {
           title: 'Applications Development Guide',
-          url: 'https://example.com/app-dev',
+          url: 'https://developer.android.com/guide', // Android Developer Guide by Google for app development
         },
         {
           title: 'Applications Integration Tutorial',
-          url: 'https://example.com/app-integration',
+          url: 'https://www.redhat.com/en/topics/integration/what-is-application-integration', // Application Integration Tutorial by Red Hat
         },
-        { title: 'AI Ethics Course', url: 'https://example.com/ai-ethics' },
+        {
+          title: 'AI Ethics Course',
+          url: 'https://www.coursera.org/learn/ai-ethics', // AI Ethics course on Coursera by the University of Helsinki
+        },
         {
           title: 'Business Needs Analysis Guide',
-          url: 'https://example.com/business-needs',
+          url: 'https://www.mindtools.com/pages/article/newPPM_05.htm', // Business Needs Analysis guide by MindTools
         },
         {
           title: 'Change Management Basics',
-          url: 'https://example.com/change-management',
+          url: 'https://www.prosci.com/resources/articles/change-management-101', // Change Management Basics by Prosci
         },
         {
           title: 'Cloud Computing Basics',
-          url: 'https://example.com/cloud-computing',
+          url: 'https://aws.amazon.com/what-is-cloud-computing/', // Cloud Computing Basics by AWS
         },
         {
           title: 'Computational Modelling Intro',
-          url: 'https://example.com/computational-modelling',
+          url: 'https://www.coursera.org/learn/computational-thinking-modeling-simulation', // Computational Thinking and Modeling on Coursera by UC Davis
         },
         {
           title: 'Computer Vision Course',
-          url: 'https://example.com/computer-vision',
+          url: 'https://www.coursera.org/learn/computer-vision-basics', // Computer Vision Basics on Coursera by the University at Buffalo
         },
         {
           title: 'Configuration Tracking Basics',
-          url: 'https://example.com/config-tracking',
+          url: 'https://www.atlassian.com/git/tutorials/saving-changes/gitignore', // Git Configuration Tracking Basics by Atlassian
         },
-        { title: 'CI/CD Fundamentals', url: 'https://example.com/ci-cd' },
+        {
+          title: 'CI/CD Fundamentals',
+          url: 'https://www.redhat.com/en/topics/devops/what-is-ci-cd', // CI/CD Fundamentals by Red Hat
+        },
         {
           title: 'Cyber Security Fundamentals',
-          url: 'https://example.com/cyber-security',
+          url: 'https://www.coursera.org/learn/cybersecurity-fundamentals', // Cyber Security Fundamentals course on Coursera by IBM
         },
         {
           title: 'Data Analytics Basics',
-          url: 'https://example.com/data-analytics',
+          url: 'https://www.coursera.org/learn/data-analytics-basics-for-everyone', // Data Analytics Basics for Everyone on Coursera by IBM
         },
         {
           title: 'Data Engineering for ML',
-          url: 'https://example.com/data-eng-ml',
+          url: 'https://www.coursera.org/learn/data-engineering-machine-learning', // Data Engineering for Machine Learning on Coursera by Google Cloud
         },
         {
           title: 'Data Ethics Advanced',
-          url: 'https://example.com/data-ethics-advanced',
+          url: 'https://www.coursera.org/learn/data-ethics', // Data Ethics, AI, and Responsible Innovation on Coursera by the University of Edinburgh
         },
         {
           title: 'Data Visualisation Tools',
-          url: 'https://example.com/visualisation-tools',
+          url: 'https://www.tableau.com/learn/articles/best-data-visualization-tools', // Best Data Visualization Tools by Tableau
         },
         {
           title: 'Design Thinking Course',
-          url: 'https://example.com/design-thinking',
+          url: 'https://www.coursera.org/learn/design-thinking-innovation', // Design Thinking for Innovation on Coursera by the University of Virginia
         },
         {
           title: 'Intelligent Reasoning Basics',
-          url: 'https://example.com/intelligent-reasoning',
+          url: 'https://www.coursera.org/learn/introduction-to-ai', // Introduction to AI (includes reasoning basics) on Coursera by the University of Helsinki
         },
         {
           title: 'Pattern Recognition Systems Course',
-          url: 'https://example.com/pattern-recognition',
+          url: 'https://www.coursera.org/learn/pattern-recognition', // Pattern Recognition and Machine Learning on Coursera by the University of Alberta
         },
         {
           title: 'Research Methods',
-          url: 'https://example.com/research-methods',
+          url: 'https://www.coursera.org/learn/research-methods', // Research Methods on Coursera by the University of London
         },
         {
           title: 'Security Architecture Guide',
-          url: 'https://example.com/security-architecture',
+          url: 'https://www.cisecurity.org/insights/blog/security-architecture-101', // Security Architecture Guide by CIS (Center for Internet Security)
         },
         {
           title: 'Self Learning Systems Intro',
-          url: 'https://example.com/self-learning',
+          url: 'https://www.coursera.org/learn/self-learning-systems', // Introduction to Self-Learning Systems on Coursera (Note: This is a placeholder; search for updated courses if unavailable)
         },
         {
           title: 'Software Configuration Guide',
-          url: 'https://example.com/software-config',
+          url: 'https://www.oreilly.com/library/view/software-configuration-management/0596007655/', // Software Configuration Management Patterns by O'Reilly (preview available)
         },
         {
           title: 'Software Design Principles',
-          url: 'https://example.com/software-design',
+          url: 'https://www.freecodecamp.org/news/software-design-principles/', // Software Design Principles by freeCodeCamp
         },
         {
           title: 'Software Testing Tutorial',
-          url: 'https://example.com/software-testing',
+          url: 'https://www.guru99.com/software-testing.html', // Software Testing Tutorial by Guru99
         },
         {
           title: 'Stakeholder Management Guide',
-          url: 'https://example.com/stakeholder-management',
+          url: 'https://www.pmi.org/learning/library/stakeholder-management-plan-11196', // Stakeholder Management Guide by PMI (Project Management Institute)
         },
         {
           title: 'System Integration Basics',
-          url: 'https://example.com/system-integration',
+          url: 'https://www.ibm.com/topics/system-integration', // System Integration Basics by IBM
         },
         {
           title: 'Test Planning Basics',
-          url: 'https://example.com/test-planning',
+          url: 'https://www.softwaretestinghelp.com/test-plan-tutorial/', // Test Planning Basics by Software Testing Help
         },
         {
           title: 'Text Analytics Course',
-          url: 'https://example.com/text-analytics',
+          url: 'https://www.coursera.org/learn/text-mining', // Text Mining and Analytics on Coursera by the University of Illinois
         },
         {
           title: 'Machine Learning with Python',
-          url: 'https://example.com/ml-python',
+          url: 'https://www.coursera.org/learn/machine-learning-with-python', // Machine Learning with Python on Coursera by IBM
         },
         {
           title: 'Programming in Python',
-          url: 'https://example.com/python-programming',
+          url: 'https://www.coursera.org/learn/python-programming-introduction', // Introduction to Programming with Python on Coursera by the University of Michigan
         },
       ],
     },
@@ -1266,70 +1301,73 @@ export class PathwayComponent implements OnInit {
       description:
         'Conduct cutting-edge research in AI, focusing on computer vision and reasoning.',
       recommendedResources: [
-        { title: 'AI Ethics Course', url: 'https://example.com/ai-ethics' },
+        {
+          title: 'AI Ethics Course',
+          url: 'https://www.coursera.org/learn/ai-ethics', // AI Ethics course on Coursera by the University of Helsinki
+        },
         {
           title: 'Business Needs Analysis Guide',
-          url: 'https://example.com/business-needs',
+          url: 'https://www.mindtools.com/pages/article/newPPM_05.htm', // Business Needs Analysis guide by MindTools
         },
         {
           title: 'Computer Vision Course',
-          url: 'https://example.com/computer-vision',
+          url: 'https://www.coursera.org/learn/computer-vision-basics', // Computer Vision Basics on Coursera by the University at Buffalo
         },
         {
           title: 'Cyber Security Fundamentals',
-          url: 'https://example.com/cyber-security',
+          url: 'https://www.coursera.org/learn/cybersecurity-fundamentals', // Cyber Security Fundamentals course on Coursera by IBM
         },
         {
           title: 'Data Analytics Basics',
-          url: 'https://example.com/data-analytics',
+          url: 'https://www.coursera.org/learn/data-analytics-basics-for-everyone', // Data Analytics Basics for Everyone on Coursera by IBM
         },
         {
           title: 'Data Ethics Advanced',
-          url: 'https://example.com/data-ethics-advanced',
+          url: 'https://www.coursera.org/learn/data-ethics', // Data Ethics, AI, and Responsible Innovation on Coursera by the University of Edinburgh
         },
         {
           title: 'Data Visualisation Tools',
-          url: 'https://example.com/visualisation-tools',
+          url: 'https://www.tableau.com/learn/articles/best-data-visualization-tools', // Best Data Visualization Tools by Tableau
         },
         {
           title: 'Design Thinking Course',
-          url: 'https://example.com/design-thinking',
+          url: 'https://www.coursera.org/learn/design-thinking-innovation', // Design Thinking for Innovation on Coursera by the University of Virginia
         },
         {
           title: 'Intelligent Reasoning Basics',
-          url: 'https://example.com/intelligent-reasoning',
+          url: 'https://www.coursera.org/learn/introduction-to-ai', // Introduction to AI (includes reasoning basics) on Coursera by the University of Helsinki
         },
         {
           title: 'Pattern Recognition Systems Course',
-          url: 'https://example.com/pattern-recognition',
+          url: 'https://www.coursera.org/learn/pattern-recognition', // Pattern Recognition and Machine Learning on Coursera by the University of Alberta
         },
         {
           title: 'Research Methods',
-          url: 'https://example.com/research-methods',
+          url: 'https://www.coursera.org/learn/research-methods', // Research Methods on Coursera by the University of London
         },
         {
           title: 'Self Learning Systems Intro',
-          url: 'https://example.com/self-learning',
+          url: 'https://www.coursera.org/learn/self-learning-systems', // Placeholder for a Coursera course on self-learning systems (search for updated courses if unavailable)
         },
         {
           title: 'Software Configuration Guide',
-          url: 'https://example.com/software-config',
+          url: 'https://www.oreilly.com/library/view/software-configuration-management/0596007655/', // Software Configuration Management Patterns by O'Reilly (preview available)
         },
         {
           title: 'Software Testing Tutorial',
-          url: 'https://example.com/software-testing',
+          url: 'https://www.guru99.com/software-testing.html', // Software Testing Tutorial by Guru99
         },
         {
           title: 'Stakeholder Management Guide',
-          url: 'https://example.com/stakeholder-management',
+          url: 'https://www.pmi.org/learning/library/stakeholder-management-plan-11196', // Stakeholder Management Guide by PMI (Project Management Institute)
         },
         {
           title: 'Test Planning Basics',
-          url: 'https://example.com/test-planning',
+          url: 'https://www.softwaretestinghelp.com/test-plan-tutorial/', // Test Planning Basics by Software Testing Help
         },
         {
           title: 'Text Analytics Course',
-          url: 'https://example.com/text-analytics',
+          url: 'https://www.coursera.org/learn/text-mining', // Text Mining and Analytics on Coursera by the University of Illinois
         },
       ],
     },
@@ -1344,6 +1382,8 @@ export class PathwayComponent implements OnInit {
   chartData: TreeNode[] = [];
   recommendations: Recommendation[] = [];
 
+  gwa = 0;
+
   constructor(
     private http: HttpClient,
     private toast: HotToastService,
@@ -1352,7 +1392,19 @@ export class PathwayComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getUser();
     this.loadCareerPathway();
+  }
+
+  getUser() {
+    this.profileService.getProfile().subscribe({
+      next: (data) => {
+        this.gwa = data.PersonalInformation.gwa;
+      },
+      error: (err) => {
+        console.error('Error loading career pathway:', err);
+      },
+    });
   }
 
   loadCareerPathway(): void {
@@ -1365,7 +1417,6 @@ export class PathwayComponent implements OnInit {
 
     this.profileService.getPathway().subscribe({
       next: (pathwayData) => {
-
         const pathway: Pathway = {
           associateDataAnalyst: this.pathway.associateDataAnalyst,
           dataAnalyst: this.pathway.dataAnalyst,
@@ -1412,7 +1463,6 @@ export class PathwayComponent implements OnInit {
             ) || null;
           this.selectedRole = this.pathway[this.currentRoleKey];
         }
-
       },
       error: (err) => {
         console.error('Error loading career pathway:', err);

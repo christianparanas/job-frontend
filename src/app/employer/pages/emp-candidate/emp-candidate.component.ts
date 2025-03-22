@@ -113,6 +113,7 @@ export class EmpCandidateComponent implements OnInit {
       next: (response: any) => {
         this.candidate = response;
 
+
       },
       error: (err: any) => {
         console.error('Error loading candidate:', err);
