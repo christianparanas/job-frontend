@@ -54,10 +54,10 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
-    if (!this.accept) {
-      this.toast.info('You must accept the terms and conditions.');
-      return;
-    }
+    // if (!this.accept) {
+    //   this.toast.info('You must accept the terms and conditions.');
+    //   return;
+    // }
 
     this.loading = true;
 
