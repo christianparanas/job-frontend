@@ -3,33 +3,38 @@
 
   <div class="mt-6 pb-10">
     <!-- <div class="grid md:grid-cols-[250px_1fr] gap-6"> -->
-      <div class="grid gap-6">
+    <div class="grid lg:grid-cols-[250px_1fr] gap-6">
       <div class="grid items-center">
         <!-- Profile Picture Section -->
-        <!-- <div
-          class="bg-gray-200 rounded-full w-[200px] h-[200px] flex items-center justify-center"
-        >
-          <img
-            *ngIf="user?.image"
-            [src]="user.image"
-            alt="Profile Picture"
-            class="w-full h-full object-cover rounded-full"
-          />
-          <input
-            *ngIf="!user?.image"
-            type="file"
-            accept="image/*"
-            (change)="onProfilePictureChange($event)"
-            class="hidden"
-            id="profilePictureInput"
-          />
-          <label
-            for="profilePictureInput"
-            class="cursor-pointer text-sm text-blue-500"
-          >
-            {{ "Change Picture" }}
-          </label>
-        </div> -->
+        <div class="profile-picture-container">
+          <div class="image-wrapper">
+            <img
+              *ngIf="user?.image"
+              [src]="user.image"
+              alt="Profile Picture"
+              class="profile-image"
+            />
+            <div *ngIf="!user?.image" class="placeholder">
+              <i class="fas fa-user fa-3x text-gray-400"></i>
+            </div>
+            <div class="overlay">
+              <input
+                type="file"
+                accept="image/*"
+                (change)="onProfilePictureChange($event)"
+                class="hidden"
+                id="profilePictureInput"
+              />
+              <label
+                for="profilePictureInput"
+                class="upload-button"
+              >
+                <i class="fas fa-camera mr-2"></i>
+                {{ user?.image ? 'Change Picture' : 'Upload Picture' }}
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
       <div>
         <div class="grid md:grid-cols-3 gap-4">

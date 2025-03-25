@@ -11,6 +11,9 @@ import {
   UserProfile,
 } from '../../shared/services/profile.service';
 
+import { Cloudinary } from '@cloudinary/url-gen';
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-seeker-information',
   imports: [
@@ -46,7 +49,7 @@ export class SeekerInformationComponent implements OnInit {
       yearGraduated: 0,
       degreeEarned: '',
       maritalStatus: '',
-      gwa: 0
+      gwa: 0,
     },
   };
 
@@ -61,9 +64,14 @@ export class SeekerInformationComponent implements OnInit {
   genderOptions: string[] = ['Male', 'Female', 'Others'];
   loading: boolean = false;
 
+  private CLOUDINARY_CLOUD_NAME = 'dbpzvd84i'; // Replace with your Cloudinary cloud name
+  private CLOUDINARY_UPLOAD_PRESET = 'aipsfcloud'; // Replace with your upload preset
+  private CLOUDINARY_API_URL = `https://api.cloudinary.com/v1_1/${this.CLOUDINARY_CLOUD_NAME}/image/upload`;
+
   constructor(
     private messageService: MessageService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -76,14 +84,13 @@ export class SeekerInformationComponent implements OnInit {
       next: (profile: any) => {
         this.user = {
           ...this.user, // Keep the initialized defaults
-          ...profile,   // Overwrite with API data
+          ...profile, // Overwrite with API data
           PersonalInformation: {
             ...this.user.PersonalInformation, // Keep default personalinformation fields
-            ...profile.PersonalInformation    // Overwrite with API personalinformation, if it exists
-          }
+            ...profile.PersonalInformation, // Overwrite with API personalinformation, if it exists
+          },
         };
         this.loading = false;
-
       },
       error: (error) => {
         console.error('Error loading profile:', error);
@@ -93,34 +100,72 @@ export class SeekerInformationComponent implements OnInit {
     });
   }
 
-  onProfilePictureChange(event: any) {
+  async onProfilePictureChange(event: any) {
     const file = event.target.files[0];
     if (file) {
+      // Basic file validation
+      if (!file.type.startsWith('image/')) {
+        this.showError('Please select an image file');
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        // 5MB limit
+        this.showError('Image size must be less than 5MB');
+        return;
+      }
+
       this.loading = true;
-      this.profileService.uploadProfilePicture(file).subscribe({
-        next: (response) => {
-          this.user.image = response.url;
-          this.loading = false;
-          this.showSuccess('Profile picture updated');
-        },
-        error: (error) => {
-          console.error('Error uploading picture:', error);
-          this.showError('Failed to upload picture');
-          this.loading = false;
-        },
-      });
+      try {
+        // Upload to Cloudinary
+        const cloudinaryUrl = await this.uploadToCloudinary(file);
+
+        // Update user image URL
+        this.user.image = cloudinaryUrl;
+
+        // Save to database
+        this.profileService.updateProfile(this.user).subscribe({
+          next: (updatedProfile) => {
+            this.user = updatedProfile;
+            this.loading = false;
+            this.showSuccess('Profile picture updated successfully');
+          },
+          error: (error) => {
+            console.error('Error updating profile:', error);
+            this.showError('Failed to update profile picture');
+            this.loading = false;
+          },
+        });
+      } catch (error) {
+        console.error('Upload error:', error);
+        this.showError('Failed to upload picture');
+        this.loading = false;
+      }
     }
   }
 
-  saveProfile() {
+  private async uploadToCloudinary(file: File): Promise<string> {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', this.CLOUDINARY_UPLOAD_PRESET);
 
+    const response: any = await this.http
+      .post(this.CLOUDINARY_API_URL, formData)
+      .toPromise();
+
+    if (response && (response as any).secure_url) {
+      return response.secure_url;
+    }
+
+    throw new Error('Failed to get secure URL from Cloudinary response');
+  }
+
+  saveProfile() {
     this.loading = true;
     this.profileService.updateProfile(this.user).subscribe({
       next: (updatedProfile) => {
         this.user = updatedProfile;
         this.loading = false;
         this.showSuccess('Profile saved successfully');
-
       },
       error: (error) => {
         console.error('Error saving profile:', error);

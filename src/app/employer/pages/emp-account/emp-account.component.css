@@ -34,3 +34,75 @@
 .p-button-primary:hover {
   background-color: #4338ca;
 }
+
+.profile-picture-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 20px; /* Centers the container and adds bottom margin */
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #e5e7eb; /* Lighter gray than bg-gray-200 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e5e7eb;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  height: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.image-wrapper:hover .overlay {
+  opacity: 1;
+}
+
+.upload-button {
+  cursor: pointer;
+  color: white;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  background-color: #3b82f6; /* Blue-500 */
+  transition: background-color 0.3s ease;
+}
+
+.upload-button:hover {
+  background-color: #192132; /* Blue-600 */
+}
+
+/* Ensure the loading state doesn't interfere */
+.profile-picture-container .loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

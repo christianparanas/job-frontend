@@ -1,0 +1,8 @@
+.p-inputgroup {
+  max-width: 100%; /* Ensures it respects the parent container */
+}
+
+.p-inputgroup-addon {
+  background-color: #f4f4f4; /* Optional: Style the icon background */
+  border-right: none; /* Optional: Seamless transition to input */
+}

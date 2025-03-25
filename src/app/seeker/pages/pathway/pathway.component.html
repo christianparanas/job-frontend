@@ -28,11 +28,9 @@
     class="pathway-content bg-gray-100 p-5 rounded-md"
     *ngIf="isPathwayLoaded"
   >
-    <div class="flex flex-col lg:flex-row gap-6 justify-center items-start">
+    <div class="flex flex-col gap-6 justify-center items-start">
       <!-- Chart Section -->
-      <aside
-        class="chart-container w-full lg:w-1/2 bg-white rounded-lg shadow-md p-6"
-      >
+      <aside class="chart-container w-full bg-white rounded-lg shadow-md p-6">
         <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
           <i class="fas fa-chart-network mr-2 text-green-500"></i> Career
           Hierarchy
@@ -85,10 +83,10 @@
 
       <!-- Details Section -->
       <section
-        class="details-container w-full lg:w-1/2 bg-white rounded-lg shadow-md p-6"
+        class="details-container w-full bg-white rounded-lg shadow-md p-6"
       >
         <!-- Summary Card -->
-        <article class="mb-6">
+        <article class="mb-6 bg-slate-100 p-4 rounded-md">
           <h3
             class="text-lg font-semibold text-gray-800 mb-4 flex items-center"
           >
@@ -145,25 +143,6 @@
               </span>
             </p>
 
-            <div
-              *ngIf="
-                !selectedRole.isEligible &&
-                selectedRole.missingSkills.length > 0
-              "
-              class="bg-yellow-50 p-3 rounded-md"
-            >
-              <h5 class="font-medium text-gray-800 flex items-center mb-2">
-                <i class="fas fa-exclamation-circle mr-2 text-yellow-600"></i>
-                Skills to Improve
-              </h5>
-              <ul class="list-disc list-inside text-sm space-y-1">
-                <li *ngFor="let skill of selectedRole.missingSkills">
-                  {{ skill.skill }} (Current: {{ skill.userLevel }} / Required:
-                  {{ skill.requiredLevel }})
-                </li>
-              </ul>
-            </div>
-
             <div>
               <p class="font-medium text-gray-800 flex items-center mb-2">
                 <i class="fas fa-chart-line mr-2 text-blue-500"></i> Progress
@@ -190,79 +169,109 @@
               </div>
             </div>
 
-            <div>
-              <h5 class="font-medium text-gray-800 flex items-center mb-2">
-                <i class="fas fa-list-ul mr-2 text-green-500"></i> Required
-                Skills
-              </h5>
-              <ul class="list-disc list-inside text-sm space-y-1">
-                <li
-                  *ngFor="let req of selectedRole.requirements"
-                  class="hover:bg-gray-100 p-1 rounded transition duration-200"
-                >
-                  {{ req.skill }} (Required: {{ req.requiredLevel }}, Current:
-                  {{ req.userLevel }})
-                  <span
-                    *ngIf="req.meetsRequirement"
-                    class="text-green-500 ml-2"
+            <div class="grid lg:grid-cols-2 gap-2 lg:gap-6 mb-8">
+              <div>
+                <h5 class="font-medium text-gray-800 flex items-center mb-2">
+                  <i class="fas fa-list-ul mr-2 text-green-500"></i> Required
+                  Skills
+                </h5>
+                <ul class="list-disc list-inside text-sm space-y-1">
+                  <li
+                    *ngFor="let req of selectedRole.requirements"
+                    class="hover:bg-gray-100 p-1 rounded transition duration-200"
                   >
-                    <i class="fas fa-check"></i>
-                  </span>
-                  <span *ngIf="!req.meetsRequirement" class="text-red-500 ml-2">
-                    <i class="fas fa-times"></i>
-                  </span>
-                </li>
-              </ul>
+                    {{ req.skill }} (Required: {{ req.requiredLevel }}, Current:
+                    {{ req.userLevel }})
+                    <span
+                      *ngIf="req.meetsRequirement"
+                      class="text-green-500 ml-2"
+                    >
+                      <i class="fas fa-check"></i>
+                    </span>
+                    <span
+                      *ngIf="!req.meetsRequirement"
+                      class="text-red-500 ml-2"
+                    >
+                      <i class="fas fa-times"></i>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              <div
+                *ngIf="
+                  !selectedRole.isEligible &&
+                  selectedRole.missingSkills.length > 0
+                "
+                class="bg-yellow-50 p-3 rounded-md h-fit"
+              >
+                <h5 class="font-medium text-gray-800 flex items-center mb-2">
+                  <i class="fas fa-exclamation-circle mr-2 text-yellow-600"></i>
+                  Skills to Improve
+                </h5>
+                <ul class="list-disc list-inside text-sm space-y-1">
+                  <li *ngFor="let skill of selectedRole.missingSkills">
+                    {{ skill.skill }} (Current: {{ skill.userLevel }} /
+                    Required: {{ skill.requiredLevel }})
+                  </li>
+                </ul>
+              </div>
             </div>
 
-            <div *ngIf="recommendations.length > 0">
-              <h5 class="font-medium text-gray-800 flex items-center mb-2">
-                <i class="fas fa-lightbulb mr-2 text-yellow-500"></i>
-                Recommendations
-              </h5>
-              <ul class="list-disc list-inside text-sm space-y-1">
-                <li
-                  *ngFor="let rec of recommendations"
-                  class="hover:bg-gray-100 p-1 rounded transition duration-200"
+            <div class="grid lg:grid-cols-2 gap-6 mt-[200px]">
+              <div *ngIf="recommendations.length > 0" class="mt-12">
+                <h5 class="font-medium text-gray-800 flex items-center mb-2">
+                  <i class="fas fa-lightbulb mr-2 text-yellow-500"></i>
+                  Recommendations
+                </h5>
+                <ul
+                  class="list-disc list-inside text-sm space-y-1 border border-1 p-4 rounded-md"
                 >
-                  {{ rec.action }}
-                  <a
-                    *ngIf="rec.resource"
-                    [href]="rec.resource"
-                    target="_blank"
-                    class="text-blue-500 underline ml-1 hover:text-blue-700 transition duration-200"
+                  <li
+                    *ngFor="let rec of recommendations"
+                    class="hover:bg-gray-100 p-1 rounded transition duration-200 w-fit"
                   >
-                    <i class="fas fa-external-link-alt"></i> Learn More
-                  </a>
-                </li>
-              </ul>
-            </div>
+                    {{ rec.action }}
+                    <a
+                      *ngIf="rec.resource"
+                      [href]="rec.resource"
+                      target="_blank"
+                      class="text-blue-500 underline ml-1 hover:text-blue-700 transition duration-200"
+                    >
+                      <i class="fas fa-external-link-alt"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
 
-            <div
-              *ngIf="
-                selectedRole.recommendedResources &&
-                selectedRole.recommendedResources.length > 0
-              "
-            >
-              <h5 class="font-medium text-gray-800 flex items-center mb-2">
-                <i class="fas fa-book mr-2 text-indigo-500"></i> Learning
-                Resources
-              </h5>
-              <ul class="list-disc list-inside text-sm space-y-1">
-                <li
-                  *ngFor="let resource of selectedRole.recommendedResources"
-                  class="hover:bg-gray-100 p-1 rounded transition duration-200"
+              <div
+                *ngIf="
+                  selectedRole.recommendedResources &&
+                  selectedRole.recommendedResources.length > 0
+                " class="mt-12"
+              >
+                <h5 class="font-medium text-gray-800 flex items-center mb-2">
+                  <i class="fas fa-book mr-2 text-indigo-500"></i> Learning
+                  Resources
+                </h5>
+                <ul
+                  class="list-disc list-inside text-sm space-y-1 border border-1 p-4 rounded-md"
                 >
-                  <a
-                    [href]="resource.url"
-                    target="_blank"
-                    class="text-indigo-500 underline hover:text-indigo-700 transition duration-200"
+                  <li
+                    *ngFor="let resource of selectedRole.recommendedResources"
+                    class="hover:bg-gray-100 p-1 rounded transition duration-200 w-fit"
                   >
-                    {{ resource.title }}
-                    <i class="fas fa-external-link-alt ml-1"></i>
-                  </a>
-                </li>
-              </ul>
+                    <a
+                      [href]="resource.url"
+                      target="_blank"
+                      class="text-indigo-500 underline hover:text-indigo-700 transition duration-200"
+                    >
+                      {{ resource.title }}
+                      <i class="fas fa-external-link-alt ml-1"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </article>

@@ -2,10 +2,15 @@
   <div>
     <div>
       <div class="w-full h-[200px] md:h-[300px] bg-gray-400 rounded-xl"></div>
-      <div class="py-5 rounded-lg grid place-items-center absolute top-24 md:top-44 ml-10">
+      <div
+        class="py-5 rounded-lg grid place-items-center absolute top-24 md:top-44 ml-10"
+      >
         <div class="w-fit rounded-full h-fit border-4 border-gray-200">
           <img
-            [src]="user.image || 'https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg'"
+            [src]="
+              user.image ||
+              'https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg'
+            "
             alt="Profile picture"
             class="w-[150px] h-[150px] md:w-[150px] md:h-[150px] object-cover rounded-full"
           />
@@ -14,7 +19,7 @@
           <h2
             class="text-center mt-4 font-bold text-[15px] md:text-[20px] text-black"
           >
-            {{ user.firstname || 'Loading...' }}
+            {{ user.firstname || "Loading..." }}
           </h2>
         </div>
       </div>
@@ -26,41 +31,44 @@
   <div class="mt-10 bg-white w-full">
     <div class="w-[400px] sm:w-full">
       <div class="relative z-40 mt-2 pb-20">
-
         <div class="mt-6 pb-10">
           <div class="grid md:grid-cols-[250px_1fr] gap-6">
             <div class="grid items-center">
               <!-- Profile Picture Section -->
-              <div
-                class="bg-gray-200 rounded-full w-[200px] h-[200px] flex items-center justify-center"
-              >
-                <img
-                  *ngIf="user?.image"
-                  [src]="user.image"
-                  alt="Profile Picture"
-                  class="w-full h-full object-cover rounded-full"
-                />
-                <input
-                  *ngIf="!user?.image"
-                  type="file"
-                  accept="image/*"
-                  (change)="onProfilePictureChange($event)"
-                  class="hidden"
-                  id="profilePictureInput"
-                />
-                <label
-                  for="profilePictureInput"
-                  class="cursor-pointer text-sm text-blue-500"
-                >
-                  {{ "Change Picture" }}
-                </label>
+              <div class="profile-picture-container">
+                <div class="image-wrapper">
+                  <img
+                    *ngIf="user?.image"
+                    [src]="user.image"
+                    alt="Profile Picture"
+                    class="profile-image"
+                  />
+                  <div *ngIf="!user?.image" class="placeholder">
+                    <i class="fas fa-user fa-3x text-gray-400"></i>
+                  </div>
+                  <div class="overlay">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      (change)="onProfilePictureChange($event)"
+                      class="hidden"
+                      id="profilePictureInput"
+                    />
+                    <label for="profilePictureInput" class="upload-button">
+                      <i class="fas fa-camera mr-2"></i>
+                      {{ user.image ? "Change Picture" : "Upload Picture" }}
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
             <div>
               <div class="grid md:grid-cols-3 gap-4">
                 <!-- First Name -->
                 <div class="flex flex-col gap-2">
-                  <label for="firstName" class="text-[14px]">Company Name</label>
+                  <label for="firstName" class="text-[14px]"
+                    >Company Name</label
+                  >
                   <input
                     pInputText
                     id="firstName"
@@ -95,15 +103,14 @@
               <div class="mt-6">
                 <div class="grid md:grid-cols-3 gap-4">
                   <!-- Educational Attainment (Dropdown) -->
-
                 </div>
 
-                <div class="grid  gap-4 ">
+                <div class="grid gap-4">
                   <!-- Phone Number -->
                   <div class="flex flex-col gap-2">
                     <label for="phone" class="text-[14px]">About</label>
                     <textarea
-                    rows="4"
+                      rows="4"
                       pInputText
                       id="phone"
                       type="tel"
@@ -114,7 +121,6 @@
                   </div>
 
                   <!-- Address -->
-
                 </div>
               </div>
             </div>
@@ -129,7 +135,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </div>
