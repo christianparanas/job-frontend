@@ -1,0 +1,107 @@
+<div class="container">
+  <!-- User Profile Section -->
+  <div class="" *ngIf="user; else loading">
+    <div class="profile-header">
+      <img [src]="user.image" alt="User Avatar" class="avatar" />
+      <div class="profile-info">
+        <h1 class="user-name">
+          {{ user.firstname }} {{ user.middlename }} {{ user.lastname }}
+          <span
+            class="status"
+            [ngClass]="{
+              active: user.status === 'active',
+              inactive: user.status === 'inactive'
+            }"
+          >
+            {{ user.status | titlecase }}
+          </span>
+        </h1>
+        <p class="user-details">
+          <i class="fas fa-envelope"></i> {{ user.email }}
+        </p>
+
+        <div class="meta-info">
+          <span
+            ><i class="fas fa-calendar-alt"></i> Joined:
+            {{ user.createdAt | date : "mediumDate" }}</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skills Section -->
+  <div
+    class="skills-section"
+    *ngIf="user && user.skills.length > 0; else noSkills"
+  >
+    <h2 class="section-title">
+      <i class="fas fa-tools"></i> Skills & Proficiencies
+    </h2>
+    <div class="skills-grid">
+      <div class="skill-card h-fit" *ngFor="let skill of user.skills">
+        <h3 class="skill-name"><i class="fas fa-cog"></i> {{ skill.name }}</h3>
+        <div class="progress-bar">
+          <div
+            class="progress-fill"
+            [style.width.%]="getProficiencyPercentage(skill.proficiencyLevel)"
+          ></div>
+          <span class="progress-label">{{ skill.proficiencyLevel }}/4</span>
+        </div>
+        <p class="skill-description">
+          {{
+            skill.isExpanded
+              ? skill.description
+              : (skill.description | slice : 0 : 100) +
+                (skill.description.length > 100 ? "..." : "")
+          }}
+        </p>
+        <button
+          *ngIf="skill.description.length > 100"
+          class="toggle-btn"
+          (click)="toggleDescription(skill)"
+        >
+          <i
+            class="fas"
+            [ngClass]="skill.isExpanded ? 'fa-chevron-up' : 'fa-chevron-down'"
+          ></i>
+          {{ skill.isExpanded ? "Show Less" : "Show More" }}
+        </button>
+        <div class="flex justify-between items-center">
+          <p class="assessment-date">
+            <i class="fas fa-calendar-day"></i> Assessed:
+            {{ skill.assessmentDate | date : "mediumDate" }}
+          </p>
+          <span
+            class="inline-flex items-center justify-center px-3 py-1 text-lg font-bold text-white rounded-full shadow-sm"
+            [ngClass]="{
+              'bg-green-500': skill.proficiencyLevel >= 4,
+              'bg-blue-500': skill.proficiencyLevel === 3,
+              'bg-yellow-500': skill.proficiencyLevel === 2,
+              'bg-red-500': skill.proficiencyLevel <= 1
+            }"
+          >
+            {{ skill.proficiencyLevel }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <ng-template #loading>
+    <div class="loading">
+      <i class="fas fa-spinner fa-spin"></i> Loading user data...
+    </div>
+  </ng-template>
+
+  <!-- No Skills State -->
+  <ng-template #noSkills>
+    <div class="no-skills" *ngIf="user">
+      <p>
+        <i class="fas fa-exclamation-circle"></i> No skills assessed for this
+        user yet.
+      </p>
+    </div>
+  </ng-template>
+</div>

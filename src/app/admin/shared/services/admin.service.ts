@@ -10,10 +10,7 @@ import { environment } from '../../../../environments/environment';
 export class AdminService {
   private apiUrl = `${environment.apiUrl}/api/user`;
 
-  constructor(
-    private http: HttpClient,
-    private authService: AuthService
-  ) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   // Helper to get headers with auth token
   private getHeaders(): HttpHeaders {
@@ -26,28 +23,54 @@ export class AdminService {
     return this.http.get<any[]>(this.apiUrl, { headers: this.getHeaders() });
   }
 
+  getUsersWithAssessments() {
+    return this.http.get<any[]>(`${this.apiUrl}/withassessment`, {
+      headers: this.getHeaders(),
+    });
+  }
+
   getUsersByRole(role: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/role/${role}`, { headers: this.getHeaders() });
+    return this.http.get<any[]>(`${this.apiUrl}/role/${role}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  getUserSkills(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/userskills/${userId}`, {
+      headers: this.getHeaders(),
+    });
   }
 
   // Get user statistics
   getUserStats(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/stats`, { headers: this.getHeaders() });
+    return this.http.get(`${this.apiUrl}/stats`, {
+      headers: this.getHeaders(),
+    });
   }
 
   // Toggle user verification status
   toggleUserVerification(userId: string, isVerified: boolean): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${userId}`, { isVerified }, { headers: this.getHeaders() });
+    return this.http.put(
+      `${this.apiUrl}/${userId}`,
+      { isVerified },
+      { headers: this.getHeaders() }
+    );
   }
 
   // Delete a user (optional admin feature)
   deleteUser(userId: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${userId}`, { headers: this.getHeaders() });
+    return this.http.delete(`${this.apiUrl}/${userId}`, {
+      headers: this.getHeaders(),
+    });
   }
 
   // Update user role (optional admin feature)
   updateUserRole(userId: string, role: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${userId}/role`, { role }, { headers: this.getHeaders() });
+    return this.http.put(
+      `${this.apiUrl}/${userId}/role`,
+      { role },
+      { headers: this.getHeaders() }
+    );
   }
 
   getUser(userId: any) {

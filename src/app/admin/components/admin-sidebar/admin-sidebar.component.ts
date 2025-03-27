@@ -28,11 +28,11 @@ export class AdminSidebarComponent implements OnInit {
     //   route: 'jobs',
     //   icon: 'fal fa-briefcase',
     // },
-    // {
-    //   title: 'Assessments',
-    //   route: 'assessments',
-    //   icon: 'fal fa-clipboard-check',
-    // },
+    {
+      title: 'Assessments',
+      route: 'assessments',
+      icon: 'fal fa-clipboard-check',
+    },
     {
       title: 'Logs',
       route: 'logs',

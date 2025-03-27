@@ -38,6 +38,8 @@ import { UnauthorizedComponent } from './core/pages/unauthorized/unauthorized.co
 import { EmpAccountComponent } from './employer/pages/emp-account/emp-account.component';
 import { EmployerComponent } from './admin/pages/employer/employer.component';
 import { SeekerComponent } from './admin/pages/seeker/seeker.component';
+import { AssessmentsComponent } from './admin/pages/assessments/assessments.component';
+import { AssessmentDetailComponent } from './admin/pages/assessment-detail/assessment-detail.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -68,6 +70,8 @@ export const routes: Routes = [
     canActivate: [adminGuard],
     children: [
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'assessments', component: AssessmentsComponent },
+      { path: 'assessment', component: AssessmentDetailComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'tickets', component: TicketsComponent },
       { path: 'notifications', component: NotificationsComponent },
