@@ -20,7 +20,7 @@
       <div class="flex items-center justify-between">
         <div>
           <h1 class="text-3xl font-bold text-gray-800">
-            {{ employerData.firstname }} {{ employerData.lastname }}
+            {{ employerData.firstname }} 
           </h1>
           <p class="text-md text-gray-600 flex items-center mt-1">
             <i class="pi pi-id-card text-lg mr-2 text-blue-500"></i>
@@ -70,24 +70,14 @@
             <i class="pi pi-user text-lg mr-3 text-gray-500"></i>
             <div>
               <label class="block text-sm text-gray-600 mb-1"
-                >Contact First Name</label
+                >Employer</label
               >
               <p class="text-base text-gray-800 font-medium">
                 {{ employerData.firstname }}
               </p>
             </div>
           </div>
-          <div class="info-item flex items-start">
-            <i class="pi pi-user text-lg mr-3 text-gray-500"></i>
-            <div>
-              <label class="block text-sm text-gray-600 mb-1"
-                >Contact Last Name</label
-              >
-              <p class="text-base text-gray-800 font-medium">
-                {{ employerData.lastname }}
-              </p>
-            </div>
-          </div>
+
           <div class="info-item flex items-start">
             <i class="pi pi-envelope text-lg mr-3 text-gray-500"></i>
             <div>
@@ -119,15 +109,7 @@
               </p>
             </div>
           </div>
-          <div class="info-item flex items-start">
-            <i class="pi pi-users text-lg mr-3 text-gray-500"></i>
-            <div>
-              <label class="block text-sm text-gray-600 mb-1">Gender</label>
-              <p class="text-base text-gray-800 font-medium">
-                {{ employerData.gender }}
-              </p>
-            </div>
-          </div>
+
         </div>
       </div>
 
