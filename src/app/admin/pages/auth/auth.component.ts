@@ -42,6 +42,5 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
-    console.log('hehe');
   }
 }

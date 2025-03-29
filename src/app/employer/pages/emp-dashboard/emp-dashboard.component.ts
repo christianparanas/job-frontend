@@ -47,7 +47,6 @@ export class EmpDashboardComponent implements OnInit {
       )
       .subscribe((data) => {
         if (data.length != 0) {
-          console.log(data);
 
           this.employerName = data[0].employer.firstname;
           // Process the server data to populate metrics and recent activities

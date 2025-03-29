@@ -88,7 +88,6 @@ export class SeekersComponent implements OnInit {
   getUsers() {
     this.adminService.getUsersByRole('User').subscribe(
       (data: any) => {
-        console.log(data);
 
         this.users = data.map((user: any) => ({
           ...user,

@@ -80,7 +80,6 @@ export class EmpApplicantsComponent implements OnInit {
 
   toggleStatus(candidate: any, newStatus: string) {
     candidate.status = newStatus;
-    console.log(`Updated ${candidate.name}'s status to ${newStatus}`);
     // Add API call to update status (e.g., candidateService.updateCandidateStatus)
   }
 

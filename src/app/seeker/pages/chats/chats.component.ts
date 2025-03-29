@@ -123,7 +123,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
   }
 
   getOtherUser(chat: Chat): string {
-    console.log(chat);
 
     if (Object.keys(chat).length == 5) {
       return 'User';

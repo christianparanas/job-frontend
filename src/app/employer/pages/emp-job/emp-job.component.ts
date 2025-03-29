@@ -44,12 +44,10 @@ export class EmpJobComponent implements OnInit {
 
   toggleStatus(newStatus: string) {
     this.job.status = newStatus;
-    console.log(`Updated ${this.job.title}'s status to ${newStatus}`);
     // Add API call here
   }
 
   deleteJob() {
-    console.log(`Deleted job: ${this.job.title}`);
     window.history.back();
   }
 }

@@ -50,7 +50,6 @@ export class EmpJobsComponent implements OnInit {
   loadJobs() {
     this.jobService.getJobs().subscribe({
       next: (response) => {
-        console.log('Jobs response:', response); // Debug
         if (Array.isArray(response)) {
           this.jobs = response.map((job) => ({
             ...job,

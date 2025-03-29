@@ -64,7 +64,6 @@ export class AssessmentsComponent implements OnInit {
   getUsers() {
     this.adminService.getUsersWithAssessments().subscribe(
       (data: any) => {
-        console.log(data);
 
         this.users = data.map((user: any) => ({
           ...user,

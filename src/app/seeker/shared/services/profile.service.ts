@@ -84,7 +84,7 @@ export class ProfileService {
         formData
       )
       .pipe(
-        tap((response) => console.log('Profile picture uploaded:', response)),
+        tap((response) => console.log('Profile picture uploaded:')),
         catchError((error) => {
           console.error('Error uploading profile picture:', error);
           return throwError(() => error);

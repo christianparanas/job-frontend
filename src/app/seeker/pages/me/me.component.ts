@@ -173,7 +173,6 @@ export class MeComponent implements OnInit {
   }
 
   saveProfile() {
-    console.log(this.user);
 
     this.loading = true;
     this.profileService.updateProfile(this.user).subscribe({
