@@ -181,7 +181,7 @@ export class SeekerInformationComponent implements OnInit {
       summary: 'Success',
       detail: message,
       life: 3000,
-      key: 'bl',
+      key: 'br',
     });
   }
 
@@ -191,7 +191,7 @@ export class SeekerInformationComponent implements OnInit {
       summary: 'Error',
       detail: message,
       life: 3000,
-      key: 'bl',
+      key: 'br',
     });
   }
 }

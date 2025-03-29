@@ -76,4 +76,24 @@ export class AdminService {
   getUser(userId: any) {
     return this.http.get<any>(`${this.apiUrl}/profile/${userId}`);
   }
+
+  resendVerification(username: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${username}/resend-verification`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  suspendUser(username: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${username}/suspend`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  unsuspendUser(username: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${username}/unsuspend`, {});
+  }
+
+  activateUser(username: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${username}/activate`, {});
+  }
 }

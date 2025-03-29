@@ -173,6 +173,8 @@ export class MeComponent implements OnInit {
   }
 
   saveProfile() {
+    console.log(this.user);
+
     this.loading = true;
     this.profileService.updateProfile(this.user).subscribe({
       next: (updatedProfile) => {
@@ -194,7 +196,7 @@ export class MeComponent implements OnInit {
       summary: 'Success',
       detail: message,
       life: 3000,
-      key: 'bl',
+      key: 'br',
     });
   }
 
@@ -204,7 +206,7 @@ export class MeComponent implements OnInit {
       summary: 'Error',
       detail: message,
       life: 3000,
-      key: 'bl',
+      key: 'br',
     });
   }
 

@@ -169,7 +169,7 @@ export class EmpEditJobComponent implements OnInit {
     // Add new skills
     newSkillIds.forEach((skillId: string) => {
       if (!currentSkillIds.includes(skillId)) {
-        const skill = this.skillOptions.find((s) => s.value === skillId);
+        const skill = this.skillOptions.find((s) => s.value == skillId);
         if (skill) {
           this.job.requirements.push({
             skillId: skill.value,

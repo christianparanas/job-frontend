@@ -1,7 +1,34 @@
-<div class="mt-6 pb-10 text-[14px]">
+<!-- seekers.component.html -->
+<div class="mt-6 lg:mt-0 pb-10 text-[14px]">
+  <!-- Search Input -->
+
+  <div
+    class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4"
+  >
+    <h1 class="text-2xl font-bold text-gray-800"></h1>
+
+    <p-iconfield>
+      <p-inputicon>
+        <i class="pi pi-search"></i>
+      </p-inputicon>
+      <input
+        type="text"
+        pInputText
+        (ngModelChange)="filterUsers()"
+        (keydown.enter)="filterUsers()"
+        (blur)="filterUsers()"
+        [(ngModel)]="searchTerm"
+        placeholder="Search by name or email"
+      />
+    </p-iconfield>
+  </div>
+
+  <p-toast position="bottom-right" key="br" />
+  <p-confirmdialog />
+
   <p-table
     [columns]="cols"
-    [value]="users"
+    [value]="filteredUsers"
     showGridlines
     [paginator]="true"
     [rowsPerPageOptions]="[5, 10, 20]"
@@ -32,11 +59,12 @@
             <span
               class="text-xs font-semibold px-3 py-1 rounded-full"
               [ngClass]="{
-                'bg-green-100 text-green-800': rowData[col.field],
-                'bg-red-100 text-red-800': !rowData[col.field]
+                'bg-green-100 text-green-800': rowData[col.field] === 'active',
+                'bg-red-100 text-red-800': rowData[col.field] === 'inactive',
+                'bg-orange-100 text-orange-800': rowData[col.field] === 'suspended'
               }"
             >
-              {{ rowData[col.field] ? "Active" : "Inactive" }}
+              {{ rowData[col.field] === 'active' ? 'Active' : rowData[col.field] === 'inactive' ? 'Inactive' : 'Suspended' }}
             </span>
           </ng-container>
 

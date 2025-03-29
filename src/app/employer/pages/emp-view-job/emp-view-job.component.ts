@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
-import { JobService } from '../../shared/services/emp-job.service'; // Adjust path
-import { AuthService } from '../../../core/shared/services/auth.service'; // Adjust path
+import { JobService } from '../../shared/services/emp-job.service';
+import { AuthService } from '../../../core/shared/services/auth.service';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { Observable } from 'rxjs';
 
@@ -25,6 +25,8 @@ interface Applicant {
   id: number;
   name: string;
   appliedDate: string;
+  gwa: number;
+  rank?: number; // Added to store the applicant's rank
 }
 
 @Component({
@@ -60,8 +62,6 @@ export class EmpViewJobComponent implements OnInit {
   loadJob(jobId: number): void {
     this.jobService.getJob(jobId).subscribe({
       next: (response) => {
-        // Map backend response to Job interface
-
         this.job = {
           id: response.id,
           title: response.title,
@@ -74,11 +74,10 @@ export class EmpViewJobComponent implements OnInit {
           salary: response.salary,
           type: response.type,
           status: response.status,
-          updatedAt: response.updatedAt || response.createdAt, // Fallback to createdAt if needed
+          updatedAt: response.updatedAt || response.createdAt,
           applications: response.Candidates,
         };
 
-        // Fetch applicants if not included in job response
         this.loadApplicants(jobId);
       },
       error: (err) => {
@@ -92,15 +91,22 @@ export class EmpViewJobComponent implements OnInit {
   loadApplicants(jobId: number): void {
     this.jobService.getJobApplicants(jobId).subscribe({
       next: (response) => {
-
-        this.applicants = response.map((applicant: any) => ({
-          id: applicant.id,
-          name:
-            applicant.applicant?.firstname +
-            ' ' +
-            applicant.applicant?.lastname,
-          appliedDate: applicant.appliedDate || applicant.createdAt, // Adjust based on backend
-        }));
+        // Map and sort applicants by GWA in descending order
+        this.applicants = response
+          .map((applicant: any) => ({
+            id: applicant.id,
+            name:
+              applicant.applicant?.firstname +
+              ' ' +
+              applicant.applicant?.lastname,
+            gwa: applicant.applicant?.PersonalInformation.gwa || 0, // Fallback to 0 if GWA is missing
+            appliedDate: applicant.appliedDate || applicant.createdAt,
+          }))
+          .sort((a: Applicant, b: Applicant) => b.gwa - a.gwa) // Sort by GWA (highest to lowest)
+          .map((applicant: Applicant, index: number) => ({
+            ...applicant,
+            rank: index + 1, // Add rank (1-based index)
+          }));
       },
       error: (err) => {
         console.error('Error loading applicants:', err);
@@ -108,6 +114,15 @@ export class EmpViewJobComponent implements OnInit {
         this.toast.error('Failed to load applicants.');
       },
     });
+  }
+
+  // Helper method to format the rank (e.g., 1st, 2nd, 3rd)
+  getRankLabel(rank: number): string {
+    const suffixes = ['th', 'st', 'nd', 'rd'];
+    const v = rank % 100;
+    const suffix =
+      v >= 11 && v <= 13 ? suffixes[0] : suffixes[v % 10] || suffixes[0];
+    return `${rank}${suffix}`;
   }
 
   getStatusColor(status: string): string {
@@ -122,21 +137,6 @@ export class EmpViewJobComponent implements OnInit {
         return 'bg-gray-100 text-gray-800';
     }
   }
-
-  // getProficiencyLabel(proficiency: number): string {
-  //   switch (proficiency) {
-  //     case 1:
-  //       return 'Basic';
-  //     case 2:
-  //       return 'Intermediate';
-  //     case 3:
-  //       return 'Advanced';
-  //     case 4:
-  //       return 'Expert';
-  //     default:
-  //       return 'Unknown';
-  //   }
-  // }
 
   messageApplicant(id: number) {
     this.router.navigate(['/employer/chats'], { queryParams: { id } });

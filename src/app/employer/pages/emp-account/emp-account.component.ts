@@ -20,7 +20,7 @@ import { HttpClient } from '@angular/common/http';
     ButtonModule,
     CommonModule,
     ToastModule,
-    SelectModule
+    SelectModule,
   ],
   templateUrl: './emp-account.component.html',
   styleUrls: ['./emp-account.component.css'],
@@ -179,7 +179,7 @@ export class EmpAccountComponent implements OnInit {
       summary: 'Success',
       detail: message,
       life: 3000,
-      key: 'bl',
+      key: 'br',
     });
   }
 
@@ -189,7 +189,7 @@ export class EmpAccountComponent implements OnInit {
       summary: 'Error',
       detail: message,
       life: 3000,
-      key: 'bl',
+      key: 'br',
     });
   }
 }
